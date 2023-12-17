@@ -1,10 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqn3h56ch5gtd"]
+[gd_scene load_steps=7 format=3 uid="uid://bqn3h56ch5gtd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_otipf"]
 [ext_resource type="Texture2D" uid="uid://by57ryjxgxgha" path="res://assets/player.png" id="2_3dgf8"]
+[ext_resource type="Texture2D" uid="uid://drwmd5cgfc7r" path="res://assets/hands.png" id="3_ysrg6"]
+[ext_resource type="Texture2D" uid="uid://cj4kwbsfk63jf" path="res://assets/gun.png" id="4_6mtv3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6agnt"]
-radius = 21.095
+radius = 16.0312
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_5eb0b"]
+radius = 16.0312
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -12,13 +17,32 @@ collision_mask = 9
 motion_mode = 1
 script = ExtResource("1_otipf")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_3dgf8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_6agnt")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 9.0
+
+[node name="RotationPivot" type="Marker2D" parent="."]
+
+[node name="Hands" type="Sprite2D" parent="RotationPivot"]
+position = Vector2(0, -21)
+texture = ExtResource("3_ysrg6")
+
+[node name="GunSprite" type="Sprite2D" parent="RotationPivot"]
+position = Vector2(0, -36.695)
+texture = ExtResource("4_6mtv3")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
+shape = SubResource("CircleShape2D_5eb0b")
+debug_color = Color(0.979353, 0, 0.388737, 0.42)

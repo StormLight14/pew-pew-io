@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var rotation_pivot = $RotationPivot
+
 const MAX_SPEED = 400
 
 func _physics_process(delta):
@@ -13,5 +15,5 @@ func movement(delta):
 	velocity = input_direction * MAX_SPEED
 
 func follow_mouse():
-	look_at(get_global_mouse_position())
-	rotation_degrees += 90
+	rotation_pivot.look_at(get_global_mouse_position())
+	rotation_pivot.rotation_degrees += 90
