@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="pew-pew-io"
-run/main_scene="res://test_level.tscn"
+run/main_scene="res://ui/main_menu.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
 config/icon="res://assets/icon.svg"
+
+[autoload]
+
+GameManager="*res://GameManager.gd"
 
 [display]
 

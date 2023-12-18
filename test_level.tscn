@@ -1,14 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckxykyo23ilmx"]
+[gd_scene load_steps=4 format=3 uid="uid://ckxykyo23ilmx"]
 
+[ext_resource type="Script" path="res://scene_manager.gd" id="1_idb0i"]
 [ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="1_t6pqn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_auvwr"]
 size = Vector2(1201, 78)
 
 [node name="TestLevel" type="Node2D"]
-
-[node name="Player" parent="." instance=ExtResource("1_t6pqn")]
-position = Vector2(420, 122)
+script = ExtResource("1_idb0i")
+player_scene = ExtResource("1_t6pqn")
 
 [node name="WorldCollisions" type="StaticBody2D" parent="."]
 collision_mask = 2
@@ -30,3 +30,35 @@ shape = SubResource("RectangleShape2D_auvwr")
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="WorldCollisions"]
 position = Vector2(540, 1123)
 shape = SubResource("RectangleShape2D_auvwr")
+
+[node name="SpawnLocations" type="Node2D" parent="."]
+
+[node name="0" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(71, 107)
+
+[node name="1" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(980, 162)
+
+[node name="2" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(77, 372)
+
+[node name="3" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(995, 429)
+
+[node name="4" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(75, 584)
+
+[node name="5" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(988, 595)
+
+[node name="6" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(79, 791)
+
+[node name="7" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(999, 783)
+
+[node name="8" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(75, 1018)
+
+[node name="9" type="Marker2D" parent="SpawnLocations" groups=["PlayerSpawnGroup"]]
+position = Vector2(1011, 1001)

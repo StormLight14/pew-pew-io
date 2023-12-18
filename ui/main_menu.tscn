@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://k1kemrf0on2r"]
+[gd_scene load_steps=2 format=3 uid="uid://k1kemrf0on2r"]
+
+[ext_resource type="Script" path="res://ui/main_menu.gd" id="1_r38uq"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -7,3 +9,35 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_r38uq")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="HostButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Host Game"
+
+[node name="JoinButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Join Game"
+
+[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="LineEdit" type="LineEdit" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "Guest"
+
+[connection signal="button_down" from="CenterContainer/VBoxContainer/HostButton" to="." method="_on_host_button_button_down"]
+[connection signal="button_down" from="CenterContainer/VBoxContainer/JoinButton" to="." method="_on_join_button_button_down"]
+[connection signal="button_down" from="CenterContainer/VBoxContainer/StartButton" to="." method="_on_start_button_button_down"]
