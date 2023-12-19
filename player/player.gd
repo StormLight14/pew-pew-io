@@ -2,20 +2,31 @@ extends CharacterBody2D
 
 @onready var rotation_pivot = $RotationPivot
 
-const MAX_SPEED = 400
+const MAX_SPEED := 400
+var player_name: String
+
+@export var player := 1 :
+	set(id):
+		player = id
+		# Give authority over the player input to the appropriate peer.
+		$PlayerInput.set_multiplayer_authority(id)
+		print(id)
+		
+@onready var input = $PlayerInput
 
 func _ready():
-	$MultiplayerSynchronizer.set_multiplayer_authority(str(name).to_int())
+	#print("Player spawned. Name: %s, position: %s" % [player_name, position])
+	if player == multiplayer.get_unique_id():
+		$Camera2D.enabled = true
 
 func _physics_process(delta):
-	if $MultiplayerSynchronizer.get_multiplayer_authority() == multiplayer.get_unique_id():
-		follow_mouse()
-		movement(delta)
-		
-		move_and_slide()
+	follow_mouse()
+	movement(delta)
+	
+	move_and_slide()
 	
 func movement(delta):
-	var input_direction = Input.get_vector("left", "right", "up", "down")
+	var input_direction = input.direction.normalized()
 	velocity = input_direction * MAX_SPEED
 
 func follow_mouse():

@@ -1,0 +1,54 @@
+[gd_scene load_steps=2 format=3 uid="uid://c03g4g4l20a3x"]
+
+[ext_resource type="Script" path="res://Multiplayer.gd" id="1_ppba1"]
+
+[node name="Multiplayer" type="Node"]
+script = ExtResource("1_ppba1")
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://world.tscn")
+spawn_path = NodePath("../Level")
+spawn_limit = 10
+
+[node name="UI" type="Control" parent="."]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Net" type="VBoxContainer" parent="UI"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Options" type="HBoxContainer" parent="UI/Net"]
+layout_mode = 2
+
+[node name="DirectConnect" type="Label" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Direct Connect"
+
+[node name="Host" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Host Server"
+
+[node name="Start" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+disabled = true
+text = "Start Game"
+
+[node name="Connect" type="Button" parent="UI/Net/Options"]
+layout_mode = 2
+text = "Connect to Server"
+
+[node name="Remote" type="LineEdit" parent="UI/Net/Options"]
+layout_mode = 2
+text = "127.0.0.1"
+expand_to_text_length = true
+
+[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="UI/Net/Options/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]
