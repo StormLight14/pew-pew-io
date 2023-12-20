@@ -1,54 +1,86 @@
-[gd_scene load_steps=2 format=3 uid="uid://c03g4g4l20a3x"]
+[gd_scene load_steps=6 format=3 uid="uid://3begruyw7wti"]
 
-[ext_resource type="Script" path="res://Multiplayer.gd" id="1_ppba1"]
+[ext_resource type="Script" path="res://multiplayer.gd" id="1_tv1bw"]
+[ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_pbl3c"]
+[ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level.tscn" id="3_qf10t"]
+[ext_resource type="Script" path="res://ui/game_ui.gd" id="3_qvi62"]
 
-[node name="Multiplayer" type="Node"]
-script = ExtResource("1_ppba1")
+[sub_resource type="Theme" id="Theme_5cf16"]
+LineEdit/font_sizes/font_size = 12
 
-[node name="Level" type="Node2D" parent="."]
+[node name="Multiplayer" type="Node2D"]
+script = ExtResource("1_tv1bw")
+player_scene = ExtResource("2_pbl3c")
 
-[node name="LevelSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://world.tscn")
-spawn_path = NodePath("../Level")
-spawn_limit = 10
-
-[node name="UI" type="Control" parent="."]
+[node name="MenuUI" type="MarginContainer" parent="."]
 process_mode = 3
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
+offset_right = 1152.0
 offset_bottom = 40.0
 
-[node name="Net" type="VBoxContainer" parent="UI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Options" type="HBoxContainer" parent="UI/Net"]
+[node name="CenterContainer" type="CenterContainer" parent="MenuUI"]
 layout_mode = 2
 
-[node name="DirectConnect" type="Label" parent="UI/Net/Options"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MenuUI/CenterContainer"]
 layout_mode = 2
-text = "Direct Connect"
 
-[node name="Host" type="Button" parent="UI/Net/Options"]
+[node name="Host" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
-text = "Host Server"
+text = "Host Game"
 
-[node name="Start" type="Button" parent="UI/Net/Options"]
+[node name="Start" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 disabled = true
 text = "Start Game"
 
-[node name="Connect" type="Button" parent="UI/Net/Options"]
+[node name="Join" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
-text = "Connect to Server"
+text = "Join Game"
 
-[node name="Remote" type="LineEdit" parent="UI/Net/Options"]
+[node name="Username" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
+layout_mode = 2
+placeholder_text = "Guest"
+expand_to_text_length = true
+
+[node name="Address" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "127.0.0.1"
 expand_to_text_length = true
 
-[connection signal="pressed" from="UI/Net/Options/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="UI/Net/Options/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="UI/Net/Options/Connect" to="." method="_on_connect_pressed"]
+[node name="Port" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "9595"
+
+[node name="GameUI" type="CanvasLayer" parent="."]
+script = ExtResource("3_qvi62")
+
+[node name="Messages" type="Label" parent="GameUI"]
+offset_left = 12.0
+offset_top = 399.0
+offset_right = 403.0
+offset_bottom = 603.0
+
+[node name="LineEdit" type="LineEdit" parent="GameUI"]
+offset_left = 15.0
+offset_top = 608.0
+offset_right = 340.0
+offset_bottom = 639.0
+theme = SubResource("Theme_5cf16")
+placeholder_text = "Message..."
+flat = true
+
+[node name="Level" parent="." instance=ExtResource("3_qf10t")]
+
+[node name="Players" type="Node2D" parent="."]
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://player/player.tscn")
+spawn_path = NodePath("../Players")
+
+[connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="text_submitted" from="MenuUI/CenterContainer/HBoxContainer/Username" to="." method="_on_username_text_submitted"]
+[connection signal="text_submitted" from="GameUI/LineEdit" to="GameUI" method="_on_line_edit_text_submitted"]

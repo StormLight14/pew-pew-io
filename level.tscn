@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://bu74xn3hlof5n"]
+
+[ext_resource type="Script" path="res://level.gd" id="1_aq73c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5k66y"]
+size = Vector2(239, 100)
+
+[node name="Level" type="Node2D"]
+script = ExtResource("1_aq73c")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(66, 82)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(185, 107)
+shape = SubResource("RectangleShape2D_5k66y")
