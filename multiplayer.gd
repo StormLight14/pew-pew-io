@@ -3,18 +3,15 @@ extends Node2D
 @onready var port = %Port
 @onready var address = %Address
 @onready var start = %Start
+@onready var username = %Username
 
 @export var player_scene: PackedScene
-
-var player_name = "Guest"
 
 var peer = ENetMultiplayerPeer.new()
 
 func _ready():
 	$Players.visible = false
 	$GameUI.visible = false
-	
-	$GameUI.message_sent.connect(_message_sent)
 
 func _on_host_pressed():
 	host_game(port.text.to_int())
@@ -39,7 +36,11 @@ func join_game(address: String, port: int):
 func add_player(id = 1):
 	var player = player_scene.instantiate()
 	player.name = str(id)
-	player.player_name = player
+	
+	if GameValues.player_name == "Guest":
+		GameValues.player_name += " " + str(id)
+		
+	player.player_name = GameValues.player_name
 	$Players.add_child(player)
 
 @rpc("any_peer", "call_local", "reliable")
@@ -51,11 +52,15 @@ func start_game():
 	$Players.visible = true
 
 @rpc("any_peer", "call_local", "reliable")
-func send_message(message = ""):
-	$GameUI/Messages.text += "Some User" + ": " + message + "\n"
+func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
+	$GameUI/Messages.text += username + ": " + message + "\n"
 	
-func _message_sent(message):
-	send_message.rpc(message)
+func _message_sent(message, username):
+	send_message.rpc(message, username)
 
-func _on_username_text_submitted(new_text):
-	player_name = new_text
+func _on_username_text_changed(new_text):
+	if new_text != "":
+		GameValues.player_name = new_text
+	else:
+		GameValues.player_name = "Guest"
+

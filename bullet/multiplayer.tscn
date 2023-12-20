@@ -1,16 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://3begruyw7wti"]
+[gd_scene load_steps=6 format=3 uid="uid://itv1k62vplmq"]
 
-[ext_resource type="Script" path="res://multiplayer.gd" id="1_tv1bw"]
-[ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_pbl3c"]
-[ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level.tscn" id="3_qf10t"]
-[ext_resource type="Script" path="res://ui/game_ui.gd" id="3_qvi62"]
+[ext_resource type="Script" path="res://multiplayer.gd" id="1_bqji1"]
+[ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_8h4kd"]
+[ext_resource type="Script" path="res://ui/game_ui.gd" id="3_moqkh"]
+[ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level.tscn" id="4_gmx68"]
 
 [sub_resource type="Theme" id="Theme_5cf16"]
 LineEdit/font_sizes/font_size = 12
 
 [node name="Multiplayer" type="Node2D"]
-script = ExtResource("1_tv1bw")
-player_scene = ExtResource("2_pbl3c")
+script = ExtResource("1_bqji1")
+player_scene = ExtResource("2_8h4kd")
 
 [node name="MenuUI" type="MarginContainer" parent="."]
 process_mode = 3
@@ -55,7 +55,7 @@ layout_mode = 2
 text = "9595"
 
 [node name="GameUI" type="CanvasLayer" parent="."]
-script = ExtResource("3_qvi62")
+script = ExtResource("3_moqkh")
 
 [node name="Messages" type="Label" parent="GameUI"]
 offset_left = 12.0
@@ -72,11 +72,11 @@ theme = SubResource("Theme_5cf16")
 placeholder_text = "Message..."
 flat = true
 
-[node name="Level" parent="." instance=ExtResource("3_qf10t")]
+[node name="Level" parent="." instance=ExtResource("4_gmx68")]
 
 [node name="Players" type="Node2D" parent="."]
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 

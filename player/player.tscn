@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqn3h56ch5gtd"]
+[gd_scene load_steps=9 format=3 uid="uid://bqn3h56ch5gtd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_otipf"]
 [ext_resource type="Texture2D" uid="uid://by57ryjxgxgha" path="res://assets/player.png" id="2_3dgf8"]
 [ext_resource type="Texture2D" uid="uid://bnelpnhdx1k3o" path="res://assets/hands-holding-gun.png" id="3_pnwp5"]
 [ext_resource type="Texture2D" uid="uid://cj4kwbsfk63jf" path="res://assets/gun.png" id="4_6mtv3"]
+[ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/main.tres" id="5_l8vil"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6agnt"]
 radius = 16.0312
@@ -18,6 +19,9 @@ properties/0/replication_mode = 1
 properties/1/path = NodePath("RotationPivot:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
+properties/2/path = NodePath("Username:text")
+properties/2/spawn = true
+properties/2/replication_mode = 1
 
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
@@ -46,6 +50,9 @@ texture = ExtResource("3_pnwp5")
 position = Vector2(1, -31)
 texture = ExtResource("4_6mtv3")
 
+[node name="BulletSpawnPoint" type="Marker2D" parent="RotationPivot"]
+position = Vector2(0.87, -39.53)
+
 [node name="Hurtbox" type="Area2D" parent="."]
 collision_layer = 4
 collision_mask = 8
@@ -55,14 +62,30 @@ visible = false
 shape = SubResource("CircleShape2D_5eb0b")
 debug_color = Color(0.979353, 0, 0.388737, 0.42)
 
+[node name="AttackDelay" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vol4q")
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -26.0
+offset_top = -36.0
+offset_right = 27.0
+offset_bottom = -31.0
+theme = ExtResource("5_l8vil")
+max_value = 500.0
+value = 500.0
+show_percentage = false
+
 [node name="Username" type="Label" parent="."]
 offset_left = -50.0
-offset_top = 16.0
+offset_top = 15.0
 offset_right = 51.0
-offset_bottom = 39.0
+offset_bottom = 38.0
 theme_override_font_sizes/font_size = 14
 text = "Guest"
 horizontal_alignment = 1
+
+[connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
