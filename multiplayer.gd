@@ -52,7 +52,7 @@ func start_game():
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(message = ""):
-	$GameUI/Messages.text += player_name + ": " + message + "\n"
+	$GameUI/Messages.text += "Some User" + ": " + message + "\n"
 	
 func _message_sent(message):
 	send_message.rpc(message)
