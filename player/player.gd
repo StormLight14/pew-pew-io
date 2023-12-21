@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var bullet_spawn_point = $RotationPivot/BulletSpawnPoint
 @onready var attack_delay = $AttackDelay
 @onready var health_bar = $HealthBar
+@onready var hurt_delay = $Hurtbox/HurtDelay
 
 const MAX_SPEED := 400
 var player_name = "Guest"
@@ -24,7 +25,11 @@ func _ready():
 	health_bar.max_value = self.health
 	
 	if is_multiplayer_authority():
-		username.text = GameValues.player_name
+		if player_name == "" or player_name == "Guest":
+			player_name = "Guest " + str(multiplayer.get_unique_id())
+			
+		GameValues.player_name = player_name
+		username.text = player_name
 
 func _physics_process(_delta):
 	if is_multiplayer_authority():
@@ -48,9 +53,7 @@ func attack():
 	if Input.is_action_just_pressed("attack"):
 		if attack_delay.is_stopped() == true:
 			attack_delay.start()
-			#print("pew from player: ", player_name)
-
-			spawn_bullet.rpc(bullet_spawn_point.global_position.direction_to(get_global_mouse_position()))
+			spawn_bullet.rpc(global_position.direction_to(bullet_spawn_point.global_position))
 			
 @rpc("any_peer", "call_local", "reliable")
 func spawn_bullet(direction = Vector2.ZERO):
@@ -58,20 +61,22 @@ func spawn_bullet(direction = Vector2.ZERO):
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
 	get_node("../../Level").add_child(bullet)
-	
-@rpc("any_peer", "call_local", "reliable")
+
 func respawn():
 	global_position = Vector2(0, 0)
 	health = max_health
 	health_bar.value = health
-	
-	GameValues.send_message(player_name + " has been killed.", "SERVER")
+
 
 func _on_hurtbox_area_entered(area):
 	if area.team != team:
 		area.queue_free()
-		health -= area.damage
-		health_bar.value = health
 		
-		if health <= 0:
-			respawn.rpc()
+		if hurt_delay.is_stopped() == true:
+			hurt_delay.start()
+			health -= area.damage
+			health_bar.value = health
+			
+			if health <= 0:
+				GameValues.send_message(name + " has been killed.", "SERVER")
+				respawn()

@@ -8,8 +8,10 @@ extends Node2D
 @export var player_scene: PackedScene
 
 var peer = ENetMultiplayerPeer.new()
+var players = []
 
 func _ready():
+	get_tree().paused = true
 	$Players.visible = false
 	$GameUI.visible = false
 
@@ -34,33 +36,29 @@ func join_game(address: String, port: int):
 	multiplayer.multiplayer_peer = peer
 	
 func add_player(id = 1):
+	print("Added player with id: ", id)
 	var player = player_scene.instantiate()
 	player.name = str(id)
-	
-	if GameValues.player_name == "Guest":
-		GameValues.player_name += " " + str(id)
-		
 	player.player_name = GameValues.player_name
-	$Players.add_child(player)
+	
+	players.append(player)
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game():
+	for player in players:
+		player.player_name = GameValues.player_name
+		$Players.add_child(player)
+		
+	get_tree().paused = false
 	$MenuUI.visible = false
 	$GameUI.visible = true
 	
 	$Level.visible = true
 	$Players.visible = true
 
-@rpc("any_peer", "call_local", "reliable")
-func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
-	$GameUI/Messages.text += username + ": " + message + "\n"
-	
-func _message_sent(message, username):
-	send_message.rpc(message, username)
-
 func _on_username_text_changed(new_text):
-	if new_text != "":
+	if new_text != "" and new_text != "Guest":
 		GameValues.player_name = new_text
 	else:
-		GameValues.player_name = "Guest"
+		GameValues.player_name = "Guest " + str(multiplayer.get_unique_id())
 

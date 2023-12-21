@@ -4,7 +4,7 @@ var speed := 300.0
 
 var bullet_direction := Vector2.ZERO
 var velocity := Vector2.ZERO
-var damage = 15
+var damage = 40
 var team = "CT"
 
 func _physics_process(delta):
