@@ -6,6 +6,7 @@ extends CharacterBody2D
 @onready var attack_delay = $AttackDelay
 @onready var health_bar = $HealthBar
 @onready var hurt_delay = $Hurtbox/HurtDelay
+@onready var camera_2d = $Camera2D
 
 const MAX_SPEED := 400
 var username = "Guest"
@@ -26,6 +27,7 @@ func _ready():
 	
 	if is_multiplayer_authority():
 		username_label.text = username
+		camera_2d.enabled = true
 
 func _physics_process(_delta):
 	if is_multiplayer_authority():

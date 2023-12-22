@@ -3,6 +3,7 @@ extends Node2D
 @onready var port = %Port
 @onready var address = %Address
 @onready var start = %Start
+@onready var start_timer = %StartTimer
 
 @export var player_scene: PackedScene
 
@@ -13,6 +14,11 @@ func _ready():
 	multiplayer.connected_to_server.connect(connected_to_server)
 	$Players.visible = false
 	$GameUI.visible = false
+	
+	if "--headless" in OS.get_cmdline_args():
+		host_game(port.text.to_int())
+		start_timer.start()
+
 
 func _on_host_pressed():
 	host_game(port.text.to_int())
@@ -20,6 +26,10 @@ func _on_host_pressed():
 
 func _on_start_pressed():
 	start_game.rpc()
+	
+func _on_start_timer_timeout():
+	start_game.rpc()
+
 
 func _on_join_pressed():
 	join_game(address.text, port.text.to_int())
@@ -70,3 +80,5 @@ func start_game():
 
 func _on_username_text_changed(new_text):
 	pass
+
+

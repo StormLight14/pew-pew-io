@@ -63,6 +63,7 @@ shape = SubResource("CircleShape2D_5eb0b")
 debug_color = Color(0.979353, 0, 0.388737, 0.42)
 
 [node name="HurtDelay" type="Timer" parent="Hurtbox"]
+wait_time = 0.1
 one_shot = true
 
 [node name="AttackDelay" type="Timer" parent="."]
