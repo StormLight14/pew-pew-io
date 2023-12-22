@@ -1,6 +1,6 @@
 extends Node
 
-var player_name = "Guest"
+var players = {}
 var typing = false
 var messages = ""
 

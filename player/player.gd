@@ -1,14 +1,14 @@
 extends CharacterBody2D
 
 @onready var rotation_pivot = $RotationPivot
-@onready var username = $Username
+@onready var username_label = $Username
 @onready var bullet_spawn_point = $RotationPivot/BulletSpawnPoint
 @onready var attack_delay = $AttackDelay
 @onready var health_bar = $HealthBar
 @onready var hurt_delay = $Hurtbox/HurtDelay
 
 const MAX_SPEED := 400
-var player_name = "Guest"
+var username = "Guest"
 var team = "T"
 var health = 200
 var max_health = health
@@ -25,11 +25,7 @@ func _ready():
 	health_bar.max_value = self.health
 	
 	if is_multiplayer_authority():
-		if player_name == "" or player_name == "Guest":
-			player_name = "Guest " + str(multiplayer.get_unique_id())
-			
-		GameValues.player_name = player_name
-		username.text = player_name
+		username_label.text = username
 
 func _physics_process(_delta):
 	if is_multiplayer_authority():
@@ -62,11 +58,14 @@ func spawn_bullet(direction = Vector2.ZERO):
 	bullet.global_position = bullet_spawn_point.global_position
 	get_node("../../Level").add_child(bullet)
 
+@rpc("any_peer", "call_local", "reliable")
 func respawn():
 	global_position = Vector2(0, 0)
 	health = max_health
 	health_bar.value = health
-
+	
+	if multiplayer.is_server():
+		GameValues.send_message.rpc(username + " has been killed.", "SERVER")
 
 func _on_hurtbox_area_entered(area):
 	if area.team != team:
@@ -78,5 +77,4 @@ func _on_hurtbox_area_entered(area):
 			health_bar.value = health
 			
 			if health <= 0:
-				GameValues.send_message(name + " has been killed.", "SERVER")
 				respawn()
