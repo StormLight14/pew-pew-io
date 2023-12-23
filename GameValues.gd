@@ -8,7 +8,10 @@ signal message_sent
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
-	messages += username + ": " + message + "\n"
+	var full_message = username + ": " + message + "\n"
+	print(full_message)
+	
+	messages += full_message
 	message_sent.emit()
 
 func get_player_count():
