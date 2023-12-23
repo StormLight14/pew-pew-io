@@ -4,7 +4,14 @@ func _ready():
 	GameValues.message_sent.connect(_on_message_sent)
 
 func _on_line_edit_text_submitted(new_text):
-	GameValues.send_message.rpc(new_text, str(multiplayer.get_unique_id()))
+	var id = multiplayer.get_unique_id()
+	var username
+	if multiplayer.is_server():
+		username = "SERVER"
+	else:
+		username = GameValues.players[id].username
+		
+	GameValues.send_message.rpc(new_text, username)
 	$MessageLine.text = ""
 	$MessageLine.release_focus()
 

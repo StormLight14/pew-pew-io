@@ -1,27 +1,44 @@
 extends Node2D
 
-@onready var port = %Port
-@onready var address = %Address
+@onready var port_input = %Port
+@onready var address_input = %Address
 @onready var start = %Start
-@onready var start_timer = %StartTimer
+@onready var start_timer = $StartTimer
 
 @export var player_scene: PackedScene
 
 var peer = ENetMultiplayerPeer.new()
 
 func _ready():
+	print_tree_pretty()
 	get_tree().paused = true
 	multiplayer.connected_to_server.connect(connected_to_server)
+	multiplayer.peer_disconnected.connect(peer_disconnected)
 	$Players.visible = false
 	$GameUI.visible = false
 	
-	if "--headless" in OS.get_cmdline_args():
-		host_game(port.text.to_int())
+	if DisplayServer.get_name() == "headless":
 		start_timer.start()
-
-
+		print("timer should have started?")
+		host_game(port_input.text.to_int())
+	
+func connected_to_server():
+	send_player_info.rpc_id(1, "Guest " + str(multiplayer.get_unique_id()), multiplayer.get_unique_id())
+	
+func peer_connected(id):
+	print("Player with ID " + str(id) + " connected.")
+	
+func peer_disconnected(id):
+	print(GameValues.players[id].username + " disconnected.")
+	GameValues.players.erase(id)
+	var player_nodes = get_tree().get_nodes_in_group("Player")
+	for player_node in player_nodes:
+		if player_node.name == str(id):
+			GameValues.send_message(player_node.username + " has disconnected.", "SERVER")
+			player_node.queue_free()
+		
 func _on_host_pressed():
-	host_game(port.text.to_int())
+	host_game(port_input.text.to_int())
 	start.disabled = false
 
 func _on_start_pressed():
@@ -29,14 +46,10 @@ func _on_start_pressed():
 	
 func _on_start_timer_timeout():
 	start_game.rpc()
-
+	print("start timer timeout")
 
 func _on_join_pressed():
-	join_game(address.text, port.text.to_int())
-	
-func connected_to_server():
-	send_player_info.rpc_id(1, "Guest " + str(multiplayer.get_unique_id()), multiplayer.get_unique_id())
-	pass
+	join_game(address_input.text, port_input.text.to_int())
 
 func host_game(port: int):
 	peer.create_server(port)
@@ -64,8 +77,6 @@ func send_player_info(username, id):
 	if multiplayer.is_server():
 		for i in GameValues.players:
 			send_player_info.rpc(GameValues.players[i].username, i)
-			
-	print(GameValues.players)
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game():

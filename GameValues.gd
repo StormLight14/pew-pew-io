@@ -10,3 +10,10 @@ signal message_sent
 func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
 	messages += username + ": " + message + "\n"
 	message_sent.emit()
+
+func get_player_count():
+	var amount = 0
+	for i in GameValues.players:
+		amount += 1
+	
+	return amount

@@ -54,6 +54,9 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "9595"
 
+[node name="Label" type="Label" parent="MenuUI/CenterContainer/HBoxContainer"]
+layout_mode = 2
+
 [node name="GameUI" type="CanvasLayer" parent="."]
 script = ExtResource("3_qvi62")
 
@@ -72,6 +75,25 @@ theme = SubResource("Theme_5cf16")
 placeholder_text = "Message..."
 flat = true
 
+[node name="Spectate" type="HBoxContainer" parent="GameUI"]
+offset_left = 335.0
+offset_top = 398.0
+offset_right = 781.0
+offset_bottom = 433.0
+
+[node name="SpectateNext" type="Button" parent="GameUI/Spectate"]
+layout_mode = 2
+text = "Next Player"
+
+[node name="Label" type="Label" parent="GameUI/Spectate"]
+layout_mode = 2
+text = "Currently Spectating: Guest"
+
+[node name="SpectatePrevious" type="Button" parent="GameUI/Spectate"]
+layout_mode = 2
+text = "Previous Player
+"
+
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
 
 [node name="Players" type="Node2D" parent="."]
@@ -80,6 +102,10 @@ flat = true
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")
 spawn_path = NodePath("../Players")
 
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 20.0
+one_shot = true
+
 [connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]
@@ -87,3 +113,4 @@ spawn_path = NodePath("../Players")
 [connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
 [connection signal="focus_exited" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_exited"]
 [connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
