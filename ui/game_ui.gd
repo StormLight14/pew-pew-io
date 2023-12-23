@@ -33,7 +33,7 @@ func _on_message_line_focus_exited():
 	GameValues.typing = false
 
 func _on_message_sent():
-	$Messages.text = GameValues.messages
+	%Messages.text = GameValues.messages
 
 func _on_spectate_previous_pressed():
 	pass # Replace with function body.

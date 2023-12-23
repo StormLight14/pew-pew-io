@@ -91,4 +91,12 @@ theme_override_font_sizes/font_size = 14
 text = "Guest"
 horizontal_alignment = 1
 
+[node name="Team" type="Label" parent="."]
+offset_left = -17.0
+offset_top = 32.0
+offset_right = 19.0
+offset_bottom = 55.0
+text = "T"
+horizontal_alignment = 1
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

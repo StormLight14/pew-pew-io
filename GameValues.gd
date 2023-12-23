@@ -16,18 +16,21 @@ func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
 
 func get_player_count(team):
 	var amount = 0
-	
+	print(players)
 	match team.to_upper():
 		"ANY":
-			for player in get_tree().get_nodes_in_group("Player"):
+			for id in players.keys():
 				amount += 1
 		"CT":
-			for player in get_tree().get_nodes_in_group("Player"):
-				if player.team == "CT":
+			for id in players.keys():
+				amount += 1
+				if players[id].team == "CT":
 					amount += 1
 		"T":
-			for player in get_tree().get_nodes_in_group("Player"):
-				if player.team == "T":
+			for id in players.keys():
+				amount += 1
+				if players[id].team == "T":
 					amount += 1
 	
+	print(team + ": " + str(amount))
 	return amount

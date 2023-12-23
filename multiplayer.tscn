@@ -60,11 +60,19 @@ layout_mode = 2
 [node name="GameUI" type="CanvasLayer" parent="."]
 script = ExtResource("3_qvi62")
 
-[node name="Messages" type="Label" parent="GameUI"]
-offset_left = 12.0
-offset_top = 399.0
-offset_right = 403.0
-offset_bottom = 603.0
+[node name="ScrollContainer" type="ScrollContainer" parent="GameUI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -231.0
+offset_right = 349.0
+offset_bottom = -43.0
+grow_vertical = 0
+
+[node name="Messages" type="Label" parent="GameUI/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="MessageLine" type="LineEdit" parent="GameUI"]
 offset_left = 15.0

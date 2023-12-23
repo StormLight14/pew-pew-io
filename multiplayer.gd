@@ -22,7 +22,7 @@ func _ready():
 		host_game(port_input.text.to_int())
 	
 func connected_to_server():
-	send_player_info.rpc_id(1, "Guest " + str(multiplayer.get_unique_id()), multiplayer.get_unique_id())
+	send_player_info.rpc_id(1, "Guest " + str(multiplayer.get_unique_id()), multiplayer.get_unique_id(), "T")
 	
 func peer_connected(id):
 	print("Player with ID " + str(id) + " connected.")
@@ -60,33 +60,36 @@ func join_game(address: String, port: int):
 	multiplayer.multiplayer_peer = peer
 	
 func add_players():
+	var added_players = 0
+	
 	for i in GameValues.players:
-		var t_player_count = GameValues.get_player_count("T")
-		var ct_player_count = GameValues.get_player_count("CT")
-		
+		added_players += 1
+
 		var player = player_scene.instantiate()
 		player.name = str(i)
 		player.username = GameValues.players[i].username
 		
-		if t_player_count <= ct_player_count:
+		if added_players % 2 == 1:
 			player.team = "T"
-		else:
+			
+		elif added_players % 2 == 0:
 			player.team = "CT"
 		
-		print("Created " + player.username + " on team " + player.team)
+		#print("Created " + player.username + " on team " + player.team)
 		$Players.add_child(player)
-	
+
 @rpc("any_peer")
-func send_player_info(username, id):
+func send_player_info(username, id, team):
 	if not GameValues.players.has(id):
 		GameValues.players[id] = {
 			"username": username,
 			"id": id,
+			"team": team,
 		}
 		
 	if multiplayer.is_server():
 		for i in GameValues.players:
-			send_player_info.rpc(GameValues.players[i].username, i)
+			send_player_info.rpc(GameValues.players[i].username, i, team)
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game():
@@ -95,7 +98,6 @@ func start_game():
 	get_tree().paused = false
 	$MenuUI.visible = false
 	$GameUI.make_visible()
-	
 	
 	$Level.visible = true
 	$Players.visible = true

@@ -2,6 +2,7 @@ extends CharacterBody2D
 
 @onready var rotation_pivot = $RotationPivot
 @onready var username_label = $Username
+@onready var team_label = $Team
 @onready var bullet_spawn_point = $RotationPivot/BulletSpawnPoint
 @onready var attack_delay = $AttackDelay
 @onready var health_bar = $HealthBar
@@ -22,11 +23,14 @@ func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	
 func _ready():
+	print(GameValues.players)
+	#GameValues.players[name].team = team
 	health_bar.value = self.health
 	health_bar.max_value = self.health
 	
 	if is_multiplayer_authority():
 		username_label.text = username
+		team_label.text = team
 		camera_2d.enabled = true
 
 func _physics_process(_delta):
@@ -58,6 +62,7 @@ func spawn_bullet(direction = Vector2.ZERO):
 	var bullet = load("res://bullet/bullet.tscn").instantiate()
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
+	bullet.team = team
 	get_node("../../Level").add_child(bullet)
 
 @rpc("any_peer", "call_local", "reliable")
