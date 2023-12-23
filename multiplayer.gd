@@ -61,9 +61,19 @@ func join_game(address: String, port: int):
 	
 func add_players():
 	for i in GameValues.players:
+		var t_player_count = GameValues.get_player_count("T")
+		var ct_player_count = GameValues.get_player_count("CT")
+		
 		var player = player_scene.instantiate()
 		player.name = str(i)
 		player.username = GameValues.players[i].username
+		
+		if t_player_count <= ct_player_count:
+			player.team = "T"
+		else:
+			player.team = "CT"
+		
+		print("Created " + player.username + " on team " + player.team)
 		$Players.add_child(player)
 	
 @rpc("any_peer")

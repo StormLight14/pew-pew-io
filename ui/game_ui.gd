@@ -39,5 +39,12 @@ func _on_spectate_previous_pressed():
 	pass # Replace with function body.
 
 func _on_spectate_next_pressed():
+	var biggest_id = 0
+	
 	for id in GameValues.players:
-		print(id)
+		if id > biggest_id:
+			biggest_id = id
+			
+	for player in get_tree().get_nodes_in_group("Player"):
+		if player.name == str(biggest_id):
+			player.camera_2d.enabled = true

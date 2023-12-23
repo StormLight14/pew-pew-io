@@ -38,7 +38,6 @@ shape = SubResource("CircleShape2D_6agnt")
 [node name="Camera2D" type="Camera2D" parent="."]
 enabled = false
 process_callback = 0
-position_smoothing_enabled = true
 
 [node name="RotationPivot" type="Marker2D" parent="."]
 
