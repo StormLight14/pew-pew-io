@@ -10,7 +10,6 @@ extends Node2D
 var peer = ENetMultiplayerPeer.new()
 
 func _ready():
-	print_tree_pretty()
 	get_tree().paused = true
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
@@ -31,6 +30,7 @@ func peer_connected(id):
 func peer_disconnected(id):
 	print(GameValues.players[id].username + " disconnected.")
 	GameValues.players.erase(id)
+	
 	var player_nodes = get_tree().get_nodes_in_group("Player")
 	for player_node in player_nodes:
 		if player_node.name == str(id):
@@ -84,12 +84,11 @@ func start_game():
 	
 	get_tree().paused = false
 	$MenuUI.visible = false
-	$GameUI.visible = true
+	$GameUI.make_visible()
+	
 	
 	$Level.visible = true
 	$Players.visible = true
 
 func _on_username_text_changed(new_text):
 	pass
-
-

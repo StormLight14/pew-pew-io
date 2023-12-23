@@ -75,24 +75,34 @@ theme = SubResource("Theme_5cf16")
 placeholder_text = "Message..."
 flat = true
 
-[node name="Spectate" type="HBoxContainer" parent="GameUI"]
-offset_left = 335.0
-offset_top = 398.0
-offset_right = 781.0
-offset_bottom = 433.0
+[node name="SpectateUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = -1.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="SpectateNext" type="Button" parent="GameUI/Spectate"]
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/SpectateUI"]
 layout_mode = 2
-text = "Next Player"
 
-[node name="Label" type="Label" parent="GameUI/Spectate"]
-layout_mode = 2
-text = "Currently Spectating: Guest"
-
-[node name="SpectatePrevious" type="Button" parent="GameUI/Spectate"]
+[node name="SpectatePrevious" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
 layout_mode = 2
 text = "Previous Player
 "
+
+[node name="SpectateLabel" type="Label" parent="GameUI/SpectateUI/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Currently Spectating: Guest"
+
+[node name="SpectateNext" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
+layout_mode = 2
+text = "Next Player"
 
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
 
@@ -113,4 +123,6 @@ one_shot = true
 [connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
 [connection signal="focus_exited" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_exited"]
 [connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
+[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
