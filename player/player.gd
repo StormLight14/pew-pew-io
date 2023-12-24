@@ -17,20 +17,20 @@ var max_health = health
 
 var can_attack = true
 
-#signal spawn_bullet(bullet_scene)
+signal create_bullet(bullet_scene)
 	
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	
 func _ready():
-	print(GameValues.players)
+	print(name + ": " + team)
 	#GameValues.players[name].team = team
 	health_bar.value = self.health
 	health_bar.max_value = self.health
+	team_label.text = team
 	
 	if is_multiplayer_authority():
 		username_label.text = username
-		team_label.text = team
 		camera_2d.enabled = true
 
 func _physics_process(_delta):
@@ -63,7 +63,8 @@ func spawn_bullet(direction = Vector2.ZERO):
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
 	bullet.team = team
-	get_node("../../Level").add_child(bullet)
+	#create_bullet.emit(bullet)
+	get_parent().get_parent().add_child(bullet)
 
 @rpc("any_peer", "call_local", "reliable")
 func respawn():

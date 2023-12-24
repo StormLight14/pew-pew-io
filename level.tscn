@@ -14,3 +14,5 @@ position = Vector2(66, 82)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(185, 107)
 shape = SubResource("RectangleShape2D_5k66y")
+
+[node name="Players" type="Node2D" parent="."]

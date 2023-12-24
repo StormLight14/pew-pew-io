@@ -4,6 +4,7 @@ extends Node2D
 @onready var address_input = %Address
 @onready var start = %Start
 @onready var start_timer = $StartTimer
+@onready var username_input = %Username
 
 @export var player_scene: PackedScene
 
@@ -13,16 +14,19 @@ func _ready():
 	get_tree().paused = true
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
-	$Players.visible = false
 	$GameUI.visible = false
 	
 	if DisplayServer.get_name() == "headless":
-		start_timer.start()
-		print("timer should have started?")
 		host_game(port_input.text.to_int())
 	
 func connected_to_server():
-	send_player_info.rpc_id(1, "Guest " + str(multiplayer.get_unique_id()), multiplayer.get_unique_id(), "T")
+	var username
+	if username_input.text != "" and username_input.text != "Guest":
+		username = username_input.text
+	else:
+		username = "Guest " + str(multiplayer.get_unique_id())
+	
+	send_player_info.rpc_id(1, username, multiplayer.get_unique_id(), "T")
 	
 func peer_connected(id):
 	print("Player with ID " + str(id) + " connected.")
@@ -76,7 +80,7 @@ func add_players():
 			player.team = "CT"
 		
 		#print("Created " + player.username + " on team " + player.team)
-		$Players.add_child(player)
+		$Level/Players.add_child(player)
 
 @rpc("any_peer")
 func send_player_info(username, id, team):
@@ -100,7 +104,6 @@ func start_game():
 	$GameUI.make_visible()
 	
 	$Level.visible = true
-	$Players.visible = true
 
 func _on_username_text_changed(new_text):
 	pass
