@@ -41,8 +41,8 @@ func _physics_process(_delta):
 			attack()
 			movement()
 		
-	move_and_slide()
-	
+		move_and_slide()
+
 func movement():
 	var input_direction = Input.get_vector("left", "right", "up", "down").normalized()
 	velocity = input_direction * MAX_SPEED
@@ -55,15 +55,15 @@ func attack():
 	if Input.is_action_just_pressed("attack"):
 		if attack_delay.is_stopped() == true:
 			attack_delay.start()
-			spawn_bullet.rpc(global_position.direction_to(bullet_spawn_point.global_position))
+			spawn_bullet.rpc(global_position.direction_to(bullet_spawn_point.global_position), multiplayer.get_unique_id())
 			
 @rpc("any_peer", "call_local", "reliable")
-func spawn_bullet(direction = Vector2.ZERO):
+func spawn_bullet(direction = Vector2.ZERO, player_id = 1):
 	var bullet = load("res://bullet/bullet.tscn").instantiate()
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
 	bullet.team = team
-	#create_bullet.emit(bullet)
+	#bullet.player_id = player_id
 	get_parent().get_parent().add_child(bullet)
 
 @rpc("any_peer", "call_local", "reliable")

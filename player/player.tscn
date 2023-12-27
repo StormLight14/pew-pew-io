@@ -71,6 +71,7 @@ one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vol4q")
+visibility_update_mode = 1
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -26.0
