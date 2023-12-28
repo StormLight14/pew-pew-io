@@ -14,6 +14,7 @@ var username = "Guest"
 var team = "T"
 var health = 200
 var max_health = health
+var index = 0
 
 var can_attack = true
 
@@ -23,8 +24,10 @@ func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	
 func _ready():
-	print(name + ": " + team)
-	#GameValues.players[name].team = team
+	for spawn_position in get_tree().get_nodes_in_group("SpawnPoint"):
+		if spawn_position.name == str(index):
+			global_position = spawn_position.global_position
+	
 	health_bar.value = self.health
 	health_bar.max_value = self.health
 	team_label.text = team

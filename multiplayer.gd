@@ -72,6 +72,8 @@ func add_players():
 		var player = player_scene.instantiate()
 		player.name = str(i)
 		player.username = GameValues.players[i].username
+		player.index = added_players
+		print(player.index)
 		
 		if added_players % 2 == 1:
 			player.team = "T"
@@ -80,6 +82,7 @@ func add_players():
 			player.team = "CT"
 		
 		#print("Created " + player.username + " on team " + player.team)
+		
 		$Level/Players.add_child(player)
 
 @rpc("any_peer")

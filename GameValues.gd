@@ -16,7 +16,7 @@ func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
 
 func get_player_count(team):
 	var amount = 0
-	print(players)
+
 	match team.to_upper():
 		"ANY":
 			for id in players.keys():

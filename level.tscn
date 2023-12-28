@@ -9,10 +9,42 @@ size = Vector2(239, 100)
 script = ExtResource("1_aq73c")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(66, 82)
+position = Vector2(127, 117)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(185, 107)
+position = Vector2(119, 48)
 shape = SubResource("RectangleShape2D_5k66y")
 
 [node name="Players" type="Node2D" parent="."]
+
+[node name="SpawnPositions" type="Node2D" parent="."]
+
+[node name="1" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(64, 208)
+
+[node name="2" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(439, 231)
+
+[node name="3" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(64, 154)
+
+[node name="4" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(436, 165)
+
+[node name="5" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(63, 100)
+
+[node name="6" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(434, 109)
+
+[node name="7" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(64, 54)
+
+[node name="8" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(434, 52)
+
+[node name="9" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(65, 8)
+
+[node name="10" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
+position = Vector2(434, 6)
