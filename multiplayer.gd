@@ -14,7 +14,6 @@ func _ready():
 	get_tree().paused = true
 	multiplayer.connected_to_server.connect(connected_to_server)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
-	$GameUI.visible = false
 	
 	if DisplayServer.get_name() == "headless":
 		host_game(port_input.text.to_int())
@@ -73,15 +72,12 @@ func add_players():
 		player.name = str(i)
 		player.username = GameValues.players[i].username
 		player.index = added_players
-		print(player.index)
 		
 		if added_players % 2 == 1:
 			player.team = "T"
 			
 		elif added_players % 2 == 0:
 			player.team = "CT"
-		
-		#print("Created " + player.username + " on team " + player.team)
 		
 		$Level/Players.add_child(player)
 
@@ -104,9 +100,10 @@ func start_game():
 	
 	get_tree().paused = false
 	$MenuUI.visible = false
-	$GameUI.make_visible()
+	$Level/GameUI.make_visible()
 	
 	$Level.visible = true
+	$Level.new_round()
 
 func _on_username_text_changed(new_text):
 	pass

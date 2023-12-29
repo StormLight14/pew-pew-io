@@ -1,18 +1,36 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu74xn3hlof5n"]
+[gd_scene load_steps=5 format=3 uid="uid://bu74xn3hlof5n"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_aq73c"]
+[ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5k66y"]
-size = Vector2(239, 100)
+size = Vector2(18.5, 137)
+
+[sub_resource type="Theme" id="Theme_5v580"]
+LineEdit/font_sizes/font_size = 12
 
 [node name="Level" type="Node2D"]
 script = ExtResource("1_aq73c")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
-position = Vector2(127, 117)
+position = Vector2(156, 57)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(119, 48)
+position = Vector2(-42, 36)
+shape = SubResource("RectangleShape2D_5k66y")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(262, 78)
+shape = SubResource("RectangleShape2D_5k66y")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(38, 166)
+rotation = 0.727544
+shape = SubResource("RectangleShape2D_5k66y")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(138, -51)
+rotation = 2.2457
 shape = SubResource("RectangleShape2D_5k66y")
 
 [node name="Players" type="Node2D" parent="."]
@@ -20,31 +38,108 @@ shape = SubResource("RectangleShape2D_5k66y")
 [node name="SpawnPositions" type="Node2D" parent="."]
 
 [node name="1" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(64, 208)
+position = Vector2(32, 32)
 
 [node name="2" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(439, 231)
+position = Vector2(512, 32)
 
 [node name="3" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(64, 154)
+position = Vector2(32, 64)
 
 [node name="4" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(436, 165)
+position = Vector2(512, 64)
 
 [node name="5" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(63, 100)
+position = Vector2(32, 96)
 
 [node name="6" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(434, 109)
+position = Vector2(512, 96)
 
 [node name="7" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(64, 54)
+position = Vector2(32, 128)
 
 [node name="8" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(434, 52)
+position = Vector2(512, 128)
 
 [node name="9" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(65, 8)
+position = Vector2(32, 160)
 
 [node name="10" type="Marker2D" parent="SpawnPositions" groups=["SpawnPoint"]]
-position = Vector2(434, 6)
+position = Vector2(512, 160)
+
+[node name="GameUI" type="CanvasLayer" parent="."]
+script = ExtResource("2_ad22g")
+
+[node name="CenterContainer" type="CenterContainer" parent="GameUI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StartTimerLabel" type="Label" parent="GameUI/CenterContainer"]
+layout_mode = 2
+text = "Starting in: 5"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="GameUI"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 19.0
+offset_top = -231.0
+offset_right = 349.0
+offset_bottom = -43.0
+grow_vertical = 0
+
+[node name="Messages" type="Label" parent="GameUI/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="MessageLine" type="LineEdit" parent="GameUI"]
+offset_left = 15.0
+offset_top = 608.0
+offset_right = 340.0
+offset_bottom = 639.0
+theme = SubResource("Theme_5v580")
+placeholder_text = "Message..."
+flat = true
+
+[node name="SpectateUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = -1.0
+offset_bottom = -22.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/SpectateUI"]
+layout_mode = 2
+
+[node name="SpectatePrevious" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
+layout_mode = 2
+text = "Previous Player
+"
+
+[node name="SpectateLabel" type="Label" parent="GameUI/SpectateUI/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Currently Spectating: Guest"
+
+[node name="SpectateNext" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
+layout_mode = 2
+text = "Next Player"
+
+[node name="StartTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
+[connection signal="focus_exited" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_exited"]
+[connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
+[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
+[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
+[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

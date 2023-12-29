@@ -1,12 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://3begruyw7wti"]
+[gd_scene load_steps=4 format=3 uid="uid://3begruyw7wti"]
 
 [ext_resource type="Script" path="res://multiplayer.gd" id="1_tv1bw"]
 [ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_pbl3c"]
 [ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level.tscn" id="3_qf10t"]
-[ext_resource type="Script" path="res://ui/game_ui.gd" id="3_qvi62"]
-
-[sub_resource type="Theme" id="Theme_5cf16"]
-LineEdit/font_sizes/font_size = 12
 
 [node name="Multiplayer" type="Node2D"]
 script = ExtResource("1_tv1bw")
@@ -57,61 +53,6 @@ text = "9595"
 [node name="Label" type="Label" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="GameUI" type="CanvasLayer" parent="."]
-script = ExtResource("3_qvi62")
-
-[node name="ScrollContainer" type="ScrollContainer" parent="GameUI"]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 19.0
-offset_top = -231.0
-offset_right = 349.0
-offset_bottom = -43.0
-grow_vertical = 0
-
-[node name="Messages" type="Label" parent="GameUI/ScrollContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="MessageLine" type="LineEdit" parent="GameUI"]
-offset_left = 15.0
-offset_top = 608.0
-offset_right = 340.0
-offset_bottom = 639.0
-theme = SubResource("Theme_5cf16")
-placeholder_text = "Message..."
-flat = true
-
-[node name="SpectateUI" type="CenterContainer" parent="GameUI"]
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -53.0
-offset_right = -1.0
-offset_bottom = -22.0
-grow_horizontal = 2
-grow_vertical = 0
-metadata/_edit_use_anchors_ = true
-
-[node name="HBoxContainer" type="HBoxContainer" parent="GameUI/SpectateUI"]
-layout_mode = 2
-
-[node name="SpectatePrevious" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
-layout_mode = 2
-text = "Previous Player
-"
-
-[node name="SpectateLabel" type="Label" parent="GameUI/SpectateUI/HBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "Currently Spectating: Guest"
-
-[node name="SpectateNext" type="Button" parent="GameUI/SpectateUI/HBoxContainer"]
-layout_mode = 2
-text = "Next Player"
-
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
@@ -125,9 +66,4 @@ one_shot = true
 [connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="MenuUI/CenterContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]
 [connection signal="text_changed" from="MenuUI/CenterContainer/HBoxContainer/Username" to="." method="_on_username_text_changed"]
-[connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
-[connection signal="focus_exited" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_exited"]
-[connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
-[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
-[connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]

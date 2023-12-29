@@ -15,6 +15,7 @@ var team = "T"
 var health = 200
 var max_health = health
 var index = 0
+var spawn_pos = Vector2.ZERO
 
 var can_attack = true
 
@@ -27,6 +28,7 @@ func _ready():
 	for spawn_position in get_tree().get_nodes_in_group("SpawnPoint"):
 		if spawn_position.name == str(index):
 			global_position = spawn_position.global_position
+	spawn_pos = global_position
 	
 	health_bar.value = self.health
 	health_bar.max_value = self.health
@@ -40,11 +42,12 @@ func _physics_process(_delta):
 	if is_multiplayer_authority():
 		follow_mouse()
 		
-		if GameValues.typing == false:
-			attack()
-			movement()
-		
-		move_and_slide()
+		if GameValues.can_interact:
+			if GameValues.typing == false:
+				attack()
+				movement()
+			
+			move_and_slide()
 
 func movement():
 	var input_direction = Input.get_vector("left", "right", "up", "down").normalized()
@@ -71,7 +74,7 @@ func spawn_bullet(direction = Vector2.ZERO, player_id = 1):
 
 @rpc("any_peer", "call_local", "reliable")
 func respawn():
-	global_position = Vector2(0, 0)
+	global_position = spawn_pos
 	health = max_health
 	health_bar.value = health
 	

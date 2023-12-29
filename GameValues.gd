@@ -2,6 +2,7 @@ extends Node
 
 var players = {}
 var typing = false
+var can_interact = false
 var messages = ""
 
 signal message_sent
