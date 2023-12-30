@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://bu74xn3hlof5n"]
+[gd_scene load_steps=7 format=3 uid="uid://bu74xn3hlof5n"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_aq73c"]
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
+[ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/x.png" id="3_pab6c"]
+[ext_resource type="Texture2D" uid="uid://b0501fivgjffx" path="res://assets/skull.png" id="4_jg50k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5k66y"]
 size = Vector2(18.5, 137)
@@ -14,6 +16,7 @@ script = ExtResource("1_aq73c")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(156, 57)
+collision_mask = 8
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(-42, 36)
@@ -70,14 +73,20 @@ position = Vector2(512, 160)
 [node name="GameUI" type="CanvasLayer" parent="."]
 script = ExtResource("2_ad22g")
 
-[node name="CenterContainer" type="CenterContainer" parent="GameUI"]
-anchors_preset = 15
+[node name="TimerUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 10
 anchor_right = 1.0
-anchor_bottom = 1.0
+offset_bottom = 23.0
 grow_horizontal = 2
-grow_vertical = 2
 
-[node name="StartTimerLabel" type="Label" parent="GameUI/CenterContainer"]
+[node name="EndTimerLabel" type="Label" parent="GameUI/TimerUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Ending in: 30"
+
+[node name="StartTimerLabel" type="Label" parent="GameUI/TimerUI"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Starting in: 5"
 
@@ -90,6 +99,7 @@ offset_top = -231.0
 offset_right = 349.0
 offset_bottom = -43.0
 grow_vertical = 0
+follow_focus = true
 
 [node name="Messages" type="Label" parent="GameUI/ScrollContainer"]
 unique_name_in_owner = true
@@ -133,7 +143,49 @@ text = "Currently Spectating: Guest"
 layout_mode = 2
 text = "Next Player"
 
+[node name="StatsUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -349.0
+offset_top = -273.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/StatsUI"]
+layout_mode = 2
+
+[node name="Deaths" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeathsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
+layout_mode = 2
+texture = ExtResource("3_pab6c")
+
+[node name="DeathsCount" type="Label" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="Kills" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="KillsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Kills"]
+layout_mode = 2
+texture = ExtResource("4_jg50k")
+
+[node name="KillsCount" type="Label" parent="GameUI/StatsUI/VBoxContainer/Kills"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
 [node name="StartTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
+[node name="EndTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
 
@@ -143,3 +195,4 @@ one_shot = true
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]

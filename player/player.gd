@@ -10,14 +10,17 @@ extends CharacterBody2D
 @onready var camera_2d = $Camera2D
 
 const MAX_SPEED := 400
+
 var username = "Guest"
 var team = "T"
 var health = 200
 var max_health = health
+
+var alive = true
+var can_attack = true
+
 var index = 0
 var spawn_pos = Vector2.ZERO
-
-var can_attack = true
 
 signal create_bullet(bullet_scene)
 	
@@ -69,26 +72,36 @@ func spawn_bullet(direction = Vector2.ZERO, player_id = 1):
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
 	bullet.team = team
-	#bullet.player_id = player_id
+	bullet.player_id = player_id
+
 	get_parent().get_parent().add_child(bullet)
 
 @rpc("any_peer", "call_local", "reliable")
 func respawn():
+	visible = true
+	set_collisions(true)
 	global_position = spawn_pos
 	health = max_health
 	health_bar.value = health
-	
-	if multiplayer.is_server():
-		GameValues.send_message.rpc(username + " has been killed.", "SERVER")
 
 func _on_hurtbox_area_entered(area):
 	if area.team != team:
 		area.queue_free()
-		
+			
 		if hurt_delay.is_stopped() == true:
 			hurt_delay.start()
 			health -= area.damage
 			health_bar.value = health
 			
 			if health <= 0:
-				respawn()
+				if multiplayer.is_server():
+					GameValues.player_killed.rpc(area.player_id, name.to_int())
+				alive = false
+				visible = false
+				set_collisions(false)
+				
+				if multiplayer.is_server():
+					GameValues.send_message.rpc(username + " has been killed.", "SERVER")
+
+func set_collisions(boolean):
+	%Hurtbox.set_deferred("monitoring", boolean)

@@ -5,7 +5,7 @@ var bullet_direction := Vector2.ZERO
 var velocity := Vector2.ZERO
 var damage = 40
 var team = "CT"
-#var player_id = 0
+var player_id = 0
 
 func _physics_process(delta):
 	velocity = (bullet_direction).normalized()  * speed

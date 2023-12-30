@@ -88,6 +88,8 @@ func send_player_info(username, id, team):
 			"username": username,
 			"id": id,
 			"team": team,
+			"kills": 0,
+			"deaths": 0,
 		}
 		
 	if multiplayer.is_server():

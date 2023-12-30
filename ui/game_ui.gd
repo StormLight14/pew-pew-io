@@ -4,7 +4,8 @@ extends CanvasLayer
 @onready var spectate_label = %SpectateLabel
 
 func _ready():
-	GameValues.message_sent.connect(_on_message_sent)
+	GameValues.message_sent_signal.connect(_on_message_sent)
+	GameValues.player_killed_signal.connect(_on_player_killed)
 	
 func make_visible():
 	self.visible = true
@@ -34,6 +35,11 @@ func _on_message_line_focus_exited():
 
 func _on_message_sent():
 	%Messages.text = GameValues.messages
+	
+func _on_player_killed():
+	if multiplayer.is_server() == false:
+		%DeathsCount.text = str(GameValues.players[multiplayer.get_unique_id()].deaths)
+		%KillsCount.text = str(GameValues.players[multiplayer.get_unique_id()].kills)
 
 func _on_spectate_previous_pressed():
 	pass # Replace with function body.

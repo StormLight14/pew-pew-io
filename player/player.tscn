@@ -27,12 +27,14 @@ properties/2/replication_mode = 1
 collision_layer = 2
 collision_mask = 9
 motion_mode = 1
+wall_min_slide_angle = 0.349066
 script = ExtResource("1_otipf")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_3dgf8")
 
 [node name="PlayerCollision" type="CollisionShape2D" parent="."]
+unique_name_in_owner = true
 shape = SubResource("CircleShape2D_6agnt")
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -53,10 +55,12 @@ texture = ExtResource("4_6mtv3")
 position = Vector2(0.87, -39.53)
 
 [node name="Hurtbox" type="Area2D" parent="."]
+unique_name_in_owner = true
 collision_layer = 4
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="HurtboxShape" type="CollisionShape2D" parent="Hurtbox"]
+unique_name_in_owner = true
 visible = false
 shape = SubResource("CircleShape2D_5eb0b")
 debug_color = Color(0.979353, 0, 0.388737, 0.42)
