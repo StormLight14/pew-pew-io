@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bu74xn3hlof5n"]
+[gd_scene load_steps=8 format=3 uid="uid://bu74xn3hlof5n"]
 
 [ext_resource type="Script" path="res://level.gd" id="1_aq73c"]
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
+[ext_resource type="Script" path="res://obstacle.gd" id="2_vfjk4"]
 [ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/x.png" id="3_pab6c"]
 [ext_resource type="Texture2D" uid="uid://b0501fivgjffx" path="res://assets/skull.png" id="4_jg50k"]
 
@@ -14,24 +15,25 @@ LineEdit/font_sizes/font_size = 12
 [node name="Level" type="Node2D"]
 script = ExtResource("1_aq73c")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Walls" type="StaticBody2D" parent="."]
 position = Vector2(156, 57)
 collision_mask = 8
+script = ExtResource("2_vfjk4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls"]
 position = Vector2(-42, 36)
 shape = SubResource("RectangleShape2D_5k66y")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Walls"]
 position = Vector2(262, 78)
 shape = SubResource("RectangleShape2D_5k66y")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Walls"]
 position = Vector2(38, 166)
 rotation = 0.727544
 shape = SubResource("RectangleShape2D_5k66y")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Walls"]
 position = Vector2(138, -51)
 rotation = 2.2457
 shape = SubResource("RectangleShape2D_5k66y")
@@ -149,25 +151,13 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -349.0
-offset_top = -273.0
+offset_left = -87.0
+offset_top = -87.0
 grow_horizontal = 0
 grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/StatsUI"]
 layout_mode = 2
-
-[node name="Deaths" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
-layout_mode = 2
-
-[node name="DeathsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
-layout_mode = 2
-texture = ExtResource("3_pab6c")
-
-[node name="DeathsCount" type="Label" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
-unique_name_in_owner = true
-layout_mode = 2
-text = "0"
 
 [node name="Kills" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
 layout_mode = 2
@@ -175,8 +165,22 @@ layout_mode = 2
 [node name="KillsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Kills"]
 layout_mode = 2
 texture = ExtResource("4_jg50k")
+expand_mode = 3
 
 [node name="KillsCount" type="Label" parent="GameUI/StatsUI/VBoxContainer/Kills"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "0"
+
+[node name="Deaths" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
+layout_mode = 2
+
+[node name="DeathsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
+layout_mode = 2
+texture = ExtResource("3_pab6c")
+expand_mode = 3
+
+[node name="DeathsCount" type="Label" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
@@ -186,7 +190,7 @@ wait_time = 5.0
 one_shot = true
 
 [node name="EndTimer" type="Timer" parent="."]
-wait_time = 5.0
+wait_time = 10.0
 one_shot = true
 
 [connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
