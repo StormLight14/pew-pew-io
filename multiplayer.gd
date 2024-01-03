@@ -7,12 +7,21 @@ extends Node2D
 @onready var username_input = %Username
 
 @export var player_scene: PackedScene
+@export var autostart_amount = 10
 
 var peer = ENetMultiplayerPeer.new()
 
 func _ready():
+	var cmdline_args = OS.get_cmdline_user_args()
+	print("Command Line Arguments:", cmdline_args)
+	if cmdline_args.size() > 0:
+		if cmdline_args[0] == "--autostart-amount":
+			print(cmdline_args[1])
+			autostart_amount = cmdline_args[1].to_int()
+		
 	get_tree().paused = true
 	multiplayer.connected_to_server.connect(connected_to_server)
+	multiplayer.peer_connected.connect(peer_connected)
 	multiplayer.peer_disconnected.connect(peer_disconnected)
 	
 	if DisplayServer.get_name() == "headless":
@@ -24,11 +33,14 @@ func connected_to_server():
 		username = username_input.text
 	else:
 		username = "Guest " + str(multiplayer.get_unique_id())
-	
+
 	send_player_info.rpc_id(1, username, multiplayer.get_unique_id(), "T")
 	
 func peer_connected(id):
-	print("Player with ID " + str(id) + " connected.")
+	#print("Peer with ID " + str(id) + " connected.")
+	if multiplayer.is_server() and GameValues.players.size() >= autostart_amount - 1:
+		await get_tree().create_timer(1).timeout
+		start_game.rpc()
 	
 func peer_disconnected(id):
 	print(GameValues.players[id].username + " disconnected.")

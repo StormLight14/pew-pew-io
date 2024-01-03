@@ -24,24 +24,3 @@ func player_killed(killer_id, victim_id):
 	players[victim_id].deaths += 1
 	
 	player_killed_signal.emit()
-
-func get_player_count(team):
-	var amount = 0
-
-	match team.to_upper():
-		"ANY":
-			for id in players.keys():
-				amount += 1
-		"CT":
-			for id in players.keys():
-				amount += 1
-				if players[id].team == "CT":
-					amount += 1
-		"T":
-			for id in players.keys():
-				amount += 1
-				if players[id].team == "T":
-					amount += 1
-	
-	print(team + ": " + str(amount))
-	return amount
