@@ -9,7 +9,9 @@ var items = {
 				"magazine-capacity": 30,
 				"reserve-ammo": 90,
 				"purchasable-by": "T",
-				"reload-time": 2.4
+				"reload-time": 2.4,
+				"firing-mode": "automatic",
+				"sprite": preload("res://assets/guns/gun.png")
 			},
 			"m4a4": {
 				"price": 3100,
@@ -17,7 +19,9 @@ var items = {
 				"magazine-capacity": 30,
 				"reserve-ammo": 90,
 				"purchasable-by": "CT",
-				"reload-time": 3.1
+				"reload-time": 3.1,
+				"firing-mode": "automatic",
+				"sprite": preload("res://assets/guns/gun.png")
 			},
 			"sg-553": {
 				"price": 3000,
@@ -25,7 +29,9 @@ var items = {
 				"magazine-capacity": 30,
 				"reserve-ammo": 90,
 				"purchasable-by": "T",
-				"reload-time": 2.8
+				"reload-time": 2.8,
+				"firing-mode": "automatic",
+				"sprite": preload("res://assets/guns/gun.png")
 			},
 			"aug": {
 				"price": 3300,
@@ -33,7 +39,9 @@ var items = {
 				"magazine-capacity": 30,
 				"reserve-ammo": 90,
 				"purchasable-by": "CT",
-				"reload-time": 3.8
+				"reload-time": 3.8,
+				"firing-mode": "automatic",
+				"sprite": preload("res://assets/guns/gun.png")
 			},
 			"awp": {
 				"price": 4750,
@@ -41,7 +49,9 @@ var items = {
 				"magazine-capacity": 5,
 				"reserve-ammo": 30,
 				"purchasable-by": "BOTH",
-				"reload-time": 3.7
+				"reload-time": 3.7,
+				"firing-mode": "bolt-action",
+				"sprite": preload("res://assets/guns/gun.png")
 			},
 			"ssg-08": {
 				"price": 1700,
@@ -49,7 +59,9 @@ var items = {
 				"magazine-capacity": 10,
 				"reserve-ammo": 90,
 				"purchasable-by": "BOTH",
-				"reload-time": 3.7
+				"reload-time": 3.7,
+				"firing-mode": "bolt-action",
+				"sprite": preload("res://assets/guns/gun.png")
 			}
 		}
 	}

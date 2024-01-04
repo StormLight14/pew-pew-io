@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://player/player.gd" id="1_otipf"]
 [ext_resource type="Texture2D" uid="uid://by57ryjxgxgha" path="res://assets/player.png" id="2_3dgf8"]
 [ext_resource type="Texture2D" uid="uid://bnelpnhdx1k3o" path="res://assets/hands-holding-gun.png" id="3_pnwp5"]
-[ext_resource type="Texture2D" uid="uid://cj4kwbsfk63jf" path="res://assets/gun.png" id="4_6mtv3"]
+[ext_resource type="Texture2D" uid="uid://cj4kwbsfk63jf" path="res://assets/guns/gun.png" id="4_6mtv3"]
 [ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/main.tres" id="5_l8vil"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6agnt"]
