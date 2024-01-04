@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bu74xn3hlof5n"]
 
-[ext_resource type="Script" path="res://level.gd" id="1_aq73c"]
+[ext_resource type="Script" path="res://level/level.gd" id="1_aq73c"]
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
 [ext_resource type="Script" path="res://obstacle.gd" id="2_vfjk4"]
 [ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/x.png" id="3_pab6c"]

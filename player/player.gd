@@ -13,7 +13,7 @@ const MAX_SPEED := 400
 
 var username = "Guest"
 var team = "T"
-var health = 200
+var health = 100
 var max_health = health
 
 var alive = true
@@ -21,6 +21,7 @@ var can_attack = true
 
 var index = 0
 var spawn_pos = Vector2.ZERO
+var items = []
 
 signal create_bullet(bullet_scene)
 	
@@ -28,6 +29,9 @@ func _enter_tree():
 	set_multiplayer_authority(name.to_int())
 	
 func _ready():
+	if index == 1:
+		items.append("bomb")
+	
 	for spawn_position in get_tree().get_nodes_in_group("SpawnPoint"):
 		if spawn_position.name == str(index):
 			global_position = spawn_position.global_position
