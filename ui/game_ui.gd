@@ -11,10 +11,13 @@ func _ready():
 func _process(_delta):
 	if Input.is_action_just_pressed("buy_menu"):
 		shop_ui.visible = not shop_ui.visible
+		update_buy_menu()
 		
 func update_buy_menu():
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
-		pass
+		buy_button.disabled = true
+		if Items.items[buy_button.buy_item]["purchasable-by"] == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item]["purchasable-by"] == "BOTH":
+			buy_button.disabled = false
 	
 func make_visible():
 	self.visible = true
