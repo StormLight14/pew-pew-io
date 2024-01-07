@@ -98,7 +98,7 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Starting in: 5"
 
-[node name="ScrollContainer" type="ScrollContainer" parent="GameUI"]
+[node name="MessageUI" type="ScrollContainer" parent="GameUI"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -109,7 +109,7 @@ offset_bottom = -43.0
 grow_vertical = 0
 follow_focus = true
 
-[node name="Messages" type="Label" parent="GameUI/ScrollContainer"]
+[node name="Messages" type="Label" parent="GameUI/MessageUI"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -192,8 +192,25 @@ layout_mode = 2
 text = "0"
 
 [node name="AmmoUI" type="CenterContainer" parent="GameUI"]
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -141.0
+offset_bottom = 50.0
+grow_horizontal = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameUI/AmmoUI"]
+layout_mode = 2
+
+[node name="PrimaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
+layout_mode = 2
+text = "Primary Ammo: 0"
+horizontal_alignment = 1
+
+[node name="SecondaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
+layout_mode = 2
+text = "Secondary Ammo: 0"
+horizontal_alignment = 1
 
 [node name="ShopUI" type="CenterContainer" parent="GameUI"]
 unique_name_in_owner = true
@@ -292,6 +309,22 @@ $500"
 script = ExtResource("5_ge0j8")
 buy_item = "usp"
 
+[node name="MoneyUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = -20.0
+offset_bottom = 20.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="MoneyLabel" type="Label" parent="GameUI/MoneyUI"]
+layout_mode = 2
+text = "$1000"
+
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
 
@@ -300,8 +333,7 @@ wait_time = 30.0
 one_shot = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
-visible = false
-color = Color(0.703808, 0.703808, 0.703808, 1)
+color = Color(0.362829, 0.362829, 0.362829, 1)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_q6k7m")
@@ -313,5 +345,13 @@ layer_0/tile_data = PackedInt32Array(65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 26
 [connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/AK47" to="GameUI/ShopUI/VBoxContainer/Rifles/AK47" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/M4A4" to="GameUI/ShopUI/VBoxContainer/Rifles/M4A4" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/SG553" to="GameUI/ShopUI/VBoxContainer/Rifles/SG553" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/AUG" to="GameUI/ShopUI/VBoxContainer/Rifles/AUG" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/AWP" to="GameUI/ShopUI/VBoxContainer/Rifles/AWP" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/SSG" to="GameUI/ShopUI/VBoxContainer/Rifles/SSG" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/Glock18" to="GameUI/ShopUI/VBoxContainer/Pistols/Glock18" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/USP" to="GameUI/ShopUI/VBoxContainer/Pistols/USP" method="_on_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]

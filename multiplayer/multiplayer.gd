@@ -68,6 +68,7 @@ func _on_start_timer_timeout():
 	print("start timer timeout")
 
 func _on_join_pressed():
+	print(address_input.text)
 	join_game(address_input.text, port_input.text.to_int())
 
 func host_game(port: int):
