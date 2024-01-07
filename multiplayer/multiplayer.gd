@@ -13,7 +13,7 @@ var peer = ENetMultiplayerPeer.new()
 
 func _ready():
 	var cmdline_args = OS.get_cmdline_user_args()
-	print("Command Line Arguments:", cmdline_args)
+	#print("Command Line Arguments:", cmdline_args)
 	if cmdline_args.size() > 0:
 		if cmdline_args[0] == "--autostart-amount":
 			print(cmdline_args[1])
@@ -43,8 +43,12 @@ func peer_connected(id):
 		start_game.rpc()
 	
 func peer_disconnected(id):
-	print(GameValues.players[id].username + " disconnected.")
-	GameValues.players.erase(id)
+	if id != 1:
+		print(GameValues.players[id].username + " disconnected.")
+		GameValues.players.erase(id)
+	else:
+		print("SERVER WENT OFFLINE.")
+		get_tree().quit()
 	
 	var player_nodes = get_tree().get_nodes_in_group("Player")
 	for player_node in player_nodes:
@@ -87,7 +91,7 @@ func add_players():
 		
 		if added_players % 2 == 1:
 			player.team = "T"
-			
+		
 		elif added_players % 2 == 0:
 			player.team = "CT"
 		

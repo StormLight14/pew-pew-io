@@ -1,6 +1,6 @@
 extends Area2D
 
-var speed := 300.0
+var speed := 700.0
 var bullet_direction := Vector2.ZERO
 var velocity := Vector2.ZERO
 var damage = 40
@@ -12,5 +12,5 @@ func _physics_process(delta):
 	global_position += velocity * delta
 
 func _on_body_entered(body):
-	if body.is_obstacle:
+	if body is CharacterBody2D == false:
 		queue_free()

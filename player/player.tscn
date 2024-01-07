@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqn3h56ch5gtd"]
+[gd_scene load_steps=11 format=3 uid="uid://bqn3h56ch5gtd"]
 
 [ext_resource type="Script" path="res://player/player.gd" id="1_otipf"]
 [ext_resource type="Texture2D" uid="uid://by57ryjxgxgha" path="res://assets/player.png" id="2_3dgf8"]
 [ext_resource type="Texture2D" uid="uid://bnelpnhdx1k3o" path="res://assets/hands-holding-gun.png" id="3_pnwp5"]
 [ext_resource type="Texture2D" uid="uid://cj4kwbsfk63jf" path="res://assets/guns/gun.png" id="4_6mtv3"]
 [ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/main.tres" id="5_l8vil"]
+[ext_resource type="Texture2D" uid="uid://tdlkuwvdxiia" path="res://assets/lighting/gun-light.png" id="5_rpd21"]
+[ext_resource type="Texture2D" uid="uid://b2s6x24rlhek2" path="res://assets/lighting/player-light.png" id="7_1uwwp"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_6agnt"]
 radius = 16.0312
@@ -54,6 +56,13 @@ texture = ExtResource("4_6mtv3")
 [node name="BulletSpawnPoint" type="Marker2D" parent="RotationPivot"]
 position = Vector2(0.87, -39.53)
 
+[node name="GunLight" type="PointLight2D" parent="RotationPivot"]
+visible = false
+position = Vector2(1, 0)
+shadow_enabled = true
+texture = ExtResource("5_rpd21")
+offset = Vector2(0, -350)
+
 [node name="Hurtbox" type="Area2D" parent="."]
 unique_name_in_owner = true
 collision_layer = 4
@@ -66,7 +75,7 @@ shape = SubResource("CircleShape2D_5eb0b")
 debug_color = Color(0.979353, 0, 0.388737, 0.42)
 
 [node name="HurtDelay" type="Timer" parent="Hurtbox"]
-wait_time = 0.1
+wait_time = 0.05
 one_shot = true
 
 [node name="AttackDelay" type="Timer" parent="."]
@@ -87,6 +96,7 @@ theme = ExtResource("5_l8vil")
 max_value = 500.0
 value = 500.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="Username" type="Label" parent="."]
 offset_left = -50.0
@@ -96,6 +106,7 @@ offset_bottom = 38.0
 theme_override_font_sizes/font_size = 14
 text = "Guest"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
 
 [node name="Team" type="Label" parent="."]
 offset_left = -17.0
@@ -104,5 +115,13 @@ offset_right = 19.0
 offset_bottom = 55.0
 text = "T"
 horizontal_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="PlayerLight" type="PointLight2D" parent="."]
+visible = false
+energy = 0.5
+shadow_enabled = true
+texture = ExtResource("7_1uwwp")
+texture_scale = 5.0
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]

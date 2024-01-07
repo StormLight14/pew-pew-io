@@ -2,10 +2,19 @@ extends CanvasLayer
 
 @onready var spectate_ui = $SpectateUI
 @onready var spectate_label = %SpectateLabel
+@onready var shop_ui = %ShopUI
 
 func _ready():
 	GameValues.message_sent_signal.connect(_on_message_sent)
 	GameValues.player_killed_signal.connect(_on_player_killed)
+	
+func _process(_delta):
+	if Input.is_action_just_pressed("buy_menu"):
+		shop_ui.visible = not shop_ui.visible
+		
+func update_buy_menu():
+	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
+		pass
 	
 func make_visible():
 	self.visible = true

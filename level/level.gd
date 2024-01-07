@@ -45,4 +45,5 @@ func _on_end_timer_timeout():
 	GameValues.can_interact = false
 	for player in get_tree().get_nodes_in_group("Player"):
 		player.respawn()
+	
 	start_timer.start()
