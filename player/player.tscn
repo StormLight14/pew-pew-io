@@ -57,6 +57,7 @@ texture = ExtResource("4_6mtv3")
 position = Vector2(0.87, -39.53)
 
 [node name="GunLight" type="PointLight2D" parent="RotationPivot"]
+visible = false
 position = Vector2(1, 0)
 shadow_enabled = true
 texture = ExtResource("5_rpd21")
@@ -121,7 +122,7 @@ visible = false
 energy = 0.5
 shadow_enabled = true
 texture = ExtResource("7_1uwwp")
-texture_scale = 5.0
+texture_scale = 10.0
 
 [node name="NoSpread" type="Timer" parent="."]
 unique_name_in_owner = true

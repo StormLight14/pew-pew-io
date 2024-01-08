@@ -9,7 +9,7 @@ func _ready():
 	GameValues.player_killed_signal.connect(_on_player_killed)
 	
 func _process(_delta):
-	if Input.is_action_just_pressed("buy_menu"):
+	if Input.is_action_just_pressed("buy_menu") and GameValues.typing == false:
 		shop_ui.visible = not shop_ui.visible
 		GameValues.shop_open = not GameValues.shop_open
 		update_buy_menu()

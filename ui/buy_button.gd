@@ -11,4 +11,4 @@ func _ready():
 func _on_pressed():
 	if price <= GameValues.player_money:
 		GameValues.player_money -= price
-		print("you bought the gun woah")
+		

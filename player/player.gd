@@ -22,7 +22,7 @@ var can_attack = true
 var index = 0
 var spawn_pos = Vector2.ZERO
 var inventory_items = {
-	"primary": Items.items["ak-47"],
+	"primary": null,
 	"secondary": Items.items["glock-18"],
 	"knife": Items.items["default-knife"],
 	"utility_1": null,
@@ -52,10 +52,14 @@ func _ready():
 	team_label.text = team
 	
 	if is_multiplayer_authority():
+		$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
 
 func _physics_process(_delta):
+	if modulate != Color(1, 1, 1, 1):
+		visible = false
+		
 	if is_multiplayer_authority():
 		follow_mouse()
 		
@@ -65,7 +69,9 @@ func _physics_process(_delta):
 				movement()
 			
 			switch_inventory_slot()
-			move_and_slide()
+			
+			if GameValues.can_interact:
+				move_and_slide()
 
 func movement():
 	var input_direction = Input.get_vector("left", "right", "up", "down").normalized()
@@ -85,28 +91,29 @@ func follow_mouse():
 
 func attack():
 	var item_dict = inventory_items[equipped_item]
-	var item_is_gun = item_dict["type"] == "gun"
-	
-	if item_is_gun:
-		var attack_delay_time = 60.0/item_dict["rate-of-fire"]
+	if item_dict:
+		var item_is_gun = item_dict["type"] == "gun"
+		
+		if item_is_gun:
+			var attack_delay_time = 60.0/item_dict["rate-of-fire"]
 
-		if attack_delay_time:
-			attack_delay.wait_time = attack_delay_time
+			if attack_delay_time:
+				attack_delay.wait_time = attack_delay_time
 
-	if attack_delay.is_stopped() == true:
-		if (item_dict["firing-mode"] == "semi-automatic" or item_dict["firing-mode"] == "bolt-action") and Input.is_action_just_pressed("attack"):
-			attack_delay.start()
-			
-			if item_is_gun:
-				spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), multiplayer.get_unique_id())
-				%NoSpread.start(0.3)
+		if attack_delay.is_stopped() == true:
+			if (item_dict["firing-mode"] == "semi-automatic" or item_dict["firing-mode"] == "bolt-action") and Input.is_action_just_pressed("attack"):
+				attack_delay.start()
 				
-		if item_dict["firing-mode"] == "automatic" and Input.is_action_pressed("attack"):
-			attack_delay.start()
-			
-			if item_is_gun:
-				spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), multiplayer.get_unique_id())
-				%NoSpread.start(0.3)
+				if item_is_gun:
+					spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
+					%NoSpread.start(0.3)
+					
+			if item_dict["firing-mode"] == "automatic" and Input.is_action_pressed("attack"):
+				attack_delay.start()
+				
+				if item_is_gun:
+					spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
+					%NoSpread.start(0.3)
 
 func get_spread_angle():
 	var spread
@@ -122,14 +129,14 @@ func get_spread_angle():
 	return spread_angle
 
 @rpc("any_peer", "call_local", "reliable")
-func spawn_bullet(direction = Vector2.ZERO, player_id = 1):
+func spawn_bullet(direction = Vector2.ZERO, damage = 0, player_id = 1):
 	var bullet = load("res://bullet/bullet.tscn").instantiate()
 
 	bullet.bullet_direction = direction
 	bullet.global_position = bullet_spawn_point.global_position
 	bullet.team = team
 	bullet.player_id = player_id
-	bullet.damage = inventory_items[equipped_item]["damage"]
+	bullet.damage = damage
 	
 	get_parent().get_parent().add_child(bullet)
 

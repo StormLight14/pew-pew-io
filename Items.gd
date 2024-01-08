@@ -4,6 +4,7 @@ var items = {
 	"default-knife": {
 		"type": "knife",
 		"damage": 25,
+		"firing-mode": "semi-automatic"
 		#"sprite": preload("res://assets/knives/default.png")
 	},
 	"ak-47": {
