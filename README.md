@@ -12,7 +12,7 @@ If you want people outside your network to join, you will need to go into your r
 ## Autostart
 If 10 players connect the game will automatically start; there is currently no way to change this number besides from the code. (TODO: allow changing this number from the GUI or with a command line argument)
 
-## Why is it lagging so much, this is terrible
+## Why is it lagging so much, this is actually terrible
 Idk I'll optimize later
 
 
