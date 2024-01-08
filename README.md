@@ -8,7 +8,7 @@ If you are connecting to a server not being hosted on the same device, replace t
 Either use the GUI and press host game, or run the binary from the command line with the headless flag if you don't want to display anything. (ex: `./pew-pew-io.x86_64 -- --headless`)
 
 ## Autostart
-If 10 players connect the game will auto start; there is currently no way to change this number besides from the code. (TODO: allow changing this number from the GUI or with a command line argument)
+If 10 players connect the game will automatically start; there is currently no way to change this number besides from the code. (TODO: allow changing this number from the GUI or with a command line argument)
 
 ## Why is it lagging so much, this is terrible
 Idk I'll optimize later
