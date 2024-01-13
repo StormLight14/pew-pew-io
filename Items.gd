@@ -8,7 +8,7 @@ var items = {
 		#"sprite": preload("res://assets/knives/default.png")
 	},
 	"ak-47": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "AK-47",
 		"price": 2700,
 		"damage": 36,
@@ -22,7 +22,7 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"m4a4": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "M4A4",
 		"price": 3100,
 		"damage": 33,
@@ -36,7 +36,7 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"sg-553": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "SG 553",
 		"price": 3000,
 		"damage": 30,
@@ -50,7 +50,7 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"aug": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "AUG",
 		"price": 3300,
 		"damage": 28,
@@ -64,7 +64,7 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"awp": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "AWP",
 		"price": 4750,
 		"damage": 115,
@@ -78,7 +78,7 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"ssg-08": {
-		"type": "gun",
+		"type": "primary",
 		"display-name": "SSG 08",
 		"price": 1700,
 		"damage": 88,
@@ -92,11 +92,11 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"glock-18": {
-		"type": "gun",
+		"type": "secondary",
 		"display-name": "Glock 18",
 		"price": 400,
 		"damage": 30,
-		"spread": 0.2,
+		"spread": 0.15,
 		"magazine-capacity": 20,
 		"reserve-ammo": 120,
 		"purchasable-by": "T",
@@ -106,11 +106,11 @@ var items = {
 		"sprite": preload("res://assets/guns/gun.png")
 	},
 	"usp": {
-		"type": "gun",
+		"type": "secondary",
 		"display-name": "USP",
 		"price": 500,
 		"damage": 33,
-		"spread": 0.2,
+		"spread": 0.1,
 		"magazine-capacity": 12,
 		"reserve-ammo": 100,
 		"purchasable-by": "CT",
@@ -119,4 +119,25 @@ var items = {
 		"firing-mode": "semi-automatic",
 		"sprite": preload("res://assets/guns/gun.png")
 	}
+}
+
+
+var default_t_items = {
+	"primary": null,
+	"secondary": items["glock-18"],
+	"knife": items["default-knife"],
+	"utility_1": null,
+	"utility_2": null,
+	"utility_3": null,
+	"bomb": null,
+}
+
+var default_ct_items = {
+	"primary": null,
+	"secondary": items["usp"],
+	"knife": items["default-knife"],
+	"utility_1": null,
+	"utility_2": null,
+	"utility_3": null,
+	"bomb": null,
 }

@@ -21,15 +21,6 @@ var can_attack = true
 
 var index = 0
 var spawn_pos = Vector2.ZERO
-var inventory_items = {
-	"primary": null,
-	"secondary": Items.items["glock-18"],
-	"knife": Items.items["default-knife"],
-	"utility_1": null,
-	"utility_2": null,
-	"utility_3": null,
-	"bomb": null,
-}
 var equipped_item = "primary"
 
 signal create_bullet(bullet_scene)
@@ -52,14 +43,11 @@ func _ready():
 	team_label.text = team
 	
 	if is_multiplayer_authority():
-		$PlayerLight.visible = true
+		#$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
 
 func _physics_process(_delta):
-	if modulate != Color(1, 1, 1, 1):
-		visible = false
-		
 	if is_multiplayer_authority():
 		follow_mouse()
 		
@@ -90,9 +78,14 @@ func follow_mouse():
 	rotation_pivot.rotation_degrees += 90
 
 func attack():
-	var item_dict = inventory_items[equipped_item]
+	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var item_dict = null
+	
+	if equipped_item in inventory_items:
+		item_dict = inventory_items[equipped_item]
+	
 	if item_dict:
-		var item_is_gun = item_dict["type"] == "gun"
+		var item_is_gun = (item_dict["type"] == "primary" or item_dict["type"] == "secondary")
 		
 		if item_is_gun:
 			var attack_delay_time = 60.0/item_dict["rate-of-fire"]
@@ -116,6 +109,7 @@ func attack():
 					%NoSpread.start(0.3)
 
 func get_spread_angle():
+	var inventory_items = GameValues.players[name.to_int()]["items"]
 	var spread
 	var spread_angle
 	

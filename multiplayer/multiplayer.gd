@@ -34,7 +34,7 @@ func connected_to_server():
 	else:
 		username = "Guest " + str(multiplayer.get_unique_id())
 
-	send_player_info.rpc_id(1, username, multiplayer.get_unique_id(), "T")
+	send_player_info.rpc_id(1, username, multiplayer.get_unique_id(), "T", Items.default_t_items)
 	
 func peer_connected(id):
 	#print("Peer with ID " + str(id) + " connected.")
@@ -92,26 +92,29 @@ func add_players():
 		
 		if added_players % 2 == 1:
 			player.team = "T"
+			GameValues.players[i].items = Items.default_t_items
 		
 		elif added_players % 2 == 0:
 			player.team = "CT"
+			GameValues.players[i].items = Items.default_ct_items
 		
 		$Level/Players.add_child(player)
 
 @rpc("any_peer")
-func send_player_info(username, id, team):
+func send_player_info(username, id, team, items):
 	if not GameValues.players.has(id):
 		GameValues.players[id] = {
 			"username": username,
 			"id": id,
 			"team": team,
+			"items": items,
 			"kills": 0,
 			"deaths": 0,
 		}
 		
 	if multiplayer.is_server():
 		for i in GameValues.players:
-			send_player_info.rpc(GameValues.players[i].username, i, team)
+			send_player_info.rpc(GameValues.players[i].username, i, team, items)
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game():

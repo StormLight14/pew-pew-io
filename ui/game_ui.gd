@@ -3,10 +3,14 @@ extends CanvasLayer
 @onready var spectate_ui = $SpectateUI
 @onready var spectate_label = %SpectateLabel
 @onready var shop_ui = %ShopUI
+@onready var money_ui = %MoneyUI
+@onready var money_label = %MoneyLabel
 
 func _ready():
 	GameValues.message_sent_signal.connect(_on_message_sent)
 	GameValues.player_killed_signal.connect(_on_player_killed)
+	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
+		buy_button.buy_button_pressed.connect(_buy_button_pressed)
 	
 func _process(_delta):
 	if Input.is_action_just_pressed("buy_menu") and GameValues.typing == false:
@@ -19,6 +23,9 @@ func update_buy_menu():
 		buy_button.disabled = true
 		if (Items.items[buy_button.buy_item]["purchasable-by"] == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item]["purchasable-by"] == "BOTH") and Items.items[buy_button.buy_item]["price"] <= GameValues.player_money:
 			buy_button.disabled = false
+			
+func update_money_label():
+	money_label.text = "$" + str(GameValues.player_money)
 
 func make_visible():
 	self.visible = true
@@ -26,6 +33,9 @@ func make_visible():
 		pass
 	else:
 		spectate_ui.visible = false
+		
+func _buy_button_pressed():
+	update_money_label()
 
 func _on_line_edit_text_submitted(new_text):
 	var id = multiplayer.get_unique_id()

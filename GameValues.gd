@@ -6,7 +6,7 @@ var can_interact = false
 var shop_open = false
 var messages = ""
 
-var player_money = 1000
+var player_money = 10000
 
 signal message_sent_signal
 signal player_killed_signal
@@ -25,3 +25,7 @@ func player_killed(killer_id, victim_id):
 	players[victim_id].deaths += 1
 	
 	player_killed_signal.emit()
+	
+@rpc("any_peer", "call_local", "reliable")
+func change_player_stat(id, stat, value):
+	players[id][stat] = value
