@@ -8,6 +8,7 @@ extends CharacterBody2D
 @onready var health_bar = $HealthBar
 @onready var hurt_delay = $Hurtbox/HurtDelay
 @onready var camera_2d = $Camera2D
+@onready var gun_sprite = %GunSprite
 
 const MAX_SPEED := 250
 
@@ -21,7 +22,6 @@ var can_attack = true
 
 var index = 0
 var spawn_pos = Vector2.ZERO
-var equipped_item = "primary"
 
 signal create_bullet(bullet_scene)
 	
@@ -48,7 +48,7 @@ func _ready():
 		camera_2d.enabled = true
 
 func _physics_process(_delta):
-	if is_multiplayer_authority():
+	if is_multiplayer_authority() and alive:
 		follow_mouse()
 		
 		if GameValues.typing == false:
@@ -66,12 +66,17 @@ func movement():
 	velocity = input_direction * MAX_SPEED
 	
 func switch_inventory_slot():
+	var change_item = null
+	
 	if Input.is_action_just_pressed("primary"):
-		equipped_item = "primary"
+		change_item = "primary"
 	elif Input.is_action_just_pressed("secondary"):
-		equipped_item = "secondary"
+		change_item = "secondary"
 	elif Input.is_action_just_pressed("knife"):
-		equipped_item = "knife"
+		change_item = "knife"
+		
+	if change_item:
+		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", change_item)
 	
 func follow_mouse():
 	rotation_pivot.look_at(get_global_mouse_position())
@@ -79,6 +84,7 @@ func follow_mouse():
 
 func attack():
 	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var equipped_item = GameValues.players[name.to_int()].equipped_item
 	var item_dict = null
 	
 	if equipped_item in inventory_items:
@@ -110,11 +116,12 @@ func attack():
 
 func get_spread_angle():
 	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var equipped_item = GameValues.players[name.to_int()].equipped_item
 	var spread
 	var spread_angle
 	
 	if %NoSpread.is_stopped() == false:
-		spread = inventory_items[equipped_item]["spread"]
+		spread = inventory_items[equipped_item].spread
 		spread_angle = RandomNumberGenerator.new().randf_range(-spread, spread)
 	else:
 		spread = 0
@@ -136,6 +143,7 @@ func spawn_bullet(direction = Vector2.ZERO, damage = 0, player_id = 1):
 
 @rpc("any_peer", "call_local", "reliable")
 func respawn():
+	alive = true
 	visible = true
 	set_collisions(true)
 	global_position = spawn_pos
@@ -152,6 +160,11 @@ func _on_hurtbox_area_entered(area):
 			health_bar.value = health
 			
 			if health <= 0:
+				if team == "T":
+					GameValues.change_player_stat.rpc(name.to_int(), "items", Items.default_t_items)
+				else:
+					GameValues.change_player_stat.rpc(name.to_int(), "items", Items.default_ct_items)
+					
 				if multiplayer.is_server():
 					GameValues.player_killed.rpc(area.player_id, name.to_int())
 				alive = false

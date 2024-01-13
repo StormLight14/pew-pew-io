@@ -4,8 +4,8 @@ var items = {
 	"default-knife": {
 		"type": "knife",
 		"damage": 25,
-		"firing-mode": "semi-automatic"
-		#"sprite": preload("res://assets/knives/default.png")
+		"firing-mode": "semi-automatic",
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"ak-47": {
 		"type": "primary",
@@ -19,7 +19,7 @@ var items = {
 		"reload-time": 2.4,
 		"rate-of-fire": 600, # measured in rounds per minute
 		"firing-mode": "automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/ak-47.png"
 	},
 	"m4a4": {
 		"type": "primary",
@@ -33,7 +33,7 @@ var items = {
 		"reload-time": 3.1,
 		"rate-of-fire": 666,
 		"firing-mode": "automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"sg-553": {
 		"type": "primary",
@@ -47,7 +47,7 @@ var items = {
 		"reload-time": 2.8,
 		"rate-of-fire": 545,
 		"firing-mode": "automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"aug": {
 		"type": "primary",
@@ -61,7 +61,7 @@ var items = {
 		"reload-time": 3.8,
 		"rate-of-fire": 600,
 		"firing-mode": "automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"awp": {
 		"type": "primary",
@@ -75,7 +75,7 @@ var items = {
 		"reload-time": 3.7,
 		"rate-of-fire": 41,
 		"firing-mode": "bolt-action",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"ssg-08": {
 		"type": "primary",
@@ -89,7 +89,7 @@ var items = {
 		"reload-time": 3.7,
 		"rate-of-fire": 48,
 		"firing-mode": "bolt-action",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"glock-18": {
 		"type": "secondary",
@@ -103,7 +103,7 @@ var items = {
 		"reload-time": 2.3,
 		"rate-of-fire": 400,
 		"firing-mode": "semi-automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	},
 	"usp": {
 		"type": "secondary",
@@ -117,7 +117,7 @@ var items = {
 		"reload-time": 2.7,
 		"rate-of-fire": 400,
 		"firing-mode": "semi-automatic",
-		"sprite": preload("res://assets/guns/gun.png")
+		"sprite": "res://assets/guns/gun.png"
 	}
 }
 

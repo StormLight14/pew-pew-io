@@ -50,6 +50,7 @@ position = Vector2(0, -21)
 texture = ExtResource("3_pnwp5")
 
 [node name="GunSprite" type="Sprite2D" parent="RotationPivot"]
+unique_name_in_owner = true
 position = Vector2(1, -31)
 texture = ExtResource("4_6mtv3")
 

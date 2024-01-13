@@ -29,3 +29,10 @@ func player_killed(killer_id, victim_id):
 @rpc("any_peer", "call_local", "reliable")
 func change_player_stat(id, stat, value):
 	players[id][stat] = value
+	
+	if stat == "equipped_item":
+		for player in get_tree().get_nodes_in_group("Player"):
+			if player.name.to_int() == id:
+				if players[id].items[value]:
+					player.gun_sprite.texture = load(players[id].items[value].sprite)
+					print(players[id].items[value])
