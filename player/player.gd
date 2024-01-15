@@ -46,6 +46,7 @@ func _ready():
 		#$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
+		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", GameValues.players[name.to_int()].equipped_item)
 
 func _physics_process(_delta):
 	if is_multiplayer_authority() and alive:
@@ -69,11 +70,14 @@ func switch_inventory_slot():
 	var change_item = null
 	
 	if Input.is_action_just_pressed("primary"):
-		change_item = "primary"
+		if GameValues.players[name.to_int()].items["primary"]:
+			change_item = "primary"
 	elif Input.is_action_just_pressed("secondary"):
-		change_item = "secondary"
+		if GameValues.players[name.to_int()].items["secondary"]:
+			change_item = "secondary"
 	elif Input.is_action_just_pressed("knife"):
-		change_item = "knife"
+		if GameValues.players[name.to_int()].items["knife"]:
+			change_item = "knife"
 		
 	if change_item:
 		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", change_item)

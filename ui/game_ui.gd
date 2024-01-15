@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var shop_ui = %ShopUI
 @onready var money_ui = %MoneyUI
 @onready var money_label = %MoneyLabel
+@onready var message_line = $MessageLine
 
 func _ready():
 	GameValues.message_sent_signal.connect(_on_message_sent)

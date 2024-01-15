@@ -16,3 +16,6 @@ func _physics_process(delta):
 func _on_body_entered(body):
 	if body is CharacterBody2D == false:
 		queue_free()
+
+func _on_lifetime_timeout():
+	queue_free()

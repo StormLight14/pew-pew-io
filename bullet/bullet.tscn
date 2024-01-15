@@ -7,6 +7,7 @@
 size = Vector2(4, 4)
 
 [node name="Bullet" type="Area2D"]
+z_index = -1
 collision_layer = 8
 script = ExtResource("1_77bsi")
 
@@ -16,4 +17,10 @@ shape = SubResource("RectangleShape2D_1aa3s")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_u430v")
 
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+autostart = true
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Lifetime" to="." method="_on_lifetime_timeout"]

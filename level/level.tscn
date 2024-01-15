@@ -123,6 +123,7 @@ placeholder_text = "Message..."
 flat = true
 
 [node name="SpectateUI" type="CenterContainer" parent="GameUI"]
+visible = false
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
@@ -152,15 +153,12 @@ layout_mode = 2
 text = "Next Player"
 
 [node name="StatsUI" type="CenterContainer" parent="GameUI"]
-anchors_preset = 3
+anchors_preset = 1
 anchor_left = 1.0
-anchor_top = 1.0
 anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -87.0
-offset_top = -87.0
+offset_left = -60.0
+offset_bottom = 60.0
 grow_horizontal = 0
-grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/StatsUI"]
 layout_mode = 2
@@ -179,6 +177,7 @@ layout_mode = 2
 text = "0"
 
 [node name="Deaths" type="HBoxContainer" parent="GameUI/StatsUI/VBoxContainer"]
+visible = false
 layout_mode = 2
 
 [node name="DeathsIcon" type="TextureRect" parent="GameUI/StatsUI/VBoxContainer/Deaths"]
@@ -192,22 +191,28 @@ layout_mode = 2
 text = "0"
 
 [node name="AmmoUI" type="CenterContainer" parent="GameUI"]
-anchors_preset = 1
+anchors_preset = 3
 anchor_left = 1.0
+anchor_top = 1.0
 anchor_right = 1.0
-offset_left = -141.0
-offset_bottom = 50.0
+anchor_bottom = 1.0
+offset_left = -183.0
+offset_top = -68.0
+offset_right = -1.0
 grow_horizontal = 0
+grow_vertical = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/AmmoUI"]
 layout_mode = 2
 
 [node name="PrimaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Primary Ammo: 0"
 horizontal_alignment = 1
 
 [node name="SecondaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Secondary Ammo: 0"
 horizontal_alignment = 1
@@ -311,16 +316,8 @@ buy_item = "usp"
 
 [node name="MoneyUI" type="CenterContainer" parent="GameUI"]
 unique_name_in_owner = true
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -79.0
-offset_top = -20.0
-offset_bottom = 20.0
-grow_horizontal = 0
-grow_vertical = 2
+offset_right = 79.0
+offset_bottom = 40.0
 
 [node name="MoneyLabel" type="Label" parent="GameUI/MoneyUI"]
 unique_name_in_owner = true

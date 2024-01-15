@@ -5,7 +5,7 @@ var items = {
 		"type": "knife",
 		"damage": 25,
 		"firing-mode": "semi-automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/knives/default-knife.png"
 	},
 	"ak-47": {
 		"type": "primary",
@@ -33,7 +33,7 @@ var items = {
 		"reload-time": 3.1,
 		"rate-of-fire": 666,
 		"firing-mode": "automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/m4a4.png"
 	},
 	"sg-553": {
 		"type": "primary",
@@ -47,7 +47,7 @@ var items = {
 		"reload-time": 2.8,
 		"rate-of-fire": 545,
 		"firing-mode": "automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/sg-553.png"
 	},
 	"aug": {
 		"type": "primary",
@@ -61,7 +61,7 @@ var items = {
 		"reload-time": 3.8,
 		"rate-of-fire": 600,
 		"firing-mode": "automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/aug.png"
 	},
 	"awp": {
 		"type": "primary",
@@ -75,7 +75,7 @@ var items = {
 		"reload-time": 3.7,
 		"rate-of-fire": 41,
 		"firing-mode": "bolt-action",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/awp.png"
 	},
 	"ssg-08": {
 		"type": "primary",
@@ -89,7 +89,7 @@ var items = {
 		"reload-time": 3.7,
 		"rate-of-fire": 48,
 		"firing-mode": "bolt-action",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/ssg-08.png"
 	},
 	"glock-18": {
 		"type": "secondary",
@@ -103,7 +103,7 @@ var items = {
 		"reload-time": 2.3,
 		"rate-of-fire": 400,
 		"firing-mode": "semi-automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/glock-18.png"
 	},
 	"usp": {
 		"type": "secondary",
@@ -117,7 +117,7 @@ var items = {
 		"reload-time": 2.7,
 		"rate-of-fire": 400,
 		"firing-mode": "semi-automatic",
-		"sprite": "res://assets/guns/gun.png"
+		"sprite": "res://assets/guns/usp.png"
 	}
 }
 
