@@ -13,11 +13,12 @@ signal player_killed_signal
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
-	var full_message = username + ": " + message + "\n"
-	print(full_message)
-	
-	messages += full_message
-	message_sent_signal.emit()
+	if message != "" and message != " ":
+		var full_message = username + ": " + message + "\n"
+		print(full_message)
+		
+		messages += full_message
+		message_sent_signal.emit()
 	
 @rpc("any_peer", "call_local", "reliable")
 func player_killed(killer_id, victim_id):
