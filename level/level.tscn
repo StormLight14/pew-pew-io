@@ -111,7 +111,10 @@ follow_focus = true
 
 [node name="Messages" type="Label" parent="GameUI/MessageUI"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 180)
 layout_mode = 2
+theme_override_font_sizes/font_size = 11
+autowrap_mode = 2
 
 [node name="MessageLine" type="LineEdit" parent="GameUI"]
 offset_left = 15.0
