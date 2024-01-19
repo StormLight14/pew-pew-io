@@ -11,9 +11,7 @@ var ct_round_wins = 0
 func _ready():
 	visible = false
 	$GameUI.visible = false
-	
-	#if multiplayer.is_server():
-		#$CanvasModulate.color = Color(1, 1, 1, 1)
+
 
 func _process(_delta):
 	if start_timer.is_stopped() == false:
