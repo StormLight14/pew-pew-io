@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://3begruyw7wti"]
+[gd_scene load_steps=6 format=3 uid="uid://3begruyw7wti"]
 
 [ext_resource type="Script" path="res://multiplayer/multiplayer.gd" id="1_tv1bw"]
 [ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_pbl3c"]
 [ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/theme/main.tres" id="3_2mwus"]
 [ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level/level.tscn" id="3_qf10t"]
+[ext_resource type="FontFile" uid="uid://kn7qq7iwgrl5" path="res://assets/fonts/High Speed.otf" id="4_7sus0"]
 
 [node name="Multiplayer" type="Node2D"]
 script = ExtResource("1_tv1bw")
@@ -22,47 +23,65 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Host" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 text = "Host Game"
 
 [node name="Start" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 disabled = true
 text = "Start Game"
 
 [node name="Join" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
+custom_minimum_size = Vector2(130, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 text = "Join Game"
 
 [node name="Username" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 placeholder_text = "Guest"
+alignment = 1
 expand_to_text_length = true
 
 [node name="Address" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 text = "127.0.0.1"
+alignment = 1
 expand_to_text_length = true
 
 [node name="Port" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(100, 25)
 layout_mode = 2
 theme = ExtResource("3_2mwus")
+theme_override_fonts/font = ExtResource("4_7sus0")
+theme_override_font_sizes/font_size = 12
 text = "9595"
-
-[node name="Label" type="Label" parent="MenuUI/CenterContainer/HBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_2mwus")
+alignment = 1
 
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
+scale = Vector2(0.993144, 1.02031)
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://player/player.tscn")

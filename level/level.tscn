@@ -122,6 +122,7 @@ offset_top = 608.0
 offset_right = 350.0
 offset_bottom = 639.0
 theme = ExtResource("3_ynjfq")
+theme_override_font_sizes/font_size = 14
 placeholder_text = "Message..."
 flat = true
 
@@ -206,11 +207,9 @@ offset_top = -68.0
 offset_right = -1.0
 grow_horizontal = 0
 grow_vertical = 0
-theme = ExtResource("3_ynjfq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/AmmoUI"]
 layout_mode = 2
-theme = ExtResource("3_ynjfq")
 
 [node name="PrimaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
 unique_name_in_owner = true
@@ -247,53 +246,60 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="RiflesLabel" type="Label" parent="GameUI/ShopUI/VBoxContainer/Rifles"]
-custom_minimum_size = Vector2(60, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Rifles:"
 horizontal_alignment = 1
 
 [node name="AK47" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "AK-47
 $2700"
 script = ExtResource("5_ge0j8")
 
 [node name="M4A4" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "M4A4
 $3100"
 script = ExtResource("5_ge0j8")
 buy_item = "m4a4"
 
 [node name="SG553" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "SG 553
 $3000"
 script = ExtResource("5_ge0j8")
 buy_item = "sg-553"
 
 [node name="AUG" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "AUG
 $3300"
 script = ExtResource("5_ge0j8")
 buy_item = "aug"
 
 [node name="AWP" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "AWP
 $4750"
 script = ExtResource("5_ge0j8")
 buy_item = "awp"
 
 [node name="SSG" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "SSG 08
 $1700"
 script = ExtResource("5_ge0j8")
@@ -303,22 +309,25 @@ buy_item = "ssg-08"
 layout_mode = 2
 
 [node name="PistolsLabel" type="Label" parent="GameUI/ShopUI/VBoxContainer/Pistols"]
-custom_minimum_size = Vector2(60, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Pistols:"
 horizontal_alignment = 1
 
 [node name="Glock18" type="Button" parent="GameUI/ShopUI/VBoxContainer/Pistols" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "Glock 18
 $400"
 script = ExtResource("5_ge0j8")
 buy_item = "glock-18"
 
 [node name="USP" type="Button" parent="GameUI/ShopUI/VBoxContainer/Pistols" groups=["BuyButton"]]
-custom_minimum_size = Vector2(75, 0)
+custom_minimum_size = Vector2(80, 0)
 layout_mode = 2
+theme_override_font_sizes/font_size = 12
 text = "USP
 $500"
 script = ExtResource("5_ge0j8")
@@ -342,9 +351,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -121.0
-offset_top = -125.0
-offset_bottom = -61.0
+offset_left = -210.0
+offset_top = -174.0
+offset_right = -2.0
+offset_bottom = -55.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("3_ynjfq")
