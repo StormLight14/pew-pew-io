@@ -10,6 +10,7 @@ var player_money = 10000
 
 signal message_sent_signal
 signal player_killed_signal
+signal player_stat_changed_signal
 
 @rpc("any_peer", "call_local", "reliable")
 func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
@@ -36,4 +37,5 @@ func change_player_stat(id, stat, value):
 			if player.name.to_int() == id:
 				if players[id].items[value]:
 					player.gun_sprite.texture = load(players[id].items[value].sprite)
-					print(players[id].items[value])
+	
+	player_stat_changed_signal.emit()

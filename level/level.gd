@@ -12,7 +12,6 @@ func _ready():
 	visible = false
 	$GameUI.visible = false
 
-
 func _process(_delta):
 	if start_timer.is_stopped() == false:
 		start_timer_label.text = "Starting in: " + str(ceil(start_timer.time_left))

@@ -6,10 +6,12 @@ extends CanvasLayer
 @onready var money_ui = %MoneyUI
 @onready var money_label = %MoneyLabel
 @onready var message_line = $MessageLine
+@onready var inventory_label = %InventoryLabel
 
 func _ready():
 	GameValues.message_sent_signal.connect(_on_message_sent)
 	GameValues.player_killed_signal.connect(_on_player_killed)
+	GameValues.player_stat_changed_signal.connect(update_inventory_label)
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.buy_button_pressed.connect(_buy_button_pressed)
 	
@@ -27,6 +29,22 @@ func update_buy_menu():
 			
 func update_money_label():
 	money_label.text = "$" + str(GameValues.player_money)
+	
+func update_inventory_label():
+	if not multiplayer.is_server():
+		var player_inventory = GameValues.players[multiplayer.get_unique_id()].items
+		var primary_name = null
+		var secondary_name = null
+		
+		inventory_label.text = ""
+		
+		if player_inventory.primary:
+			primary_name = player_inventory.primary["display-name"]
+			inventory_label.text += "[1] - " + primary_name + "\n"
+		if player_inventory.secondary:
+			secondary_name = player_inventory.secondary["display-name"]
+			inventory_label.text += "[2] - " + secondary_name + "\n"
+		inventory_label.text += "[3] - Knife" + "\n"
 
 func make_visible():
 	self.visible = true
