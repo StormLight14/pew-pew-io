@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://3begruyw7wti"]
+[gd_scene load_steps=5 format=3 uid="uid://3begruyw7wti"]
 
 [ext_resource type="Script" path="res://multiplayer/multiplayer.gd" id="1_tv1bw"]
 [ext_resource type="PackedScene" uid="uid://bqn3h56ch5gtd" path="res://player/player.tscn" id="2_pbl3c"]
+[ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/theme/main.tres" id="3_2mwus"]
 [ext_resource type="PackedScene" uid="uid://bu74xn3hlof5n" path="res://level/level.tscn" id="3_qf10t"]
 
 [node name="Multiplayer" type="Node2D"]
@@ -12,6 +13,7 @@ player_scene = ExtResource("2_pbl3c")
 process_mode = 3
 offset_right = 1152.0
 offset_bottom = 40.0
+theme = ExtResource("3_2mwus")
 
 [node name="CenterContainer" type="CenterContainer" parent="MenuUI"]
 layout_mode = 2
@@ -21,37 +23,44 @@ layout_mode = 2
 
 [node name="Host" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 text = "Host Game"
 
 [node name="Start" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 disabled = true
 text = "Start Game"
 
 [node name="Join" type="Button" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 text = "Join Game"
 
 [node name="Username" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 placeholder_text = "Guest"
 expand_to_text_length = true
 
 [node name="Address" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 text = "127.0.0.1"
 expand_to_text_length = true
 
 [node name="Port" type="LineEdit" parent="MenuUI/CenterContainer/HBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 text = "9595"
 
 [node name="Label" type="Label" parent="MenuUI/CenterContainer/HBoxContainer"]
 layout_mode = 2
+theme = ExtResource("3_2mwus")
 
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
 

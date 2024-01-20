@@ -13,9 +13,21 @@ signal player_killed_signal
 signal player_stat_changed_signal
 
 @rpc("any_peer", "call_local", "reliable")
-func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR"):
+func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR", player_id = "ID_ERROR"):
+	var color = "#FFFFFF"
+	
+	if player_id == 1:
+		color = "#FF4D4D"
+	else:
+		match players[player_id].team:
+			"T":
+				color = "#FFA836"
+			"CT":
+				color = "#364AFF"
+		
+		
 	if message != "" and message != " ":
-		var full_message = username + ": " + message + "\n"
+		var full_message = "[color=" + color + "]" + username + "[/color]" + ": " + message + "\n"
 		print(full_message)
 		
 		messages += full_message

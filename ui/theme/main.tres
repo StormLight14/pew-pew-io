@@ -1,0 +1,40 @@
+[gd_resource type="Theme" load_steps=12 format=3 uid="uid://b2kensy6ma0e6"]
+
+[ext_resource type="FontFile" uid="uid://kn7qq7iwgrl5" path="res://assets/fonts/High Speed.otf" id="1_k88yq"]
+[ext_resource type="StyleBox" uid="uid://cgrxkibwpb6dq" path="res://ui/theme/default_stylebox.tres" id="2_dkcn6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xept5"]
+bg_color = Color(0, 0, 0, 0.243137)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tyhi1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_skxdc"]
+bg_color = Color(0, 0, 0, 0.501961)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_84kj0"]
+bg_color = Color(0, 0, 0, 0.376471)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jay0j"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kjyk5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_eaaci"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_brqbo"]
+bg_color = Color(1, 0.341176, 0.298039, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tp058"]
+bg_color = Color(0.470588, 0.945098, 0, 1)
+
+[resource]
+Button/styles/disabled = SubResource("StyleBoxFlat_xept5")
+Button/styles/focus = SubResource("StyleBoxFlat_tyhi1")
+Button/styles/hover = SubResource("StyleBoxFlat_skxdc")
+Button/styles/normal = SubResource("StyleBoxFlat_84kj0")
+Button/styles/pressed = SubResource("StyleBoxFlat_jay0j")
+Label/fonts/font = ExtResource("1_k88yq")
+LineEdit/styles/focus = SubResource("StyleBoxFlat_kjyk5")
+LineEdit/styles/normal = ExtResource("2_dkcn6")
+LineEdit/styles/read_only = SubResource("StyleBoxFlat_eaaci")
+ProgressBar/styles/background = SubResource("StyleBoxFlat_brqbo")
+ProgressBar/styles/fill = SubResource("StyleBoxFlat_tp058")

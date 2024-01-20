@@ -57,17 +57,25 @@ func _buy_button_pressed():
 	update_money_label()
 
 func _on_line_edit_text_submitted(new_text):
-	var id = multiplayer.get_unique_id()
+	var player_id = multiplayer.get_unique_id()
 	var username
 	
 	if multiplayer.is_server():
 		username = "SERVER"
 	else:
-		username = GameValues.players[id].username
+		username = GameValues.players[player_id].username
+	
+	if multiplayer.is_server() == false:
+		new_text = strip_bbcode(new_text)
 		
-	GameValues.send_message.rpc(new_text, username)
+	GameValues.send_message.rpc(new_text, username, player_id)
 	$MessageLine.text = ""
 	$MessageLine.release_focus()
+	
+func strip_bbcode(source:String) -> String:
+	var regex = RegEx.new()
+	regex.compile("\\[.+?\\]")
+	return regex.sub(source, "", true)
 
 func _on_message_line_focus_entered():
 	GameValues.typing = true

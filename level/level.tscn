@@ -2,13 +2,11 @@
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_aq73c"]
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
-[ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/x.png" id="3_pab6c"]
-[ext_resource type="Texture2D" uid="uid://b0501fivgjffx" path="res://assets/skull.png" id="4_jg50k"]
+[ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/icons/x.png" id="3_pab6c"]
+[ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/theme/main.tres" id="3_ynjfq"]
+[ext_resource type="Texture2D" uid="uid://b0501fivgjffx" path="res://assets/icons/skull.png" id="4_jg50k"]
 [ext_resource type="Texture2D" uid="uid://twdvsshmukxg" path="res://assets/tilemaps/main-tilemap.png" id="5_duu31"]
 [ext_resource type="Script" path="res://ui/buy_button.gd" id="5_ge0j8"]
-
-[sub_resource type="Theme" id="Theme_5v580"]
-LineEdit/font_sizes/font_size = 12
 
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_t5fmh"]
 polygon = PackedVector2Array(-16, -16, 16, -16, 16, 16, -16, 16)
@@ -86,6 +84,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 23.0
 grow_horizontal = 2
+theme = ExtResource("3_ynjfq")
 
 [node name="EndTimerLabel" type="Label" parent="GameUI/TimerUI"]
 unique_name_in_owner = true
@@ -107,13 +106,14 @@ offset_top = -238.0
 offset_right = 396.0
 offset_bottom = -43.0
 grow_vertical = 0
+theme = ExtResource("3_ynjfq")
 follow_focus = true
 
-[node name="Messages" type="Label" parent="GameUI/MessageUI"]
+[node name="Messages" type="RichTextLabel" parent="GameUI/MessageUI"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 180)
 layout_mode = 2
-theme_override_font_sizes/font_size = 11
+bbcode_enabled = true
 autowrap_mode = 2
 
 [node name="MessageLine" type="LineEdit" parent="GameUI"]
@@ -121,7 +121,7 @@ offset_left = 15.0
 offset_top = 608.0
 offset_right = 350.0
 offset_bottom = 639.0
-theme = SubResource("Theme_5v580")
+theme = ExtResource("3_ynjfq")
 placeholder_text = "Message..."
 flat = true
 
@@ -136,6 +136,7 @@ offset_right = -1.0
 offset_bottom = -22.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("3_ynjfq")
 metadata/_edit_use_anchors_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="GameUI/SpectateUI"]
@@ -162,6 +163,7 @@ anchor_right = 1.0
 offset_left = -60.0
 offset_bottom = 60.0
 grow_horizontal = 0
+theme = ExtResource("3_ynjfq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/StatsUI"]
 layout_mode = 2
@@ -204,19 +206,23 @@ offset_top = -68.0
 offset_right = -1.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("3_ynjfq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/AmmoUI"]
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 
 [node name="PrimaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 text = "Primary Ammo: 0"
 horizontal_alignment = 1
 
 [node name="SecondaryAmmo" type="Label" parent="GameUI/AmmoUI/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 text = "Secondary Ammo: 0"
 horizontal_alignment = 1
 
@@ -228,6 +234,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_ynjfq")
 
 [node name="ColorRect" type="ColorRect" parent="GameUI/ShopUI"]
 layout_mode = 2
@@ -321,10 +328,12 @@ buy_item = "usp"
 unique_name_in_owner = true
 offset_right = 79.0
 offset_bottom = 40.0
+theme = ExtResource("3_ynjfq")
 
 [node name="MoneyLabel" type="Label" parent="GameUI/MoneyUI"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 text = "$1000"
 
 [node name="InventoryUI" type="CenterContainer" parent="GameUI"]
@@ -338,13 +347,16 @@ offset_top = -125.0
 offset_bottom = -61.0
 grow_horizontal = 0
 grow_vertical = 0
+theme = ExtResource("3_ynjfq")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameUI/InventoryUI"]
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 
 [node name="InventoryLabel" type="Label" parent="GameUI/InventoryUI/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+theme = ExtResource("3_ynjfq")
 text = "[2] - Glock 18
 [3] - Knife"
 

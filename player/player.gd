@@ -176,7 +176,7 @@ func _on_hurtbox_area_entered(area):
 				set_collisions(false)
 				
 				if multiplayer.is_server():
-					GameValues.send_message.rpc(username + " has been killed.", "SERVER")
+					GameValues.send_message.rpc(username + " has been killed.", "SERVER", 1)
 
 func set_collisions(boolean):
 	%Hurtbox.set_deferred("monitoring", boolean)
