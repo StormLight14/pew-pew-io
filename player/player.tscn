@@ -79,6 +79,10 @@ debug_color = Color(0.979353, 0, 0.388737, 0.42)
 wait_time = 0.05
 one_shot = true
 
+[node name="ReloadDelay" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [node name="AttackDelay" type="Timer" parent="."]
 wait_time = 0.2
 one_shot = true
@@ -130,3 +134,4 @@ unique_name_in_owner = true
 one_shot = true
 
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
+[connection signal="timeout" from="ReloadDelay" to="." method="_on_reload_delay_timeout"]

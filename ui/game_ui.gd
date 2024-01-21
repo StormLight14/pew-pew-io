@@ -12,6 +12,7 @@ func _ready():
 	GameValues.message_sent_signal.connect(_on_message_sent)
 	GameValues.player_killed_signal.connect(_on_player_killed)
 	GameValues.player_stat_changed_signal.connect(update_inventory_label)
+	GameValues.update_ammo_ui.connect(update_ammo_ui)
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.buy_button_pressed.connect(_buy_button_pressed)
 	
@@ -21,6 +22,16 @@ func _process(_delta):
 		GameValues.shop_open = not GameValues.shop_open
 		update_buy_menu()
 		
+func update_ammo_ui():
+	if multiplayer.is_server() == false:
+		var inventory_items = GameValues.players[multiplayer.get_unique_id()]["items"]
+		var equipped_item = GameValues.players[multiplayer.get_unique_id()].equipped_item
+		
+		if equipped_item in inventory_items:
+			var item_dict = inventory_items[equipped_item]
+			
+			%Ammo.text = "Ammo: " + str(inventory_items[equipped_item]["magazine-ammo"])
+			%ReserveAmmo.text = "Reserve Ammo: " + str(inventory_items[equipped_item]["reserve-ammo"])
 func update_buy_menu():
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.disabled = true
