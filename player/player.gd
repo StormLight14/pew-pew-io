@@ -19,7 +19,6 @@ var max_health = health
 
 var alive = true
 var can_attack = true
-var can_reload = false
 
 var index = 0
 var spawn_pos = Vector2.ZERO
@@ -48,6 +47,7 @@ func _ready():
 		username_label.text = username
 		camera_2d.enabled = true
 		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", GameValues.players[name.to_int()].equipped_item)
+		GameValues.update_ammo_ui.emit()
 
 func _physics_process(_delta):
 	if is_multiplayer_authority() and alive:
@@ -115,16 +115,20 @@ func attack():
 						%NoSpread.start(0.3)
 						
 						item_dict["magazine-ammo"] -= 1
+						GameValues.update_ammo_ui.emit()
 					
 			if item_dict["firing-mode"] == "automatic" and Input.is_action_pressed("attack"):
 				attack_delay.start()
 				
 				if item_is_gun:
-					spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
-					%NoSpread.start(0.3)
+					if item_dict["magazine-ammo"] > 0:
+						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
+						%NoSpread.start(0.3)
+						
+						item_dict["magazine-ammo"] -= 1
+						GameValues.update_ammo_ui.emit()
 					
 func reload_gun():
-	print(can_reload)
 	var inventory_items = GameValues.players[name.to_int()]["items"]
 	var equipped_item = GameValues.players[name.to_int()].equipped_item
 	
@@ -136,20 +140,23 @@ func reload_gun():
 				if %ReloadDelay.is_stopped() == true:
 					%ReloadDelay.wait_time = item_dict["reload-time"]
 					%ReloadDelay.start()
-				
-					if can_reload:
-						if item_dict["reserve-ammo"] >= item_dict["magazine-capacity"]:
-							item_dict["magazine-ammo"] = item_dict["magazine-capacity"]
-							item_dict["reserve-ammo"] -= item_dict["magazine-capacity"]
-					
-						elif item_dict["reserve-ammo"] > 0:
-							item_dict["magazine-ammo"] = item_dict["reserve-ammo"]
-							item_dict["reserve-ammo"] = 0
-	can_reload = false
 
 func _on_reload_delay_timeout():
-	can_reload = true
+	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var equipped_item = GameValues.players[name.to_int()].equipped_item
+	
+	if equipped_item in inventory_items:
+		var item_dict = inventory_items[equipped_item]
+		if item_dict["reserve-ammo"] >= item_dict["magazine-capacity"]:
+			item_dict["magazine-ammo"] = item_dict["magazine-capacity"]
+			item_dict["reserve-ammo"] -= item_dict["magazine-capacity"]
+
+		elif item_dict["reserve-ammo"] > 0:
+			item_dict["magazine-ammo"] = item_dict["reserve-ammo"]
+			item_dict["reserve-ammo"] = 0
+			
 	GameValues.update_ammo_ui.emit()
+	
 
 func get_spread_angle():
 	var inventory_items = GameValues.players[name.to_int()]["items"]
@@ -168,7 +175,6 @@ func get_spread_angle():
 
 @rpc("any_peer", "call_local", "reliable")
 func spawn_bullet(direction = Vector2.ZERO, damage = 0, player_id = 1):
-	GameValues.update_ammo_ui.emit()
 	var bullet = load("res://bullet/bullet.tscn").instantiate()
 
 	bullet.bullet_direction = direction
