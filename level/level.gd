@@ -8,6 +8,8 @@ extends Node2D
 var t_round_wins = 0
 var ct_round_wins = 0
 
+var mouse_in_message_line = false
+
 func _ready():
 	visible = false
 	$GameUI.visible = false
@@ -18,6 +20,9 @@ func _process(_delta):
 		
 	if end_timer.is_stopped() == false:
 		end_timer_label.text = "Round ends in: " + format_time(end_timer.time_left)
+		
+	if mouse_in_message_line == false and Input.is_action_just_pressed("attack"):
+		%MessageLine.release_focus()
 		
 func format_time(seconds: float) -> String:
 	var minutes: int = int(seconds) / 60
@@ -47,3 +52,10 @@ func _on_end_timer_timeout():
 		player.respawn()
 	
 	start_timer.start()
+
+
+func _on_message_line_mouse_entered():
+	mouse_in_message_line = true
+
+func _on_message_line_mouse_exited():
+	mouse_in_message_line = false

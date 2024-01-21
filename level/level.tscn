@@ -117,6 +117,7 @@ bbcode_enabled = true
 autowrap_mode = 2
 
 [node name="MessageLine" type="LineEdit" parent="GameUI"]
+unique_name_in_owner = true
 offset_left = 15.0
 offset_top = 608.0
 offset_right = 350.0
@@ -389,6 +390,8 @@ layer_0/tile_data = PackedInt32Array(65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 26
 
 [connection signal="focus_entered" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_entered"]
 [connection signal="focus_exited" from="GameUI/MessageLine" to="GameUI" method="_on_message_line_focus_exited"]
+[connection signal="mouse_entered" from="GameUI/MessageLine" to="." method="_on_message_line_mouse_entered"]
+[connection signal="mouse_exited" from="GameUI/MessageLine" to="." method="_on_message_line_mouse_exited"]
 [connection signal="text_submitted" from="GameUI/MessageLine" to="GameUI" method="_on_line_edit_text_submitted"]
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectatePrevious" to="GameUI" method="_on_spectate_previous_pressed"]
 [connection signal="pressed" from="GameUI/SpectateUI/HBoxContainer/SpectateNext" to="GameUI" method="_on_spectate_next_pressed"]
