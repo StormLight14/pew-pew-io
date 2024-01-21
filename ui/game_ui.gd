@@ -29,9 +29,12 @@ func update_ammo_ui():
 		
 		if equipped_item in inventory_items:
 			var item_dict = inventory_items[equipped_item]
-			
-			%Ammo.text = "Ammo: " + str(inventory_items[equipped_item]["magazine-ammo"])
-			%ReserveAmmo.text = "Reserve Ammo: " + str(inventory_items[equipped_item]["reserve-ammo"])
+			if item_dict["type"] == "secondary" or item_dict["type"] == "primary":
+				%Ammo.text = "Ammo: " + str(inventory_items[equipped_item]["magazine-ammo"])
+				%ReserveAmmo.text = "Reserve Ammo: " + str(inventory_items[equipped_item]["reserve-ammo"])
+			else:
+				%Ammo.text = ""
+				%ReserveAmmo.text = ""
 func update_buy_menu():
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.disabled = true

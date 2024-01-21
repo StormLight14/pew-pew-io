@@ -71,18 +71,20 @@ func movement():
 func switch_inventory_slot():
 	var change_item = null
 	
-	if Input.is_action_just_pressed("primary"):
-		if GameValues.players[name.to_int()].items["primary"]:
-			change_item = "primary"
-	elif Input.is_action_just_pressed("secondary"):
-		if GameValues.players[name.to_int()].items["secondary"]:
-			change_item = "secondary"
-	elif Input.is_action_just_pressed("knife"):
-		if GameValues.players[name.to_int()].items["knife"]:
-			change_item = "knife"
-		
-	if change_item:
-		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", change_item)
+	if %ReloadDelay.is_stopped():
+		if Input.is_action_just_pressed("primary"):
+			if GameValues.players[name.to_int()].items["primary"]:
+				change_item = "primary"
+		elif Input.is_action_just_pressed("secondary"):
+			if GameValues.players[name.to_int()].items["secondary"]:
+				change_item = "secondary"
+		elif Input.is_action_just_pressed("knife"):
+			if GameValues.players[name.to_int()].items["knife"]:
+				change_item = "knife"
+			
+		if change_item:
+			GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", change_item)
+			GameValues.update_ammo_ui.emit()
 	
 func follow_mouse():
 	rotation_pivot.look_at(get_global_mouse_position())
