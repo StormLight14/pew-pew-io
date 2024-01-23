@@ -71,6 +71,8 @@ func movement():
 func switch_inventory_slot():
 	var change_item = null
 	
+	print(%ReloadDelay.time_left)
+	
 	if %ReloadDelay.is_stopped():
 		if Input.is_action_just_pressed("primary"):
 			if GameValues.players[name.to_int()].items["primary"]:
@@ -139,7 +141,7 @@ func reload_gun():
 		
 		if item_dict["type"] == "primary" or item_dict["type"] == "secondary":
 			if item_dict["magazine-ammo"] == 0 or Input.is_action_just_pressed("reload"):
-				if %ReloadDelay.is_stopped() == true:
+				if %ReloadDelay.is_stopped() == true and (item_dict["magazine-ammo"] == 0 and item_dict["reserve-ammo"] == 0) == false:
 					%ReloadDelay.wait_time = item_dict["reload-time"]
 					%ReloadDelay.start()
 

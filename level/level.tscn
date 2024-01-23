@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=3 uid="uid://bu74xn3hlof5n"]
+[gd_scene load_steps=12 format=3 uid="uid://bu74xn3hlof5n"]
 
 [ext_resource type="Script" path="res://level/level.gd" id="1_aq73c"]
 [ext_resource type="Script" path="res://ui/game_ui.gd" id="2_ad22g"]
 [ext_resource type="Texture2D" uid="uid://c03okv5asqn22" path="res://assets/icons/x.png" id="3_pab6c"]
 [ext_resource type="Theme" uid="uid://b2kensy6ma0e6" path="res://ui/theme/main.tres" id="3_ynjfq"]
 [ext_resource type="Texture2D" uid="uid://b0501fivgjffx" path="res://assets/icons/skull.png" id="4_jg50k"]
+[ext_resource type="FontFile" uid="uid://b7dm85pjt2303" path="res://assets/fonts/Roboto-Medium.ttf" id="4_jlpa4"]
 [ext_resource type="Texture2D" uid="uid://twdvsshmukxg" path="res://assets/tilemaps/main-tilemap.png" id="5_duu31"]
 [ext_resource type="Script" path="res://ui/buy_button.gd" id="5_ge0j8"]
 
@@ -123,6 +124,7 @@ offset_top = 608.0
 offset_right = 350.0
 offset_bottom = 639.0
 theme = ExtResource("3_ynjfq")
+theme_override_fonts/font = ExtResource("4_jlpa4")
 theme_override_font_sizes/font_size = 14
 placeholder_text = "Message..."
 flat = true
@@ -334,6 +336,15 @@ $500"
 script = ExtResource("5_ge0j8")
 buy_item = "usp"
 
+[node name="Deagle" type="Button" parent="GameUI/ShopUI/VBoxContainer/Pistols" groups=["BuyButton"]]
+custom_minimum_size = Vector2(80, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "Desert Eagle
+$700"
+script = ExtResource("5_ge0j8")
+buy_item = "deagle"
+
 [node name="MoneyUI" type="CenterContainer" parent="GameUI"]
 unique_name_in_owner = true
 offset_right = 79.0
@@ -403,5 +414,6 @@ layer_0/tile_data = PackedInt32Array(65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 26
 [connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Rifles/SSG" to="GameUI/ShopUI/VBoxContainer/Rifles/SSG" method="_on_pressed"]
 [connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/Glock18" to="GameUI/ShopUI/VBoxContainer/Pistols/Glock18" method="_on_pressed"]
 [connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/USP" to="GameUI/ShopUI/VBoxContainer/Pistols/USP" method="_on_pressed"]
+[connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/Deagle" to="GameUI/ShopUI/VBoxContainer/Pistols/Deagle" method="_on_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]

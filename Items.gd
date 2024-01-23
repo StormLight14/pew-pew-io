@@ -126,6 +126,21 @@ var items = {
 		"rate-of-fire": 400,
 		"firing-mode": "semi-automatic",
 		"sprite": "res://assets/guns/usp.png"
+	},
+	"deagle": {
+		"type": "secondary",
+		"display-name": "Desert Eagle",
+		"price": 700,
+		"damage": 53,
+		"spread": 0.3,
+		"magazine-capacity": 7,
+		"magazine-ammo": 7,
+		"reserve-ammo": 35,
+		"purchasable-by": "BOTH",
+		"reload-time": 2.2,
+		"rate-of-fire": 267,
+		"firing-mode": "semi-automatic",
+		"sprite": "res://assets/guns/deagle.png"
 	}
 }
 
