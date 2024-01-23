@@ -71,8 +71,6 @@ func movement():
 func switch_inventory_slot():
 	var change_item = null
 	
-	print(%ReloadDelay.time_left)
-	
 	if %ReloadDelay.is_stopped():
 		if Input.is_action_just_pressed("primary"):
 			if GameValues.players[name.to_int()].items["primary"]:
