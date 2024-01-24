@@ -129,7 +129,7 @@ var items = {
 	},
 	"deagle": {
 		"type": "secondary",
-		"display-name": "Desert Eagle",
+		"display-name": "Deagle",
 		"price": 700,
 		"damage": 53,
 		"spread": 0.3,

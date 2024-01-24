@@ -88,7 +88,6 @@ wait_time = 0.2
 one_shot = true
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
-delta_interval = 0.3
 replication_config = SubResource("SceneReplicationConfig_vol4q")
 visibility_update_mode = 1
 
