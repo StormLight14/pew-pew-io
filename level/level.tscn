@@ -279,7 +279,7 @@ theme_override_font_sizes/font_size = 12
 text = "SG 553
 $3000"
 script = ExtResource("5_ge0j8")
-buy_item = "sg-553"
+buy_item = "sg_553"
 
 [node name="AUG" type="Button" parent="GameUI/ShopUI/VBoxContainer/Rifles" groups=["BuyButton"]]
 custom_minimum_size = Vector2(80, 0)
@@ -306,7 +306,7 @@ theme_override_font_sizes/font_size = 12
 text = "SSG 08
 $1700"
 script = ExtResource("5_ge0j8")
-buy_item = "ssg-08"
+buy_item = "ssg_08"
 
 [node name="Pistols" type="HBoxContainer" parent="GameUI/ShopUI/VBoxContainer"]
 layout_mode = 2
@@ -325,7 +325,7 @@ theme_override_font_sizes/font_size = 12
 text = "Glock 18
 $400"
 script = ExtResource("5_ge0j8")
-buy_item = "glock-18"
+buy_item = "glock_18"
 
 [node name="USP" type="Button" parent="GameUI/ShopUI/VBoxContainer/Pistols" groups=["BuyButton"]]
 custom_minimum_size = Vector2(80, 0)

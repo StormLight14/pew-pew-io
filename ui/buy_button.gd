@@ -1,6 +1,6 @@
 extends Button
 
-@export var buy_item := "ak-47"
+@export var buy_item := "ak_47"
 
 signal buy_button_pressed
 
@@ -8,9 +8,9 @@ var price
 var item_type
 
 func _ready():
-	price = Items.items[buy_item]["price"]
-	item_type = Items.items[buy_item]["type"]
-	text = Items.items[buy_item]["display-name"] + "\n" + "$" + str(price)
+	price = Items.items[buy_item].price
+	item_type = Items.items[buy_item].type
+	text = Items.items[buy_item].display_name + "\n" + "$" + str(price)
 
 func _on_pressed():
 	var current_items = GameValues.players[multiplayer.get_unique_id()].items

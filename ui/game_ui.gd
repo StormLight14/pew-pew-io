@@ -24,21 +24,21 @@ func _process(_delta):
 		
 func update_ammo_ui():
 	if multiplayer.is_server() == false:
-		var inventory_items = GameValues.players[multiplayer.get_unique_id()]["items"]
+		var inventory_items = GameValues.players[multiplayer.get_unique_id()].items
 		var equipped_item = GameValues.players[multiplayer.get_unique_id()].equipped_item
 		
 		if equipped_item in inventory_items:
 			var item_dict = inventory_items[equipped_item]
-			if item_dict["type"] == "secondary" or item_dict["type"] == "primary":
-				%Ammo.text = "Ammo: " + str(inventory_items[equipped_item]["magazine-ammo"])
-				%ReserveAmmo.text = "Reserve Ammo: " + str(inventory_items[equipped_item]["reserve-ammo"])
+			if item_dict.type == "secondary" or item_dict.type == "primary":
+				%Ammo.text = "Ammo: " + str(inventory_items[equipped_item].magazine_ammo)
+				%ReserveAmmo.text = "Reserve Ammo: " + str(inventory_items[equipped_item].reserve_ammo)
 			else:
 				%Ammo.text = ""
 				%ReserveAmmo.text = ""
 func update_buy_menu():
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.disabled = true
-		if (Items.items[buy_button.buy_item]["purchasable-by"] == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item]["purchasable-by"] == "BOTH") and Items.items[buy_button.buy_item]["price"] <= GameValues.player_money:
+		if (Items.items[buy_button.buy_item].purchasable_by == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item].purchasable_by == "BOTH") and Items.items[buy_button.buy_item].price <= GameValues.player_money:
 			buy_button.disabled = false
 			
 func update_money_label():
@@ -53,12 +53,14 @@ func update_inventory_label():
 		inventory_label.text = ""
 		
 		if player_inventory.primary:
-			primary_name = player_inventory.primary["display-name"]
+			primary_name = player_inventory.primary.display_name
 			inventory_label.text += "[1] - " + primary_name + "\n"
 		if player_inventory.secondary:
-			secondary_name = player_inventory.secondary["display-name"]
+			secondary_name = player_inventory.secondary.display_name
 			inventory_label.text += "[2] - " + secondary_name + "\n"
 		inventory_label.text += "[3] - Knife" + "\n"
+		if player_inventory.bomb:
+			inventory_label.text += "[5] - Bomb\n"
 
 func make_visible():
 	self.visible = true

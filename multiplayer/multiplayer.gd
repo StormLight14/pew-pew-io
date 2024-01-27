@@ -83,6 +83,7 @@ func add_players():
 	var added_players = 0
 	
 	for i in GameValues.players:
+		var given_bomb = false
 		added_players += 1
 
 		var player = player_scene.instantiate()
@@ -93,6 +94,10 @@ func add_players():
 		if added_players % 2 == 1:
 			player.team = "T"
 			GameValues.players[i].items = Items.default_t_items
+			
+			if not given_bomb:
+				GameValues.players[i].items.bomb = Items.items.bomb
+				given_bomb = true
 		
 		elif added_players % 2 == 0:
 			player.team = "CT"

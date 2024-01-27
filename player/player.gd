@@ -73,13 +73,13 @@ func switch_inventory_slot():
 	
 	if %ReloadDelay.is_stopped():
 		if Input.is_action_just_pressed("primary"):
-			if GameValues.players[name.to_int()].items["primary"]:
+			if GameValues.players[name.to_int()].items.primary:
 				change_item = "primary"
 		elif Input.is_action_just_pressed("secondary"):
-			if GameValues.players[name.to_int()].items["secondary"]:
+			if GameValues.players[name.to_int()].items.secondary:
 				change_item = "secondary"
 		elif Input.is_action_just_pressed("knife"):
-			if GameValues.players[name.to_int()].items["knife"]:
+			if GameValues.players[name.to_int()].items.knife:
 				change_item = "knife"
 			
 		if change_item:
@@ -99,63 +99,63 @@ func attack():
 		item_dict = inventory_items[equipped_item]
 	
 	if item_dict:
-		var item_is_gun = (item_dict["type"] == "primary" or item_dict["type"] == "secondary")
+		var item_is_gun = (item_dict.type == "primary" or item_dict.type == "secondary")
 		
 		if item_is_gun:
-			var attack_delay_time = 60.0/item_dict["rate-of-fire"]
+			var attack_delay_time = 60.0/item_dict.rate_of_fire
 
 			if attack_delay_time:
 				attack_delay.wait_time = attack_delay_time
 
 		if attack_delay.is_stopped() == true:
-			if (item_dict["firing-mode"] == "semi-automatic" or item_dict["firing-mode"] == "bolt-action") and Input.is_action_just_pressed("attack"):
+			if (item_dict.firing_mode == "semi_automatic" or item_dict.firing_mode == "bolt_action") and Input.is_action_just_pressed("attack"):
 				attack_delay.start()
 				
 				if item_is_gun:
-					if item_dict["magazine-ammo"] > 0:
-						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
+					if item_dict.magazine_ammo > 0:
+						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
 						%NoSpread.start(0.3)
 						
-						item_dict["magazine-ammo"] -= 1
+						item_dict.magazine_ammo -= 1
 						GameValues.update_ammo_ui.emit()
 					
-			if item_dict["firing-mode"] == "automatic" and Input.is_action_pressed("attack"):
+			if item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack"):
 				attack_delay.start()
 				
 				if item_is_gun:
-					if item_dict["magazine-ammo"] > 0:
-						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item]["damage"], multiplayer.get_unique_id())
+					if item_dict.magazine_ammo > 0:
+						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
 						%NoSpread.start(0.3)
 						
-						item_dict["magazine-ammo"] -= 1
+						item_dict.magazine_ammo -= 1
 						GameValues.update_ammo_ui.emit()
 					
 func reload_gun():
-	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var inventory_items = GameValues.players[name.to_int()].items
 	var equipped_item = GameValues.players[name.to_int()].equipped_item
 	
 	if equipped_item in inventory_items:
 		var item_dict = inventory_items[equipped_item]
 		
-		if item_dict["type"] == "primary" or item_dict["type"] == "secondary":
-			if item_dict["magazine-ammo"] == 0 or Input.is_action_just_pressed("reload"):
-				if %ReloadDelay.is_stopped() == true and (item_dict["magazine-ammo"] == 0 and item_dict["reserve-ammo"] == 0) == false:
-					%ReloadDelay.wait_time = item_dict["reload-time"]
+		if item_dict.type == "primary" or item_dict.type == "secondary":
+			if item_dict.magazine_ammo == 0 or Input.is_action_just_pressed("reload"):
+				if %ReloadDelay.is_stopped() == true and (item_dict.magazine_ammo == 0 and item_dict.reserve_ammo == 0) == false:
+					%ReloadDelay.wait_time = item_dict.reload_time
 					%ReloadDelay.start()
 
 func _on_reload_delay_timeout():
-	var inventory_items = GameValues.players[name.to_int()]["items"]
+	var inventory_items = GameValues.players[name.to_int()].items
 	var equipped_item = GameValues.players[name.to_int()].equipped_item
 	
 	if equipped_item in inventory_items:
 		var item_dict = inventory_items[equipped_item]
-		if item_dict["reserve-ammo"] >= item_dict["magazine-capacity"]:
-			item_dict["magazine-ammo"] = item_dict["magazine-capacity"]
-			item_dict["reserve-ammo"] -= item_dict["magazine-capacity"]
+		if item_dict.reserve_ammo >= item_dict.magazine_capacity:
+			item_dict.magazine_ammo = item_dict.magazine_capacity
+			item_dict.reserve_ammo -= item_dict.magazine_capacity
 
-		elif item_dict["reserve-ammo"] > 0:
-			item_dict["magazine-ammo"] = item_dict["reserve-ammo"]
-			item_dict["reserve-ammo"] = 0
+		elif item_dict.reserve_ammo > 0:
+			item_dict.magazine_ammo = item_dict.reserve_ammo
+			item_dict.reserve_ammo = 0
 			
 	GameValues.update_ammo_ui.emit()
 	

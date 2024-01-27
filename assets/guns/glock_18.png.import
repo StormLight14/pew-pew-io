@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bgybtnwtsymbt"
-path="res://.godot/imported/glock-18.png-584257b0ec877e702eec9339870f7ca0.ctex"
+path="res://.godot/imported/glock_18.png-fe757445efe7aa776157efa9503cb7ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/guns/glock-18.png"
-dest_files=["res://.godot/imported/glock-18.png-584257b0ec877e702eec9339870f7ca0.ctex"]
+source_file="res://assets/guns/glock_18.png"
+dest_files=["res://.godot/imported/glock_18.png-fe757445efe7aa776157efa9503cb7ce.ctex"]
 
 [params]
 

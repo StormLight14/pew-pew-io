@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cxs043i285y4a"
-path="res://.godot/imported/ak-47.png-d5391df52d285ea92a12c3431a1dceb6.ctex"
+uid="uid://mxua3a1kt5to"
+path="res://.godot/imported/default_knife.png-32e7587cb1def9ef01b7c09d49b0aa43.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/guns/ak-47.png"
-dest_files=["res://.godot/imported/ak-47.png-d5391df52d285ea92a12c3431a1dceb6.ctex"]
+source_file="res://assets/knives/default_knife.png"
+dest_files=["res://.godot/imported/default_knife.png-32e7587cb1def9ef01b7c09d49b0aa43.ctex"]
 
 [params]
 
