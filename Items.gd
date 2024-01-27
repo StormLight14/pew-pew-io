@@ -145,7 +145,9 @@ var items = {
 	"bomb": {
 		"type": "bomb",
 		"place_time": 5,
-		"detonate_time": 15
+		"detonate_time": 15,
+		"firing_mode": "bomb",
+		"sprite": "res://assets/bomb/bomb_item.png"
 	}
 }
 

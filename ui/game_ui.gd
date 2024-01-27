@@ -118,5 +118,5 @@ func _on_spectate_next_pressed():
 			biggest_id = id
 			
 	for player in get_tree().get_nodes_in_group("Player"):
-		if player.name == str(biggest_id):
+		if player.id == biggest_id:
 			player.camera_2d.enabled = true

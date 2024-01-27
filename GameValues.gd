@@ -47,7 +47,7 @@ func change_player_stat(id, stat, value):
 	
 	if stat == "equipped_item":
 		for player in get_tree().get_nodes_in_group("Player"):
-			if player.name.to_int() == id:
+			if player.id == id:
 				if players[id].items[value]:
 					player.gun_sprite.texture = load(players[id].items[value].sprite)
 	

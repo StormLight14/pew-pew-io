@@ -23,16 +23,15 @@ var can_attack = true
 var index = 0
 var spawn_pos = Vector2.ZERO
 
+var id
+
 signal create_bullet(bullet_scene)
 	
 func _enter_tree():
-	set_multiplayer_authority(name.to_int())
-	GameValues.players[name.to_int()].team = team
+	set_multiplayer_authority(id)
+	GameValues.players[id].team = team
 	
 func _ready():
-	if index == 1:
-		pass # give bomb
-	
 	for spawn_position in get_tree().get_nodes_in_group("SpawnPoint"):
 		if spawn_position.name == str(index):
 			global_position = spawn_position.global_position
@@ -46,7 +45,7 @@ func _ready():
 		#$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
-		GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", GameValues.players[name.to_int()].equipped_item)
+		GameValues.change_player_stat.rpc(id, "equipped_item", GameValues.players[id].equipped_item)
 		GameValues.update_ammo_ui.emit()
 
 func _physics_process(_delta):
@@ -73,17 +72,20 @@ func switch_inventory_slot():
 	
 	if %ReloadDelay.is_stopped():
 		if Input.is_action_just_pressed("primary"):
-			if GameValues.players[name.to_int()].items.primary:
+			if GameValues.players[id].items.primary:
 				change_item = "primary"
 		elif Input.is_action_just_pressed("secondary"):
-			if GameValues.players[name.to_int()].items.secondary:
+			if GameValues.players[id].items.secondary:
 				change_item = "secondary"
 		elif Input.is_action_just_pressed("knife"):
-			if GameValues.players[name.to_int()].items.knife:
+			if GameValues.players[id].items.knife:
 				change_item = "knife"
+		elif Input.is_action_just_pressed("bomb"):
+			if GameValues.players[id].items.bomb:
+				change_item = "bomb"
 			
 		if change_item:
-			GameValues.change_player_stat.rpc(name.to_int(), "equipped_item", change_item)
+			GameValues.change_player_stat.rpc(id, "equipped_item", change_item)
 			GameValues.update_ammo_ui.emit()
 	
 func follow_mouse():
@@ -91,8 +93,8 @@ func follow_mouse():
 	rotation_pivot.rotation_degrees += 90
 
 func attack():
-	var inventory_items = GameValues.players[name.to_int()]["items"]
-	var equipped_item = GameValues.players[name.to_int()].equipped_item
+	var inventory_items = GameValues.players[id]["items"]
+	var equipped_item = GameValues.players[id].equipped_item
 	var item_dict = null
 	
 	if equipped_item in inventory_items:
@@ -131,8 +133,8 @@ func attack():
 						GameValues.update_ammo_ui.emit()
 					
 func reload_gun():
-	var inventory_items = GameValues.players[name.to_int()].items
-	var equipped_item = GameValues.players[name.to_int()].equipped_item
+	var inventory_items = GameValues.players[id].items
+	var equipped_item = GameValues.players[id].equipped_item
 	
 	if equipped_item in inventory_items:
 		var item_dict = inventory_items[equipped_item]
@@ -144,8 +146,8 @@ func reload_gun():
 					%ReloadDelay.start()
 
 func _on_reload_delay_timeout():
-	var inventory_items = GameValues.players[name.to_int()].items
-	var equipped_item = GameValues.players[name.to_int()].equipped_item
+	var inventory_items = GameValues.players[id].items
+	var equipped_item = GameValues.players[id].equipped_item
 	
 	if equipped_item in inventory_items:
 		var item_dict = inventory_items[equipped_item]
@@ -161,8 +163,8 @@ func _on_reload_delay_timeout():
 	
 
 func get_spread_angle():
-	var inventory_items = GameValues.players[name.to_int()]["items"]
-	var equipped_item = GameValues.players[name.to_int()].equipped_item
+	var inventory_items = GameValues.players[id]["items"]
+	var equipped_item = GameValues.players[id].equipped_item
 	var spread
 	var spread_angle
 	
@@ -207,12 +209,12 @@ func _on_hurtbox_area_entered(area):
 			
 			if health <= 0:
 				if team == "T":
-					GameValues.change_player_stat.rpc(name.to_int(), "items", Items.default_t_items)
+					GameValues.change_player_stat.rpc(id, "items", Items.default_t_items)
 				else:
-					GameValues.change_player_stat.rpc(name.to_int(), "items", Items.default_ct_items)
+					GameValues.change_player_stat.rpc(id, "items", Items.default_ct_items)
 					
 				if multiplayer.is_server():
-					GameValues.player_killed.rpc(area.player_id, name.to_int())
+					GameValues.player_killed.rpc(area.player_id, id)
 				alive = false
 				visible = false
 				set_collisions(false)

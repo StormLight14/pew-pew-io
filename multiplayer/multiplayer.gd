@@ -5,9 +5,10 @@ extends Node2D
 @onready var start = %Start
 @onready var start_timer = $StartTimer
 @onready var username_input = %Username
+@onready var autostart_timer = %AutoStartTimer
 
 @export var player_scene: PackedScene
-@export var autostart_amount = 10
+@export var autostart_amount = 2
 
 var peer = ENetMultiplayerPeer.new()
 
@@ -39,8 +40,7 @@ func connected_to_server():
 func peer_connected(id):
 	#print("Peer with ID " + str(id) + " connected.")
 	if multiplayer.is_server() and GameValues.players.size() >= autostart_amount - 1:
-		await get_tree().create_timer(1).timeout
-		start_game.rpc()
+		autostart_timer.start()
 	
 func peer_disconnected(id):
 	if id != 1:
@@ -52,7 +52,7 @@ func peer_disconnected(id):
 	
 	var player_nodes = get_tree().get_nodes_in_group("Player")
 	for player_node in player_nodes:
-		if player_node.name == str(id):
+		if player_node.id == id:
 			GameValues.send_message(player_node.username + " has disconnected.", "SERVER")
 			player_node.queue_free()
 		
@@ -87,7 +87,7 @@ func add_players():
 		added_players += 1
 
 		var player = player_scene.instantiate()
-		player.name = str(i)
+		player.id = i
 		player.username = GameValues.players[i].username
 		player.index = added_players
 		
@@ -135,3 +135,6 @@ func start_game():
 
 func _on_username_text_changed(new_text):
 	pass
+
+func _on_auto_start_timer_timeout():
+	start_game.rpc()
