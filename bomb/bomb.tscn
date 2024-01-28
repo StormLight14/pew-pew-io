@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://6gchmen5j28w"]
+
+[ext_resource type="Texture2D" uid="uid://d36i0sgfckiuh" path="res://assets/bomb/bomb_active-sheet.png" id="1_i5lil"]
+[ext_resource type="Texture2D" uid="uid://bepv1o131gsjx" path="res://assets/bomb/bomb_item.png" id="2_0l7yd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1f7h"]
+atlas = ExtResource("1_i5lil")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_85mol"]
+atlas = ExtResource("1_i5lil")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lb7tb"]
+atlas = ExtResource("2_0l7yd")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gmglu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1f7h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_85mol")
+}],
+"loop": true,
+"name": &"active",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lb7tb")
+}],
+"loop": true,
+"name": &"defused",
+"speed": 5.0
+}]
+
+[node name="Bomb" type="Node2D"]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_gmglu")
+animation = &"active"
