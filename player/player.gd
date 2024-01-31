@@ -110,6 +110,7 @@ func attack():
 	
 		if attack_delay.is_stopped() == true:
 			if (item_dict.firing_mode == "semi_automatic" or item_dict.firing_mode == "bolt_action") and Input.is_action_just_pressed("attack"):
+				attack_delay.start()
 				if item_is_gun:
 					if item_dict.magazine_ammo > 0:
 						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
@@ -117,9 +118,9 @@ func attack():
 						
 						item_dict.magazine_ammo -= 1
 						GameValues.update_ammo_ui.emit()
-				attack_delay.start()
 					
 			if item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack"):
+				attack_delay.start()
 				if item_is_gun:
 					if item_dict.magazine_ammo > 0:
 						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
@@ -127,7 +128,6 @@ func attack():
 						
 						item_dict.magazine_ammo -= 1
 						GameValues.update_ammo_ui.emit()
-				attack_delay.start()
 				
 					
 func reload_gun():
