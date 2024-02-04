@@ -94,40 +94,27 @@ func follow_mouse():
 func attack():
 	var inventory_items = GameValues.players[id]["items"]
 	var equipped_item = GameValues.players[id].equipped_item
-	var item_dict = null
+	var item_dict = inventory_items.get(equipped_item, null)
 	
-	if equipped_item in inventory_items:
-		item_dict = inventory_items[equipped_item]
+	if not item_dict:
+		return
 	
-	if item_dict:
-		var item_is_gun = (item_dict.type == "primary" or item_dict.type == "secondary")
-		
-		if item_is_gun:
-			var attack_delay_time = 60.0/item_dict.rate_of_fire
+	var item_is_gun = item_dict.type in ["primary", "secondary"]
+	
+	if item_is_gun:
+		var attack_delay_time = 60.0/item_dict.rate_of_fire
+		attack_delay.wait_time = attack_delay_time
+	
+	if attack_delay.is_stopped() and (item_dict.firing_mode in ["semi_automatic", "bolt_action"] and Input.is_action_just_pressed("attack") or
+									   item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack")):
+		attack_delay.start()
+		if item_is_gun and item_dict.magazine_ammo > 0:
+			var bullet_direction = global_position.direction_to(bullet_spawn_point.global_position).rotated(get_spread_angle())
+			spawn_bullet.rpc(bullet_direction, item_dict.damage, multiplayer.get_unique_id())
+			%NoSpread.start(0.3)
+			item_dict.magazine_ammo -= 1
+			GameValues.update_ammo_ui.emit()
 
-			if attack_delay_time:
-				attack_delay.wait_time = attack_delay_time
-	
-		if attack_delay.is_stopped() == true:
-			if (item_dict.firing_mode == "semi_automatic" or item_dict.firing_mode == "bolt_action") and Input.is_action_just_pressed("attack"):
-				attack_delay.start()
-				if item_is_gun:
-					if item_dict.magazine_ammo > 0:
-						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
-						%NoSpread.start(0.3)
-						
-						item_dict.magazine_ammo -= 1
-						GameValues.update_ammo_ui.emit()
-					
-			if item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack"):
-				attack_delay.start()
-				if item_is_gun:
-					if item_dict.magazine_ammo > 0:
-						spawn_bullet.rpc((global_position.direction_to(bullet_spawn_point.global_position)).rotated(get_spread_angle()), inventory_items[equipped_item].damage, multiplayer.get_unique_id())
-						%NoSpread.start(0.3)
-						
-						item_dict.magazine_ammo -= 1
-						GameValues.update_ammo_ui.emit()
 				
 					
 func reload_gun():
