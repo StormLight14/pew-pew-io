@@ -115,15 +115,13 @@ func attack():
 			item_dict.magazine_ammo -= 1
 			GameValues.update_ammo_ui.emit()
 
-				
-					
 func reload_gun():
 	var inventory_items = GameValues.players[id].items
 	var equipped_item = GameValues.players[id].equipped_item
 	
 	if equipped_item in inventory_items:
 		var item_dict = inventory_items[equipped_item]
-		
+		 
 		if item_dict.type == "primary" or item_dict.type == "secondary":
 			if item_dict.magazine_ammo == 0 or Input.is_action_just_pressed("reload"):
 				if %ReloadDelay.is_stopped() == true and (item_dict.magazine_ammo == 0 and item_dict.reserve_ammo == 0) == false:
