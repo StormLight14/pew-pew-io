@@ -38,7 +38,10 @@ func update_ammo_ui():
 func update_buy_menu():
 	for buy_button in get_tree().get_nodes_in_group("BuyButton"):
 		buy_button.disabled = true
-		if (Items.items[buy_button.buy_item].purchasable_by == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item].purchasable_by == "BOTH") and Items.items[buy_button.buy_item].price <= GameValues.player_money:
+		buy_button.visible = false
+		if (Items.items[buy_button.buy_item].purchasable_by == GameValues.players[multiplayer.get_unique_id()].team or Items.items[buy_button.buy_item].purchasable_by == "BOTH"):
+			buy_button.visible = true
+		if (Items.items[buy_button.buy_item].price <= GameValues.player_money):
 			buy_button.disabled = false
 			
 func update_money_label():
