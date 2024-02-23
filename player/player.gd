@@ -27,7 +27,6 @@ var id
 signal create_bullet(bullet_scene)
 	
 func _enter_tree():
-	set_multiplayer_authority(id)
 	GameValues.players[id].team = team
 	
 func _ready():
@@ -41,6 +40,7 @@ func _ready():
 	team_label.text = team
 	
 	if is_multiplayer_authority():
+		print("Authority: " + str(get_multiplayer_authority()))
 		#$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
@@ -52,7 +52,7 @@ func _physics_process(_delta):
 		follow_mouse()
 		
 		if GameValues.typing == false:
-			if GameValues.can_interact and GameValues.shop_open == false:
+			if GameValues.can_interact == true and GameValues.shop_open == false:
 				attack()
 				movement()
 				reload_gun()
@@ -105,9 +105,9 @@ func attack():
 		var attack_delay_time = 60.0/item_dict.rate_of_fire
 		attack_delay.wait_time = attack_delay_time
 	
-	if attack_delay.is_stopped() and (item_dict.firing_mode in ["semi_automatic", "bolt_action"] and Input.is_action_just_pressed("attack") or
-									   item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack")):
+	if attack_delay.is_stopped() and (item_dict.firing_mode in ["semi_automatic", "bolt_action"] and Input.is_action_just_pressed("attack") or item_dict.firing_mode == "automatic" and Input.is_action_pressed("attack")):
 		attack_delay.start()
+		print("attack - " + str(id) + " - " + str(multiplayer.get_unique_id()))
 		if item_is_gun and item_dict.magazine_ammo > 0:
 			var bullet_direction = global_position.direction_to(bullet_spawn_point.global_position).rotated(get_spread_angle())
 			spawn_bullet.rpc(bullet_direction, item_dict.damage, multiplayer.get_unique_id())
@@ -143,7 +143,6 @@ func _on_reload_delay_timeout():
 			item_dict.reserve_ammo = 0
 			
 	GameValues.update_ammo_ui.emit()
-	
 
 func get_spread_angle():
 	var inventory_items = GameValues.players[id]["items"]

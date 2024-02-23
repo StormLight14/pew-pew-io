@@ -83,9 +83,6 @@ alignment = 1
 [node name="Level" parent="." instance=ExtResource("3_qf10t")]
 scale = Vector2(0.993144, 1.02031)
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
-_spawnable_scenes = PackedStringArray("res://player/player.tscn")
-
 [node name="StartTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true

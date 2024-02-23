@@ -8,7 +8,7 @@ extends Node2D
 @onready var autostart_timer = %AutoStartTimer
 
 @export var player_scene: PackedScene
-@export var autostart_amount = 2
+@export var autostart_amount = 10
 
 var peer = ENetMultiplayerPeer.new()
 
@@ -81,6 +81,8 @@ func join_game(address: String, port: int):
 	
 func add_players():
 	var added_players = 0
+	if multiplayer.get_unique_id() == 1:
+		print(GameValues.players.keys())
 	
 	for i in GameValues.players:
 		var given_bomb = false
@@ -88,6 +90,7 @@ func add_players():
 
 		var player = player_scene.instantiate()
 		player.id = i
+		player.set_multiplayer_authority(i)
 		player.username = GameValues.players[i].username
 		player.index = added_players
 		
