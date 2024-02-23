@@ -4,6 +4,7 @@ var players = {}
 var typing = false
 var can_interact = false
 var shop_open = false
+var game_started = false
 var messages = ""
 
 var player_money = 10000

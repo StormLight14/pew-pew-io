@@ -127,6 +127,7 @@ func send_player_info(username, id, team, items, equipped_item):
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game():
+	GameValues.game_started = true
 	add_players()
 	
 	get_tree().paused = false
