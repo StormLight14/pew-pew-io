@@ -4,6 +4,10 @@ extends Node2D
 @onready var start_timer_label = %StartTimerLabel
 @onready var end_timer = $EndTimer
 @onready var end_timer_label = %EndTimerLabel
+@onready var post_round_timer = $PostRoundTimer
+@onready var post_round_label = %PostRoundLabel
+@onready var lost_banner = %LostBanner
+@onready var won_banner = %WonBanner
 
 var t_round_wins = 0
 var ct_round_wins = 0
@@ -44,15 +48,38 @@ func _on_start_timer_timeout():
 	end_timer.start()
 	
 func _on_end_timer_timeout():
-	start_timer_label.visible = true
+	start_post_round("CT")
+	
+func start_post_round(winning_team):
+	post_round_timer.start()
 	end_timer_label.visible = false
+	
+	if multiplayer.is_server() == false:
+		post_round_label.visible = true
+		
+		if winning_team == GameValues.players[multiplayer.get_unique_id()].team:
+			post_round_label.text = "R o u n d  W o n"
+			lost_banner.visible = false
+			won_banner.visible = true
+		else:
+			post_round_label.text = "R o u n d  L o s t"
+			won_banner.visible = false
+			lost_banner.visible = true
+	
+func _on_post_round_timer_timeout():
+	start_timer_label.visible = true
+	won_banner.visible = false
+	lost_banner.visible = false
+	post_round_label.visible = false
 	
 	GameValues.can_interact = false
 	for player in get_tree().get_nodes_in_group("Player"):
 		player.respawn()
 	
+	for temp_object in get_tree().get_nodes_in_group("TempObject"):
+		temp_object.queue_free()
+	
 	start_timer.start()
-
 
 func _on_message_line_mouse_entered():
 	mouse_in_message_line = true

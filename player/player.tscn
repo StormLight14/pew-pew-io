@@ -87,6 +87,11 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
+[node name="BombPlaceDelay" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 3.4
+one_shot = true
+
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 replication_config = SubResource("SceneReplicationConfig_vol4q")
 visibility_update_mode = 1
@@ -132,5 +137,9 @@ texture_scale = 10.0
 unique_name_in_owner = true
 one_shot = true
 
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+unique_name_in_owner = true
+
 [connection signal="area_entered" from="Hurtbox" to="." method="_on_hurtbox_area_entered"]
 [connection signal="timeout" from="ReloadDelay" to="." method="_on_reload_delay_timeout"]
+[connection signal="timeout" from="BombPlaceDelay" to="." method="_on_bomb_place_delay_timeout"]

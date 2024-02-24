@@ -40,7 +40,7 @@ terrain_set_0/terrain_0/name = "Obstacles"
 terrain_set_0/terrain_0/color = Color(0.705882, 0.0745098, 0.243137, 1)
 sources/0 = SubResource("TileSetAtlasSource_sijfv")
 
-[node name="Level" type="Node2D"]
+[node name="Level" type="Node2D" groups=["Level"]]
 script = ExtResource("1_aq73c")
 
 [node name="Players" type="Node2D" parent="."]
@@ -80,6 +80,34 @@ position = Vector2(512, 160)
 [node name="GameUI" type="CanvasLayer" parent="."]
 script = ExtResource("2_ad22g")
 
+[node name="PostRoundUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -140.67
+offset_bottom = -107.67
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="LostBanner" type="TextureRect" parent="GameUI/PostRoundUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="WonBanner" type="TextureRect" parent="GameUI/PostRoundUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="PostRoundLabel" type="Label" parent="GameUI/PostRoundUI"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme = ExtResource("3_ynjfq")
+theme_override_font_sizes/font_size = 22
+text = "R o u n d  W o n"
+
 [node name="TimerUI" type="CenterContainer" parent="GameUI"]
 anchors_preset = 10
 anchor_right = 1.0
@@ -115,6 +143,8 @@ unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 180)
 layout_mode = 2
 bbcode_enabled = true
+scroll_active = false
+scroll_following = true
 autowrap_mode = 2
 
 [node name="MessageLine" type="LineEdit" parent="GameUI"]
@@ -389,6 +419,10 @@ one_shot = true
 wait_time = 30.0
 one_shot = true
 
+[node name="PostRoundTimer" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 visible = false
 color = Color(0.482353, 0.482353, 0.482353, 1)
@@ -417,3 +451,4 @@ layer_0/tile_data = PackedInt32Array(65539, 0, 0, 131075, 0, 0, 196611, 0, 0, 26
 [connection signal="pressed" from="GameUI/ShopUI/VBoxContainer/Pistols/Deagle" to="GameUI/ShopUI/VBoxContainer/Pistols/Deagle" method="_on_pressed"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="EndTimer" to="." method="_on_end_timer_timeout"]
+[connection signal="timeout" from="PostRoundTimer" to="." method="_on_post_round_timer_timeout"]

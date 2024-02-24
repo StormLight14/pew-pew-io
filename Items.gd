@@ -8,8 +8,9 @@ var items = {
 		"sprite": "res://assets/knives/default_knife.png"
 	},
 	"ak_47": {
+		"id": "ak_47",
 		"type": "primary",
-		"display_name": "AK_47",
+		"display_name": "AK-47",
 		"price": 2700,
 		"damage": 36,
 		"spread": 0.2,
@@ -23,6 +24,7 @@ var items = {
 		"sprite": "res://assets/guns/ak_47.png"
 	},
 	"m4a4": {
+		"id": "m4a4",
 		"type": "primary",
 		"display_name": "M4A4",
 		"price": 3100,
@@ -38,6 +40,7 @@ var items = {
 		"sprite": "res://assets/guns/m4a4.png"
 	},
 	"sg_553": {
+		"id": "sg_553",
 		"type": "primary",
 		"display_name": "SG 553",
 		"price": 3000,
@@ -53,6 +56,7 @@ var items = {
 		"sprite": "res://assets/guns/sg_553.png"
 	},
 	"aug": {
+		"id": "aug",
 		"type": "primary",
 		"display_name": "AUG",
 		"price": 3300,
@@ -68,6 +72,7 @@ var items = {
 		"sprite": "res://assets/guns/aug.png"
 	},
 	"awp": {
+		"id": "awp",
 		"type": "primary",
 		"display_name": "AWP",
 		"price": 4750,
@@ -83,6 +88,7 @@ var items = {
 		"sprite": "res://assets/guns/awp.png"
 	},
 	"ssg_08": {
+		"id": "ssg_08",
 		"type": "primary",
 		"display_name": "SSG 08",
 		"price": 1700,
@@ -98,6 +104,7 @@ var items = {
 		"sprite": "res://assets/guns/ssg_08.png"
 	},
 	"glock_18": {
+		"id": "glock_18",
 		"type": "secondary",
 		"display_name": "Glock 18",
 		"price": 400,
@@ -113,6 +120,7 @@ var items = {
 		"sprite": "res://assets/guns/glock_18.png"
 	},
 	"usp": {
+		"id": "usp",
 		"type": "secondary",
 		"display_name": "USP",
 		"price": 500,
@@ -128,6 +136,7 @@ var items = {
 		"sprite": "res://assets/guns/usp.png"
 	},
 	"deagle": {
+		"id": "deagle",
 		"type": "secondary",
 		"display_name": "Deagle",
 		"price": 700,
@@ -143,6 +152,7 @@ var items = {
 		"sprite": "res://assets/guns/deagle.png"
 	},
 	"bomb": {
+		"id": "bomb",
 		"type": "bomb",
 		"place_time": 5,
 		"detonate_time": 15,

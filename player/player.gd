@@ -43,6 +43,7 @@ func _ready():
 		#$PlayerLight.visible = true
 		username_label.text = username
 		camera_2d.enabled = true
+		%AudioListener2D.current = true
 		GameValues.change_player_stat.rpc(id, "equipped_item", GameValues.players[id].equipped_item)
 		GameValues.update_ammo_ui.emit()
 
@@ -53,6 +54,7 @@ func _physics_process(_delta):
 		if GameValues.typing == false:
 			if GameValues.can_interact == true and GameValues.shop_open == false:
 				attack()
+				bomb_place()
 				movement()
 				reload_gun()
 			
@@ -85,10 +87,24 @@ func switch_inventory_slot():
 		if change_item:
 			GameValues.change_player_stat.rpc(id, "equipped_item", change_item)
 			GameValues.update_ammo_ui.emit()
-	
+
 func follow_mouse():
 	rotation_pivot.look_at(get_global_mouse_position())
 	rotation_pivot.rotation_degrees += 90
+
+func bomb_place():
+	var inventory_items = GameValues.players[id]["items"]
+	var equipped_item = GameValues.players[id].equipped_item
+	var item_dict = inventory_items.get(equipped_item, null)
+	
+	if not item_dict:
+		return
+		
+	if item_dict.type == "bomb":
+		if Input.is_action_pressed("interact") and %BombPlaceDelay.is_stopped():
+			%BombPlaceDelay.start(3.4)
+		elif Input.is_action_pressed("interact") == false:
+			%BombPlaceDelay.stop()
 
 func attack():
 	var inventory_items = GameValues.players[id]["items"]
@@ -144,7 +160,7 @@ func _on_reload_delay_timeout():
 	GameValues.update_ammo_ui.emit()
 
 func get_spread_angle():
-	var inventory_items = GameValues.players[id]["items"]
+	var inventory_items = GameValues.players[id].items
 	var equipped_item = GameValues.players[id].equipped_item
 	var spread
 	var spread_angle
@@ -181,27 +197,39 @@ func respawn():
 
 func _on_hurtbox_area_entered(area):
 	if area.team != team:
-		area.queue_free()
-			
+		area.queue_free() # delete bullet
+
 		if hurt_delay.is_stopped() == true:
 			hurt_delay.start()
 			health -= area.damage
 			health_bar.value = health
 			
 			if health <= 0:
-				if team == "T":
-					GameValues.change_player_stat.rpc(id, "items", Items.default_t_items)
-				else:
-					GameValues.change_player_stat.rpc(id, "items", Items.default_ct_items)
-					
-				if multiplayer.is_server():
-					GameValues.player_killed.rpc(area.player_id, id)
-				alive = false
-				visible = false
-				set_collisions(false)
-				
-				if multiplayer.is_server():
-					GameValues.send_message.rpc(username + " has been killed.", "SERVER", 1)
+				kill_player(area.player_id)
+
+func kill_player(attacker_id):
+	alive = false
+	visible = false
+	set_collisions(false)
+	
+	if team == "T":
+		GameValues.change_player_stat.rpc(id, "items", Items.default_t_items)
+	else:
+		GameValues.change_player_stat.rpc(id, "items", Items.default_ct_items)
+	
+	if multiplayer.is_server():
+		GameValues.player_killed.rpc(attacker_id, id, team)
+		GameValues.send_message.rpc(username + " has been killed.", "SERVER", 1)
 
 func set_collisions(boolean):
 	%Hurtbox.set_deferred("monitoring", boolean)
+
+func _on_bomb_place_delay_timeout():
+	spawn_bomb.rpc()
+
+@rpc("any_peer", "call_local", "reliable")
+func spawn_bomb():
+	var bomb = load("res://bomb/bomb.tscn").instantiate()
+	bomb.global_position = bullet_spawn_point.global_position
+	bomb.rotation_degrees = rotation_pivot.rotation_degrees;
+	get_parent().get_parent().add_child(bomb)

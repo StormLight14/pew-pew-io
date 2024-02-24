@@ -1,7 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://6gchmen5j28w"]
+[gd_scene load_steps=11 format=3 uid="uid://6gchmen5j28w"]
 
 [ext_resource type="Texture2D" uid="uid://d36i0sgfckiuh" path="res://assets/bomb/bomb_active-sheet.png" id="1_i5lil"]
+[ext_resource type="Script" path="res://bomb/bomb.gd" id="1_l8bq2"]
 [ext_resource type="Texture2D" uid="uid://bepv1o131gsjx" path="res://assets/bomb/bomb_item.png" id="2_0l7yd"]
+[ext_resource type="AudioStream" uid="uid://umxaxwx1yfsq" path="res://assets/audio/bomb_planted.mp3" id="4_o0fkm"]
+[ext_resource type="AudioStream" uid="uid://sw6mn1e6ngcl" path="res://assets/audio/bomb_beep.wav" id="5_wna20"]
+[ext_resource type="AudioStream" uid="uid://c5vu6ab3yfoca" path="res://assets/audio/bomb_explode.wav" id="6_vnx8e"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1f7h"]
 atlas = ExtResource("1_i5lil")
@@ -37,8 +41,28 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Bomb" type="Node2D"]
+[node name="Bomb" type="Node2D" groups=["TempObject"]]
+script = ExtResource("1_l8bq2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_gmglu")
 animation = &"active"
+frame_progress = 0.246751
+offset = Vector2(0, 8.275)
+
+[node name="BeepTimer" type="Timer" parent="."]
+one_shot = true
+autostart = true
+
+[node name="BombPlantedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("4_o0fkm")
+autoplay = true
+
+[node name="BombBeepSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_wna20")
+
+[node name="BombExplodeSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_vnx8e")
+
+[connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]
