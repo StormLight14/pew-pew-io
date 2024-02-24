@@ -8,6 +8,7 @@ var game_started = false
 var messages = ""
 var rounds_won = [0, 0] # T, CT
 var player_money = 10000
+var bomb_exploded = false
 
 signal message_sent_signal
 signal player_killed_signal
@@ -68,7 +69,7 @@ func player_killed(killer_id, victim_id, victim_team):
 		players[victim_id].items = Items.default_ct_items
 	
 	player_killed_signal.emit()
-	
+
 @rpc("any_peer", "call_local", "reliable")
 func change_player_stat(id, stat, value):
 	players[id][stat] = value

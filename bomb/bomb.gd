@@ -18,6 +18,7 @@ func on_explode():
 	for level in get_tree().get_nodes_in_group("Level"):
 		level.start_post_round("T")
 		visible = false
+	GameValues.bomb_exploded = true
 
 func _on_beep_timer_timeout():
 	bomb_beep_sound.play()

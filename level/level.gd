@@ -39,6 +39,7 @@ func format_time(seconds: float) -> String:
 	
 func new_round():
 	start_timer.start()
+	GameValues.bomb_exploded = false
 	
 func _on_start_timer_timeout():
 	start_timer_label.visible = false
@@ -48,7 +49,8 @@ func _on_start_timer_timeout():
 	end_timer.start()
 	
 func _on_end_timer_timeout():
-	start_post_round("CT")
+	if GameValues.bomb_exploded == false:
+		start_post_round("CT")
 	
 func start_post_round(winning_team):
 	post_round_timer.start()
