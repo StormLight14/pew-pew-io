@@ -10,9 +10,4 @@ Either use the GUI and press host game, or run the binary from the command line 
 If you want people outside your network to join, you will need to go into your router settings and port forward the port you are hosting (default `9595`)
 
 ## Autostart
-If 10 players connect the game will automatically start; there is currently no way to change this number besides from the code. (TODO: allow changing this number from the GUI or with a command line argument)
-
-## Why is it lagging so much, this is actually terrible
-Idk I'll optimize later
-
-
+If 10 players connect the game ~~will~~ should automatically start; there is currently no way to change this number besides from the code. (TODO: allow changing this number from the GUI or with a command line argument)
