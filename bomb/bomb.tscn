@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://6gchmen5j28w"]
+[gd_scene load_steps=13 format=3 uid="uid://6gchmen5j28w"]
 
 [ext_resource type="Texture2D" uid="uid://d36i0sgfckiuh" path="res://assets/bomb/bomb_active-sheet.png" id="1_i5lil"]
 [ext_resource type="Script" path="res://bomb/bomb.gd" id="1_l8bq2"]
@@ -6,6 +6,7 @@
 [ext_resource type="AudioStream" uid="uid://umxaxwx1yfsq" path="res://assets/audio/bomb_planted.mp3" id="4_o0fkm"]
 [ext_resource type="AudioStream" uid="uid://sw6mn1e6ngcl" path="res://assets/audio/bomb_beep.wav" id="5_wna20"]
 [ext_resource type="AudioStream" uid="uid://c5vu6ab3yfoca" path="res://assets/audio/bomb_explode.wav" id="6_vnx8e"]
+[ext_resource type="AudioStream" uid="uid://ca1hitot2yf36" path="res://assets/audio/bomb_defused.mp3" id="7_kctku"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_f1f7h"]
 atlas = ExtResource("1_i5lil")
@@ -41,14 +42,18 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Bomb" type="Node2D" groups=["TempObject"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vjlh"]
+size = Vector2(33, 36)
+
+[node name="Bomb" type="Area2D" groups=["Bomb", "TempObject"]]
+collision_layer = 32
+collision_mask = 16
 script = ExtResource("1_l8bq2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1.2, 1.2)
 sprite_frames = SubResource("SpriteFrames_gmglu")
 animation = &"active"
-frame_progress = 0.246751
 offset = Vector2(0, 8.275)
 
 [node name="BeepTimer" type="Timer" parent="."]
@@ -64,5 +69,14 @@ stream = ExtResource("5_wna20")
 
 [node name="BombExplodeSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_vnx8e")
+max_distance = 3000.0
+
+[node name="BombDefusedSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("7_kctku")
+max_distance = 5000.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 10)
+shape = SubResource("RectangleShape2D_4vjlh")
 
 [connection signal="timeout" from="BeepTimer" to="." method="_on_beep_timer_timeout"]

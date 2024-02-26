@@ -412,6 +412,25 @@ theme = ExtResource("3_ynjfq")
 text = "[2] - Glock 18
 [3] - Knife"
 
+[node name="DefuseUI" type="CenterContainer" parent="GameUI"]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = 45.865
+offset_bottom = 91.865
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DefuseLabel" type="Label" parent="GameUI/DefuseUI"]
+unique_name_in_owner = true
+layout_mode = 2
+theme = ExtResource("3_ynjfq")
+theme_override_font_sizes/font_size = 10
+text = "Defusing: 5.0s left..."
+
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
 

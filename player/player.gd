@@ -18,6 +18,7 @@ var health = 100
 var max_health = health
 
 var alive = true
+var can_defuse = false
 
 var index = 0
 var spawn_pos = Vector2.ZERO
@@ -45,7 +46,7 @@ func _ready():
 		camera_2d.enabled = true
 		%AudioListener2D.current = true
 		GameValues.change_player_stat.rpc(id, "equipped_item", GameValues.players[id].equipped_item)
-		GameValues.update_ammo_ui.emit()
+		GameValues.update_inventory_ui.emit()
 
 func _physics_process(_delta):
 	if is_multiplayer_authority() and alive:
@@ -54,7 +55,7 @@ func _physics_process(_delta):
 		if GameValues.typing == false:
 			if GameValues.can_interact == true and GameValues.shop_open == false:
 				attack()
-				bomb_place()
+				interact()
 				movement()
 				reload_gun()
 			
@@ -86,25 +87,11 @@ func switch_inventory_slot():
 			
 		if change_item:
 			GameValues.change_player_stat.rpc(id, "equipped_item", change_item)
-			GameValues.update_ammo_ui.emit()
+			GameValues.update_inventory_ui.emit()
 
 func follow_mouse():
 	rotation_pivot.look_at(get_global_mouse_position())
 	rotation_pivot.rotation_degrees += 90
-
-func bomb_place():
-	var inventory_items = GameValues.players[id]["items"]
-	var equipped_item = GameValues.players[id].equipped_item
-	var item_dict = inventory_items.get(equipped_item, null)
-	
-	if not item_dict:
-		return
-		
-	if item_dict.type == "bomb":
-		if Input.is_action_pressed("interact") and %BombPlaceDelay.is_stopped():
-			%BombPlaceDelay.start(3.4)
-		elif Input.is_action_pressed("interact") == false:
-			%BombPlaceDelay.stop()
 
 func attack():
 	var inventory_items = GameValues.players[id]["items"]
@@ -128,7 +115,7 @@ func attack():
 			spawn_bullet.rpc(bullet_direction, item_dict.damage, multiplayer.get_unique_id())
 			%NoSpread.start(0.3)
 			item_dict.magazine_ammo -= 1
-			GameValues.update_ammo_ui.emit()
+			GameValues.update_inventory_ui.emit()
 
 func reload_gun():
 	var inventory_items = GameValues.players[id].items
@@ -157,7 +144,7 @@ func _on_reload_delay_timeout():
 			item_dict.magazine_ammo = item_dict.reserve_ammo
 			item_dict.reserve_ammo = 0
 			
-	GameValues.update_ammo_ui.emit()
+	GameValues.update_inventory_ui.emit()
 
 func get_spread_angle():
 	var inventory_items = GameValues.players[id].items
@@ -201,11 +188,14 @@ func _on_hurtbox_area_entered(area):
 
 		if hurt_delay.is_stopped() == true:
 			hurt_delay.start()
-			health -= area.damage
-			health_bar.value = health
-			
-			if health <= 0:
-				kill_player(area.player_id)
+			damage(area.damage, area.player_id)
+				
+func damage(damage_amount, attacker_id):
+	health -= damage_amount
+	health_bar.value = health
+	
+	if health <= 0:
+		kill_player(attacker_id)
 
 func kill_player(attacker_id):
 	alive = false
@@ -217,14 +207,21 @@ func kill_player(attacker_id):
 	else:
 		GameValues.change_player_stat.rpc(id, "items", Items.default_ct_items)
 	
-	if multiplayer.is_server():
-		GameValues.player_killed.rpc(attacker_id, id, team)
-		GameValues.send_message.rpc(username + " has been killed.", "SERVER", 1)
+	GameValues.player_killed(attacker_id, id, team)
+	GameValues.send_message(username + " has been killed.", "SERVER", 1)
 
 func set_collisions(boolean):
 	%Hurtbox.set_deferred("monitoring", boolean)
 
 func _on_bomb_place_delay_timeout():
+	if GameValues.players[id].items.primary:
+		GameValues.change_player_stat.rpc(id, "equipped_item", "primary")
+	elif GameValues.players[id].items.secondary:
+		GameValues.change_player_stat.rpc(id, "equipped_item", "secondary")
+	else:
+		GameValues.change_player_stat.rpc(id, "equipped_item", "knife")
+	GameValues.players[id].items.bomb = null
+	GameValues.update_inventory_ui.emit()
 	spawn_bomb.rpc()
 
 @rpc("any_peer", "call_local", "reliable")
@@ -233,3 +230,47 @@ func spawn_bomb():
 	bomb.global_position = bullet_spawn_point.global_position
 	bomb.rotation_degrees = rotation_pivot.rotation_degrees;
 	get_parent().get_parent().add_child(bomb)
+
+func _on_interact_zone_area_entered(area):
+	if team == "CT" and area.object_type == "bomb":
+		can_defuse = true
+		
+func _on_interact_zone_area_exited(area):
+	if area.object_type == "bomb":
+		can_defuse = false
+		
+func interact():
+	# bomb defuse check
+	if can_defuse and GameValues.bomb_active:
+		if Input.is_action_pressed("interact") and %BombDefuseDelay.is_stopped():
+			%BombDefuseDelay.start(5.0)
+			GameValues.defuse_ui.emit(%BombDefuseDelay.time_left, true)
+		elif Input.is_action_pressed("interact") == false:
+			%BombDefuseDelay.stop()
+			GameValues.defuse_ui.emit(0, false)
+		else:
+			GameValues.defuse_ui.emit(%BombDefuseDelay.time_left, true)
+			print("Defusing, time left: ", %BombDefuseDelay.time_left)
+	
+	var inventory_items = GameValues.players[id]["items"]
+	var equipped_item = GameValues.players[id].equipped_item
+	var item_dict = inventory_items.get(equipped_item, null)
+	
+	if not item_dict:
+		return
+		
+	if item_dict.type == "bomb":
+		if Input.is_action_pressed("interact") and %BombPlaceDelay.is_stopped():
+			%BombPlaceDelay.start(3.4)
+		elif Input.is_action_pressed("interact") == false:
+			%BombPlaceDelay.stop()
+
+func _on_bomb_defuse_delay_timeout():
+	GameValues.defuse_ui.emit(0, false)
+	defuse_bomb.rpc()
+
+@rpc("any_peer", "call_local", "reliable")
+func defuse_bomb():
+	for bomb in get_tree().get_nodes_in_group("Bomb"):
+		bomb.animated_sprite_2d.play("defused")
+		bomb.defuse()

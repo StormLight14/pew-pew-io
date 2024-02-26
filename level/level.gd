@@ -40,6 +40,7 @@ func format_time(seconds: float) -> String:
 func new_round():
 	start_timer.start()
 	GameValues.bomb_exploded = false
+	GameValues.bomb_active = false
 	
 func _on_start_timer_timeout():
 	start_timer_label.visible = false

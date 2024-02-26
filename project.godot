@@ -108,8 +108,11 @@ interact={
 2d_physics/layer_2="Player"
 2d_physics/layer_3="PlayerHurtbox"
 2d_physics/layer_4="BulletHitbox"
+2d_physics/layer_5="PlayerInteract"
+2d_physics/layer_6="Bomb"
 
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
+textures/vram_compression/import_s3tc_bptc=true

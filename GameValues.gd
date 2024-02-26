@@ -1,6 +1,7 @@
 extends Node
 
 var players = {}
+
 var typing = false
 var can_interact = false
 var shop_open = false
@@ -8,12 +9,15 @@ var game_started = false
 var messages = ""
 var rounds_won = [0, 0] # T, CT
 var player_money = 10000
+
 var bomb_exploded = false
+var bomb_active = false
 
 signal message_sent_signal
 signal player_killed_signal
 signal player_stat_changed_signal
-signal update_ammo_ui
+signal update_inventory_ui
+signal defuse_ui(defuse_seconds, show)
 
 func get_alive_players() -> Array[int]:
 	var t_alive = 0
@@ -51,12 +55,13 @@ func send_message(message = "MESSAGE_ERROR", username = "USERNAME_ERROR", player
 	
 @rpc("any_peer", "call_local", "reliable")
 func player_killed(killer_id, victim_id, victim_team):
-	players[killer_id].kills += 1
+	if killer_id is String == false and killer_id != 1:
+		players[killer_id].kills += 1
 	players[victim_id].deaths += 1
 	
 	var alive_players = get_alive_players()
 	for level in get_tree().get_nodes_in_group("Level"):
-		if alive_players[0] == 0: # all T's are dead
+		if alive_players[0] == 0 and bomb_active == false: # all T's are dead, bomb is offw
 			level.start_post_round("CT")
 			rounds_won[1] += 1
 		elif alive_players[1] == 0: # all CT's are dead
