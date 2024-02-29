@@ -1,6 +1,6 @@
 extends Node2D
 
-@onready var animated_sprite_2d = $AnimatedSprite2D
+@onready var sprite_2d = $Sprite2D
 @onready var beep_timer = $BeepTimer
 @onready var bomb_beep_sound = $BombBeepSound
 @onready var bomb_explode_sound = $BombExplodeSound
@@ -10,7 +10,6 @@ var exploded = false
 var object_type = "bomb"
 
 func _ready():
-	animated_sprite_2d.play("active")
 	GameValues.bomb_active = true
 	
 func _process(_delta):
@@ -52,3 +51,8 @@ func _on_beep_timer_timeout():
 		beep_timer.start()
 	else:
 		bomb_explode_sound.play()
+		
+	if sprite_2d.frame == 0:
+		sprite_2d.frame = 1
+	else:
+		sprite_2d.frame = 0

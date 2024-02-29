@@ -250,7 +250,6 @@ func interact():
 			GameValues.defuse_ui.emit(0, false)
 		else:
 			GameValues.defuse_ui.emit(%BombDefuseDelay.time_left, true)
-			print("Defusing, time left: ", %BombDefuseDelay.time_left)
 	
 	var inventory_items = GameValues.players[id]["items"]
 	var equipped_item = GameValues.players[id].equipped_item
@@ -272,5 +271,4 @@ func _on_bomb_defuse_delay_timeout():
 @rpc("any_peer", "call_local", "reliable")
 func defuse_bomb():
 	for bomb in get_tree().get_nodes_in_group("Bomb"):
-		bomb.animated_sprite_2d.play("defused")
 		bomb.defuse()
