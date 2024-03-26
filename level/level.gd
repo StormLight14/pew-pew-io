@@ -61,6 +61,13 @@ func start_post_round(winning_team):
 		GameValues.rounds_won[0] += 1
 	else:
 		GameValues.rounds_won[1] += 1
+		
+	if GameValues.rounds_won[0] >= 8:
+		%WinnerLabel.text = "Terrorists Win"
+		game_over()
+	if GameValues.rounds_won[1] >= 8:
+		%WinnerLabel.text = "Counter-Terrorists Win"
+		game_over()
 	
 	if multiplayer.is_server() == false:
 		post_round_label.visible = true
@@ -74,6 +81,14 @@ func start_post_round(winning_team):
 			won_banner.visible = false
 			lost_banner.visible = true
 	GameValues.update_game_ui.emit()
+	
+func game_over():
+	%PostGameUI.visible = true
+	%InGameUI.visible = false 
+	GameValues.game_ended = true
+	
+	for player in get_tree().get_nodes_in_group("Player"):
+		player.alive = false
 	
 func _on_post_round_timer_timeout():
 	start_timer_label.visible = true

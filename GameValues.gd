@@ -6,6 +6,7 @@ var typing = false
 var can_interact = false
 var shop_open = false
 var game_started = false
+var game_ended = false
 var messages = ""
 var rounds_won = [0, 0] # T, CT
 var player_money = 10000

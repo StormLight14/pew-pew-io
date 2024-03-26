@@ -1,11 +1,11 @@
 extends CanvasLayer
 
-@onready var spectate_ui = $SpectateUI
+@onready var spectate_ui = %SpectateUI
 @onready var spectate_label = %SpectateLabel
 @onready var shop_ui = %ShopUI
 @onready var money_ui = %MoneyUI
 @onready var money_label = %MoneyLabel
-@onready var message_line = $MessageLine
+@onready var message_line = %MessageLine
 @onready var inventory_label = %InventoryLabel
 
 func _ready():
