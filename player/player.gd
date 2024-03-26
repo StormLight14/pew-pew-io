@@ -46,7 +46,7 @@ func _ready():
 		camera_2d.enabled = true
 		%AudioListener2D.current = true
 		GameValues.change_player_stat.rpc(id, "equipped_item", GameValues.players[id].equipped_item)
-		GameValues.update_inventory_ui.emit()
+		GameValues.update_game_ui.emit()
 
 func _physics_process(_delta):
 	if is_multiplayer_authority() and alive:
@@ -87,7 +87,7 @@ func switch_inventory_slot():
 			
 		if change_item:
 			GameValues.change_player_stat.rpc(id, "equipped_item", change_item)
-			GameValues.update_inventory_ui.emit()
+			GameValues.update_game_ui.emit()
 
 func follow_mouse():
 	rotation_pivot.look_at(get_global_mouse_position())
@@ -115,7 +115,7 @@ func attack():
 			spawn_bullet.rpc(bullet_direction, item_dict.damage, multiplayer.get_unique_id())
 			%NoSpread.start(0.3)
 			item_dict.magazine_ammo -= 1
-			GameValues.update_inventory_ui.emit()
+			GameValues.update_game_ui.emit()
 
 func reload_gun():
 	var inventory_items = GameValues.players[id].items
@@ -144,7 +144,7 @@ func _on_reload_delay_timeout():
 			item_dict.magazine_ammo = item_dict.reserve_ammo
 			item_dict.reserve_ammo = 0
 			
-	GameValues.update_inventory_ui.emit()
+	GameValues.update_game_ui.emit()
 
 func get_spread_angle():
 	var inventory_items = GameValues.players[id].items
@@ -221,7 +221,7 @@ func _on_bomb_place_delay_timeout():
 	else:
 		GameValues.change_player_stat.rpc(id, "equipped_item", "knife")
 	GameValues.players[id].items.bomb = null
-	GameValues.update_inventory_ui.emit()
+	GameValues.update_game_ui.emit()
 	spawn_bomb.rpc()
 
 @rpc("any_peer", "call_local", "reliable")

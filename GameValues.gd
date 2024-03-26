@@ -16,7 +16,7 @@ var bomb_active = false
 signal message_sent_signal
 signal player_killed_signal
 signal player_stat_changed_signal
-signal update_inventory_ui
+signal update_game_ui
 signal defuse_ui(defuse_seconds, show)
 
 func get_alive_players() -> Array[int]:

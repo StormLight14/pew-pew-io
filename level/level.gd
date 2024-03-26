@@ -23,7 +23,7 @@ func _process(_delta):
 		start_timer_label.text = "Starting in: " + str(ceil(start_timer.time_left))
 		
 	if end_timer.is_stopped() == false:
-		end_timer_label.text = "Round ends in: " + format_time(end_timer.time_left)
+		end_timer_label.text = format_time(end_timer.time_left)
 		
 	if mouse_in_message_line == false and Input.is_action_just_pressed("attack"):
 		%MessageLine.release_focus()
@@ -57,6 +57,11 @@ func start_post_round(winning_team):
 	post_round_timer.start()
 	end_timer_label.visible = false
 	
+	if winning_team == "T":
+		GameValues.rounds_won[0] += 1
+	else:
+		GameValues.rounds_won[1] += 1
+	
 	if multiplayer.is_server() == false:
 		post_round_label.visible = true
 		
@@ -68,6 +73,7 @@ func start_post_round(winning_team):
 			post_round_label.text = "R o u n d  L o s t"
 			won_banner.visible = false
 			lost_banner.visible = true
+	GameValues.update_game_ui.emit()
 	
 func _on_post_round_timer_timeout():
 	start_timer_label.visible = true

@@ -115,16 +115,55 @@ offset_bottom = 23.0
 grow_horizontal = 2
 theme = ExtResource("3_ynjfq")
 
-[node name="EndTimerLabel" type="Label" parent="GameUI/TimerUI"]
+[node name="StartTimerLabel" type="Label" parent="GameUI/TimerUI"]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
-text = "Ending in: 30"
+text = "Starting in: 5"
 
-[node name="StartTimerLabel" type="Label" parent="GameUI/TimerUI"]
+[node name="DuringRound" type="HBoxContainer" parent="GameUI/TimerUI"]
+layout_mode = 2
+
+[node name="TBackground" type="ColorRect" parent="GameUI/TimerUI/DuringRound"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(0.721569, 0.458824, 0.133333, 0.847059)
+
+[node name="TScore" type="Label" parent="GameUI/TimerUI/DuringRound/TBackground"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ynjfq")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndTimerLabel" type="Label" parent="GameUI/TimerUI/DuringRound"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "Starting in: 5"
+text = "0:30"
+
+[node name="CTBackground" type="ColorRect" parent="GameUI/TimerUI/DuringRound"]
+custom_minimum_size = Vector2(32, 32)
+layout_mode = 2
+color = Color(0.298039, 0.0941176, 1, 0.811765)
+
+[node name="CTScore" type="Label" parent="GameUI/TimerUI/DuringRound/CTBackground"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_ynjfq")
+text = "0"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="MessageUI" type="ScrollContainer" parent="GameUI"]
 anchors_preset = 2
@@ -430,6 +469,12 @@ layout_mode = 2
 theme = ExtResource("3_ynjfq")
 theme_override_font_sizes/font_size = 10
 text = "Defusing: 5.0s left..."
+
+[node name="ScoreUI" type="CenterContainer" parent="GameUI"]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 23.0
+grow_horizontal = 2
 
 [node name="StartTimer" type="Timer" parent="."]
 one_shot = true
