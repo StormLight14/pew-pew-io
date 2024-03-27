@@ -14,7 +14,7 @@ var peer = ENetMultiplayerPeer.new()
 
 func _ready():
 	var cmdline_args = OS.get_cmdline_user_args()
-	#print("Command Line Arguments:", cmdline_args)
+	print("Command Line Arguments:", cmdline_args)
 	if cmdline_args.size() > 0:
 		if cmdline_args[0] == "--autostart-amount":
 			print(cmdline_args[1])
