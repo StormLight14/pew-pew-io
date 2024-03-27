@@ -64,10 +64,8 @@ func player_killed(killer_id, victim_id, victim_team):
 	for level in get_tree().get_nodes_in_group("Level"):
 		if alive_players[0] == 0 and bomb_active == false: # all T's are dead, bomb is offw
 			level.start_post_round("CT")
-			rounds_won[1] += 1
 		elif alive_players[1] == 0: # all CT's are dead
 			level.start_post_round("T")
-			rounds_won[0] += 1
 
 	if victim_team == "T":
 		players[victim_id].items = Items.default_t_items
