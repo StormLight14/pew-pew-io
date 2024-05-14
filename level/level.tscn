@@ -127,12 +127,6 @@ offset_bottom = 32.0
 grow_horizontal = 2
 theme = ExtResource("3_ynjfq")
 
-[node name="StartTimerLabel" type="Label" parent="GameUI/InGameUI/TimerUI"]
-unique_name_in_owner = true
-visible = false
-layout_mode = 2
-text = "Starting in: 5"
-
 [node name="DuringRound" type="HBoxContainer" parent="GameUI/InGameUI/TimerUI"]
 layout_mode = 2
 
@@ -158,6 +152,12 @@ vertical_alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 text = "0:30"
+
+[node name="StartTimerLabel" type="Label" parent="GameUI/InGameUI/TimerUI/DuringRound"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+text = "Starting in: 5"
 
 [node name="CTBackground" type="ColorRect" parent="GameUI/InGameUI/TimerUI/DuringRound"]
 custom_minimum_size = Vector2(32, 32)
@@ -495,13 +495,6 @@ theme = ExtResource("3_ynjfq")
 theme_override_font_sizes/font_size = 10
 text = "Defusing: 5.0s left..."
 
-[node name="ScoreUI" type="CenterContainer" parent="GameUI/InGameUI"]
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 23.0
-grow_horizontal = 2
-
 [node name="PostGameUI" type="CenterContainer" parent="GameUI"]
 unique_name_in_owner = true
 visible = false
@@ -525,6 +518,7 @@ unique_name_in_owner = true
 layout_mode = 2
 
 [node name="StartTimer" type="Timer" parent="."]
+wait_time = 3.0
 one_shot = true
 
 [node name="EndTimer" type="Timer" parent="."]
