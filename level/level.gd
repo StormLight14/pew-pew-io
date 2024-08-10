@@ -4,7 +4,7 @@ extends Node2D
 @onready var start_timer_label = %StartTimerLabel
 @onready var end_timer = $EndTimer
 @onready var end_timer_label = %EndTimerLabel
-@onready var post_round_timer = $PostRoundTimer
+@onready var post_round_timer = %PostRoundTimer
 @onready var post_round_label = %PostRoundLabel
 @onready var lost_banner = %LostBanner
 @onready var won_banner = %WonBanner

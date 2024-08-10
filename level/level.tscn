@@ -527,6 +527,7 @@ wait_time = 30.0
 one_shot = true
 
 [node name="PostRoundTimer" type="Timer" parent="."]
+unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 
