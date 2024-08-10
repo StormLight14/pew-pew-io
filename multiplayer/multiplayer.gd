@@ -41,6 +41,11 @@ func peer_connected(id):
 	#print("Peer with ID " + str(id) + " connected.")
 	if multiplayer.is_server() and GameValues.players.size() >= autostart_amount - 1:
 		autostart_timer.start()
+		
+		if GameValues.game_started:
+			# Send information to the newly connected player that the game has started
+			var username = GameValues.players[id].username if GameValues.players.has(id) else "Guest"
+			send_player_info.rpc_id(id, username, id, GameValues.players[id].team, GameValues.players[id].items, "secondary", true)
 	
 func peer_disconnected(id):
 	if id != 1:
@@ -91,6 +96,7 @@ func add_players():
 		player.set_multiplayer_authority(i)
 		player.username = GameValues.players[i].username
 		player.index = added_players
+		player.alive = GameValues.players[i].alive
 		
 		if added_players % 2 == 1:
 			player.team = "T"
@@ -117,6 +123,7 @@ func send_player_info(username, id, team, items, equipped_item):
 			"equipped_item": "secondary",
 			"kills": 0,
 			"deaths": 0,
+			"alive": not GameValues.game_started
 		}
 		
 	if multiplayer.is_server():
