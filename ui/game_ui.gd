@@ -22,6 +22,8 @@ func _process(_delta):
 		shop_ui.visible = not shop_ui.visible
 		GameValues.shop_open = not GameValues.shop_open
 		update_buy_menu()
+	elif Input.is_action_just_pressed("message") and GameValues.typing == false and GameValues.shop_open == false:
+		message_line.grab_focus()
 		
 func update_defuse_ui(defuse_seconds, show):
 	%DefuseUI.visible = show
