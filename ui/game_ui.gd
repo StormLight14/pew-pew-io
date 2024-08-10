@@ -96,8 +96,8 @@ func _on_line_edit_text_submitted(new_text):
 		new_text = strip_bbcode(new_text)
 		
 	GameValues.send_message.rpc(new_text, username, player_id)
-	$MessageLine.text = ""
-	$MessageLine.release_focus()
+	%MessageLine.text = ""
+	%MessageLine.release_focus()
 	
 func strip_bbcode(source:String) -> String:
 	var regex = RegEx.new()
